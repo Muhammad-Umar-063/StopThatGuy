@@ -1,0 +1,1007 @@
+{
+  "schema_version": 1,
+  "updated": "2026-11-16",
+  "project": "Stop That Guy!",
+  "implementation_started": false,
+  "status_values": [
+    "planned",
+    "ready",
+    "in_progress",
+    "in_review",
+    "blocked",
+    "done",
+    "cancelled"
+  ],
+  "tasks": [
+    {
+      "id": "T001",
+      "title": "Repository and toolchain setup",
+      "lane": "D",
+      "status": "ready",
+      "depends_on": [],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "package.json",
+        "package-lock.json",
+        "apps/*/package.json",
+        "tsconfig*",
+        "apps/*/src/bootstrap/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T002",
+      "title": "Shared contracts and fixtures",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T001"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/shared/",
+        "packages/test-support/src/fixtures/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T003",
+      "title": "Fixed-step simulation foundation",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T002"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T004",
+      "title": "Validation and integration tooling",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "scripts/",
+        "tests/",
+        "packages/test-support/",
+        ".github/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T005",
+      "title": "First street and route blockout",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T004"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/world/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T006",
+      "title": "Room and session lifecycle",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T004"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/server/src/rooms/",
+        "apps/server/src/adapters/",
+        "apps/server/src/validation/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T007",
+      "title": "Keyboard input and action mapping",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T004"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/input/keyboard/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T008",
+      "title": "Asset workflow and provenance",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T004"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "assets/",
+        "assets-source/",
+        "scripts/assets/",
+        "apps/client/src/render/assets/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T009",
+      "title": "Road movement, lanes and stamina",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T005",
+        "T007"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/movement/",
+        "packages/simulation/src/collision/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T010",
+      "title": "Automatic third-person camera",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T005",
+        "T007"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/camera/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T011",
+      "title": "Finished street visual slice",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T005",
+        "T008"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/environment/",
+        "apps/client/public/assets/environment/",
+        "assets-source/environment/",
+        "assets/manifest-environment.json"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T012",
+      "title": "Keyboard-accessible lobby screens",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T006",
+        "T007"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/lobby/",
+        "apps/client/src/ui/menu/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T013",
+      "title": "Robber AI and match progression",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T006",
+        "T009"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/robber/",
+        "packages/simulation/src/match/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T014",
+      "title": "Client connection and state adapter",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T006",
+        "T009"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/network/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T015",
+      "title": "Character models and movement animation",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T008",
+        "T011"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/characters/",
+        "apps/client/public/assets/characters/",
+        "assets-source/characters/",
+        "assets/manifest-characters.json"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T016",
+      "title": "Complete playable city graph",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T005",
+        "T011"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/world/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T017",
+      "title": "Capture and authoritative result rules",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T013"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/capture/",
+        "packages/simulation/src/results/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T018",
+      "title": "Chase HUD and contextual cues",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T010",
+        "T013",
+        "T014"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/hud/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T019",
+      "title": "Transport models and visual definitions",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T008",
+        "T011"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/vehicles/",
+        "apps/client/public/assets/vehicles/",
+        "assets-source/vehicles/",
+        "assets/manifest-vehicles.json"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T020",
+      "title": "Integrate first playable online chase",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/bootstrap/",
+        "apps/server/src/bootstrap/",
+        "tests/integration/chase/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T021",
+      "title": "Authoritative vehicles, borrowing and lift",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T020"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/vehicles/",
+        "packages/simulation/src/interactions/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T022",
+      "title": "Prediction, reconciliation and interpolation",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T020"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/presentation/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T023",
+      "title": "Vehicle riding and interaction animation",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T015",
+        "T019",
+        "T020"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/animation/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T024",
+      "title": "Android touch controls",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T018",
+        "T020"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/input/touch/",
+        "apps/client/src/ui/touch/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T025",
+      "title": "Authoritative sabotage and protection",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T021"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/sabotage/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T026",
+      "title": "Transport interaction presentation",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T018",
+        "T021",
+        "T023"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/interactions/",
+        "apps/client/src/presentation/vehicles/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T027",
+      "title": "City prop kit and obstacle presentation",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T016",
+        "T019",
+        "T023"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/props/",
+        "apps/client/public/assets/props/",
+        "assets/manifest-props.json"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T028",
+      "title": "Reconnect, forfeit and room cleanup",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T020",
+        "T022"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/server/src/rooms/",
+        "apps/client/src/network/",
+        "tests/integration/reconnect/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T029",
+      "title": "Shop theft and wanted state",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T021",
+        "T025"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/crime/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T030",
+      "title": "Action feedback and control polish",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T024",
+        "T025",
+        "T026"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/hud/",
+        "apps/client/src/ui/interactions/",
+        "apps/client/src/presentation/feedback/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T031",
+      "title": "Quality presets and first device profiling",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T015",
+        "T016",
+        "T023",
+        "T027"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/quality/",
+        "scripts/performance/",
+        "docs/TEST_RESULTS.md"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T032",
+      "title": "Interaction integration regression suite",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T025",
+        "T026",
+        "T028"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "tests/integration/interactions/",
+        "tests/browser/interactions/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T033",
+      "title": "Police pursuit and arrest",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T016",
+        "T029"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/police/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T034",
+      "title": "Spectating, awards screen and rematch UI",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T017",
+        "T028",
+        "T030"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/results/",
+        "apps/client/src/ui/spectator/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T035",
+      "title": "Audio and comic event presentation",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T027",
+        "T030"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/audio/",
+        "apps/client/src/render/effects/",
+        "apps/client/public/assets/audio/",
+        "assets/manifest-audio.json"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T036",
+      "title": "Latency and malformed-input verification",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T022",
+        "T028",
+        "T032"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "tests/integration/network/",
+        "tests/integration/validation/",
+        "packages/test-support/src/network/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T037",
+      "title": "Awards, route and economy balancing",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T017",
+        "T021",
+        "T025",
+        "T029",
+        "T033"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "packages/simulation/src/results/",
+        "packages/simulation/src/balance/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T038",
+      "title": "Final menu, errors and accessibility flow",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T024",
+        "T030",
+        "T034"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/ui/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T039",
+      "title": "Full-map visual consistency and optimization",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T031",
+        "T035"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/render/",
+        "apps/client/public/assets/",
+        "assets-source/",
+        "assets/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T040",
+      "title": "Six-player gameplay playtest",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T033",
+        "T034",
+        "T036"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "tests/playtest/",
+        "coordination/playtests/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T041",
+      "title": "Server validation and abuse hardening",
+      "lane": "A",
+      "status": "planned",
+      "depends_on": [
+        "T036",
+        "T037",
+        "T040"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/server/src/validation/",
+        "packages/simulation/src/validation/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T042",
+      "title": "Desktop and Android acceptance checks",
+      "lane": "B",
+      "status": "planned",
+      "depends_on": [
+        "T038",
+        "T039",
+        "T040"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "tests/browser/acceptance/",
+        "docs/DEVICE_RESULTS.md"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T043",
+      "title": "Asset, accessibility and presentation audit",
+      "lane": "C",
+      "status": "planned",
+      "depends_on": [
+        "T035",
+        "T038",
+        "T039"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "docs/ART_AUDIT.md",
+        "assets/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T044",
+      "title": "Final local integration and regression gate",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T037",
+        "T038",
+        "T039",
+        "T040"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "apps/client/src/bootstrap/",
+        "apps/server/src/bootstrap/",
+        "tests/release/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T045",
+      "title": "Deployment configuration and release preparation",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T041",
+        "T042",
+        "T043",
+        "T044"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "deployment/",
+        "scripts/release/",
+        ".env.example",
+        "docs/DEPLOYMENT.md",
+        "README.md"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T046",
+      "title": "Staging deployment and external verification",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T045"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "deployment/",
+        "tests/release/",
+        "coordination/releases/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T047",
+      "title": "User playtest and release fixes",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T046"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "coordination/playtests/",
+        "coordination/releases/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "T048",
+      "title": "Public release and developer handoff",
+      "lane": "D",
+      "status": "planned",
+      "depends_on": [
+        "T047"
+      ],
+      "owner": null,
+      "branch": null,
+      "base_commit": null,
+      "write_paths": [
+        "docs/",
+        "README.md",
+        "coordination/releases/"
+      ],
+      "integration_commit": null,
+      "evidence": [],
+      "blocker": null
+    }
+  ]
+}
