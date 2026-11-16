@@ -1,0 +1,17 @@
+{
+  "name": "@stopthatguy/test-support",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Deterministic TEST DATA fixtures and consistency checks. Development/test use only; never a production dependency.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "tsx --conditions=stopthatguy-source --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@stopthatguy/shared": "0.0.0"
+  }
+}

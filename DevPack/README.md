@@ -2,7 +2,7 @@
 
 Working title. Version 1.0 · 16 November 2026.
 
-This pack is the source of truth for developing a 3D multiplayer browser chase game with Claude and ChatGPT. It contains specifications, decisions, task definitions, and collaboration records. It contains **no implementation prompts**. T001 added the npm workspace toolchain, a temporary Babylon.js renderer smoke scene and an empty Colyseus server; **no gameplay is implemented** and nothing is deployed.
+This pack is the source of truth for developing a 3D multiplayer browser chase game with Claude and ChatGPT. It contains specifications, decisions, task definitions, and collaboration records. It contains **no implementation prompts**. T001 added the npm workspace toolchain, a temporary Babylon.js renderer smoke scene and an empty Colyseus server; T002 added the shared contracts and test fixtures. **No gameplay is implemented** and nothing is deployed.
 
 ## Local development
 
@@ -16,11 +16,14 @@ npm run dev:client     # Vite dev server: http://localhost:5173/ (run in a secon
 
 The client currently shows a temporary smoke scene (a moving sphere) to prove the renderer starts. It does not connect to the server yet; that arrives with T014. The server has no room types yet (T006).
 
+Workspaces: `apps/client` (Vite + Babylon.js), `apps/server` (Colyseus), `packages/shared` (contracts, config and validation, imported by both apps) and `packages/test-support` (deterministic test fixtures, for development only). In dev, typecheck and tests, `@stopthatguy/shared` is used directly from its TypeScript source through the `stopthatguy-source` export condition, so no prior build is needed. The server's production build and `start:server` use the compiled `packages/shared/dist`, which `npm run build` produces first.
+
 | Command | Purpose |
 |---|---|
-| `npm run typecheck` | `tsc --noEmit` for the client and the server |
-| `npm run build` | Client production bundle → `apps/client/dist/`; server JavaScript → `apps/server/dist/` |
-| `npm run check` | `typecheck`, then `build` |
+| `npm run typecheck` | `tsc --noEmit` for every workspace |
+| `npm test` | Contract validation and fixture consistency tests (Node test runner via tsx) |
+| `npm run build` | `packages/shared/dist`, then the client bundle → `apps/client/dist/` and the server JavaScript → `apps/server/dist/` |
+| `npm run check` | `typecheck`, `test`, then `build` |
 | `npm run start:server` | Run the built server (after `npm run build`) |
 | `npm run preview:client` | Serve the built client at http://localhost:4173/ |
 
@@ -81,4 +84,4 @@ Forty-eight tasks are reviewable work packages, not forty-eight prompts or equal
 
 ## First action
 
-T001 (toolchain) is complete; see [its handoff](coordination/handoffs/T001.md). T002 (shared contracts and fixtures) is next. Check [board.json](tasks/board.json) for the current status before starting work.
+T001 (toolchain) and T002 (shared contracts and fixtures) are complete; see [coordination/handoffs/](coordination/handoffs/). T003 (fixed-step simulation foundation) is next. Check [board.json](tasks/board.json) for the current status before starting work.

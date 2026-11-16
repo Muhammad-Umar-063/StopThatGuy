@@ -69,3 +69,19 @@ Implementation evidence (T001). D010 is now pinned with exact versions in the wo
 | tsx | 4.23.15 | server dev | Watch-mode TS runner; production uses `tsc` output |
 
 Node engine: ≥ 22.12 (Colyseus 0.18 requires ≥ 22). Tested only on Node 24.22.0 / npm 11.19.1. `.npmrc` sets `save-exact=true`. Affected tasks: all; version changes go through the coordinator. Migration impact: none (first install).
+
+### 16 November 2026 — Workflow: single `main` branch
+
+Source: the user. All work is committed directly on `main`. Task branches and worktrees are not used, which overrides the branch-per-task suggestion in PARALLEL_WORK.md. The user pushes to the GitHub remote manually; agents commit locally and never push. Affected tasks: all. With a single checkout, exclusive write paths in ACTIVE_WORK.md remain the conflict guard.
+
+### 16 November 2026 — T002 shared contract choices
+
+Source: implementation (T002). Affected tasks: T003 onward. Migration impact: none (first version, `PROTOCOL_VERSION` 1, `CONFIG_VERSION` "provisional-1").
+
+- **Validation without a schema library.** Runtime checks for client commands are hand-written, stateless functions in `packages/shared/src/validation.ts`. Each one builds a fresh, typed result, so a type change fails to compile until its validator is updated. Unknown fields and unknown commands are rejected. No dependency was added, and the validators are tree-shaken out of the client bundle. Colyseus 0.18 also accepts Standard Schema validators; T006 may wrap these functions if useful.
+- **Protocol limits** (assistant-selected, since the specs left them open): nicknames are 1–16 Unicode code points after trimming and NFC normalization, and may not contain control, format/bidi or line-separator characters. Room codes are 5 characters from `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`, case-insensitive on input. An input frame carries at most 8 unacknowledged edge actions. Sequence and action IDs are uint32. Version labels are 1–32 characters of `[A-Za-z0-9._-]`.
+- **Input semantics.** Action IDs increase strictly per session, and the server acknowledges `lastProcessedActionId`. Clients never send entity IDs; the server picks targets from context. The `resume` command is the reconnect handshake, and the input sequence restarts after it.
+- **Tuning.** `DEFAULT_TUNING` contains only values the specs state. Values they leave open (stamina recovery, capture speed threshold, arrest range, room expiry, abandoned-vehicle return) are omitted until a task needs them.
+- **Package wiring.** Workspace packages expose a `stopthatguy-source` export condition. Vite, tsx and the TypeScript typecheck use the source directly. The server's production build and runtime use the compiled `packages/shared/dist`, built first by `npm run build`. `@stopthatguy/test-support` is source-only and must never be a production dependency.
+- **Tests.** The focused checks use Node's built-in test runner through tsx, which is already pinned and is now a root dev dependency. Adopting Vitest/Playwright (ARCHITECTURE.md) remains a T004 decision.
+- **Open rule.** The contract includes the `spectator` participation state from GAMEPLAY.md, but how a player enters it is not specified. Fixtures exercise the value only; T028/T034 decide the rule.

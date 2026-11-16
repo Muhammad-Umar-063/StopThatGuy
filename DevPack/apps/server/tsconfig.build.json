@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Resolve workspace packages to their compiled dist (built first by the root build script).
+    "customConditions": [],
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true
+  }
+}

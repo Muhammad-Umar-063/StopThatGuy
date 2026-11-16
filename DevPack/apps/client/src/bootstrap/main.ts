@@ -1,4 +1,5 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
+import { PROTOCOL_VERSION } from "@stopthatguy/shared";
 import { createSmokeScene } from "./smokeScene";
 
 const canvas = document.getElementById("renderCanvas");
@@ -15,7 +16,7 @@ function start(): void {
   const scene = createSmokeScene(engine);
 
   scene.onAfterRenderObservable.addOnce(() => {
-    const message = `Babylon.js ${Engine.Version} running (WebGL${engine.webGLVersion}) — temporary T001 smoke scene`;
+    const message = `Babylon.js ${Engine.Version} running (WebGL${engine.webGLVersion}), protocol v${PROTOCOL_VERSION} — temporary T001 smoke scene`;
     document.documentElement.dataset.renderer = "running";
     setStatus(message);
     console.info(`[client] ${message}`);

@@ -4,17 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file-if-exists=.env src/bootstrap/main.ts",
-    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --conditions=stopthatguy-source --env-file-if-exists=.env src/bootstrap/main.ts",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node --env-file-if-exists=.env dist/bootstrap/main.js",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@colyseus/core": "0.18.28",
     "@colyseus/schema": "5.0.48",
-    "@colyseus/ws-transport": "0.18.5"
-  },
-  "devDependencies": {
-    "tsx": "4.23.15"
+    "@colyseus/ws-transport": "0.18.5",
+    "@stopthatguy/shared": "0.0.0"
   }
 }

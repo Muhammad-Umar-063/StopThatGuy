@@ -1,6 +1,6 @@
-# Shared contracts — freeze in T002
+# Shared contracts — frozen in T002 (protocol v1)
 
-This file describes responsibilities and required fields; T002 creates actual TypeScript definitions and runtime schemas. No dependency-specific API signatures are promised here. Only the coordinator merges contract changes during parallel work.
+This file describes responsibilities and required fields. The TypeScript definitions and runtime validation live in `packages/shared` (`@stopthatguy/shared`); see "Implemented interfaces (T002)" at the end for where each part lives and the names that were settled. Only the coordinator merges contract changes during parallel work.
 
 ## Identity and versioning
 
@@ -40,7 +40,7 @@ Nodes: ID, world position, type. Directed edges: source/target, centerline, leng
 
 ## Simulation interface responsibilities
 
-createInitialState(config, world, seed); step(state, validatedInputs, fixedDelta); queryLegalActions(state, player); collectEvents(); readSerializableState(). Names may be refined once in T002/T003. Shared movement exposes a pure function for prediction. The server adapter owns serialization and session mapping; simulation never accepts network connections.
+createInitialState(setup); step(state, validatedInputs, fixedDelta); queryLegalActions(state, player); collectEvents(); readSerializableState(). Names may be refined once in T002/T003. Shared movement exposes a pure function for prediction. The server adapter owns serialization and session mapping; simulation never accepts network connections.
 
 ## UI/presentation adapter
 
@@ -49,3 +49,31 @@ Required read-only view model: connection state, lobby/players, local player, ro
 ## Ownership and evolution
 
 T002 owns initial definitions. Later tasks request minimal compatible extensions through the coordinator; code against merged types. Breaking changes require a new protocol version and updates to fixtures, server, client and tests in a coordinated task. Never introduce a local copy of a shared enum/type to bypass a conflict.
+
+## Implemented interfaces (T002)
+
+All exports come from `@stopthatguy/shared` (`packages/shared/src`). Units are suffixed (`Ms`, `M`, `Mps`). Coordinates use the Babylon.js left-handed, Y-up convention, with yaw 0 = +Z and positive yaw toward +X (`geometry.ts`).
+
+| Area | Module | Main exports |
+|---|---|---|
+| IDs, versions | `ids.ts`, `versions.ts` | Branded `PlayerId`, `VehicleId`, `EdgeId`, …; `Tick`, `ActionId`, `EventId`; `PROTOCOL_VERSION`, `WORLD_SCHEMA_VERSION`, `VersionInfo`, `versionMismatches` |
+| Enumerations | `states.ts` | `MatchPhase`, `MatchMode`, `ConnectionStatus`, `ParticipationState`, `LocomotionState`, vehicle/robber/police/interactable states (each with a runtime array) |
+| Configuration | `config.ts` | `PROTOCOL_LIMITS` (wire bounds; change ⇒ protocol bump), `DEFAULT_TUNING` + `CONFIG_VERSION` (provisional documented values only) |
+| Input | `input.ts` | `InputFrame`, `EdgeAction`, `EDGE_ACTION_KINDS`, `NEUTRAL_HELD_CONTROLS` |
+| Commands | `commands.ts` | `CreateRoomOptions`, `JoinRoomOptions`, `ClientCommand`, `COMMAND_PHASES`, `HOST_ONLY_COMMANDS`, `RoomErrorCode`, `ServerMessage` |
+| State | `entities.ts`, `results.ts` | `MatchRecord`, `PlayerRecord`, `RobberRecord`, `VehicleRecord`, `PoliceRecord`, `InteractableRecord`, `AuthoritativeSnapshot`, `MatchResult` |
+| Events | `events.ts` | `GameEvent` (payload + `id` + `tick`), `GAME_EVENT_TYPES` |
+| World | `world.ts` | `WorldData`, `RouteNode`, `RouteEdge`, `Junction`, `ColliderPrimitive`, `Zone`, `Spawn`, `AuthoredRoute`, `WorldValidationReport` |
+| Simulation boundary | `simulation.ts` | `Simulation<TState>`, `SimulationSetup`, `ValidatedPlayerInput`, `LegalActions` |
+| UI | `ui.ts` | `UiViewModel` (with `dataSource: "server" \| "fixture"`), `UiIntent`, `UiAdapter` |
+| Validation | `validation.ts` | `parseClientCommand`, `parseCreateRoomOptions`, `parseJoinRoomOptions`, `parseInputFrame`, `parseNickname`, `parseRoomCode` → `ValidationResult<T>` |
+
+Settled names and rules:
+
+- Input frames use `sequence`, a uint32 that increases strictly per session and restarts after the `resume` handshake. Edge actions carry an `id` (uint32 ≥ 1) that increases strictly per session. Each frame lists its actions in ascending, unique `id` order, at most 8 per frame. Acknowledgement comes through `PlayerRecord.lastProcessedInputSequence` and `lastProcessedActionId`.
+- Clients never send entity IDs. The server chooses capture, sabotage and interaction targets from context. Validation rejects unknown fields and unknown command types, so a client cannot submit positions, ownership, hits, rewards or winners.
+- The "reconnect handshake" is the `resume` command, which re-checks `VersionInfo`. Reconnect credentials stay inside the transport and never appear in contract messages.
+- `createInitialState` takes a single `SimulationSetup` (tuning, world, seed, mode, participants). `step` advances one fixed step and mutates the state. `collectEvents` drains the events emitted since the last call.
+- A junction belongs to one incoming edge, and its branch sides are `left`, `right` or `forward`. A dead-end turnaround is a `forward` branch. Lane offsets are listed left to right, with positive values to the right of travel.
+- Validation is stateless. Cross-frame monotonicity, rate limits, phase and host permissions, ranges, speeds, cooldowns and vehicle availability belong to the server and simulation tasks.
+- Deterministic test data lives in `@stopthatguy/test-support` (`packages/test-support/src/fixtures`), which provides `FIXTURE_WORLD`, `FIXTURE_SNAPSHOTS`, `FIXTURE_VIEWS`, event sequences, command samples and consistency checks. It is for development and tests only.

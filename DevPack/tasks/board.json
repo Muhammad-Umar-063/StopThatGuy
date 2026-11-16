@@ -51,19 +51,39 @@
       "id": "T002",
       "title": "Shared contracts and fixtures",
       "lane": "D",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T001"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (coordinator, Claude Code)",
+      "branch": "main",
+      "base_commit": "70d675c",
       "write_paths": [
         "packages/shared/",
-        "packages/test-support/src/fixtures/"
+        "packages/test-support/package.json",
+        "packages/test-support/tsconfig.json",
+        "packages/test-support/src/index.ts",
+        "packages/test-support/src/fixtures/",
+        "packages/test-support/test/",
+        "package.json",
+        "package-lock.json",
+        "apps/*/package.json",
+        "apps/*/tsconfig*",
+        "apps/client/vite.config.ts",
+        "apps/*/src/bootstrap/main.ts",
+        "docs/CONTRACTS.md",
+        "docs/DECISIONS.md",
+        "README.md",
+        "CHANGELOG.md"
       ],
       "integration_commit": null,
-      "evidence": [],
+      "evidence": [
+        "coordination/handoffs/T002.md",
+        "npm ci (clean, lockfile) OK",
+        "npm run check (typecheck + 97 tests + build) exit 0",
+        "dev (source) and production (dist) resolution verified for client and server; /health reports versions",
+        "client dev + preview in headless Chrome 154: protocol v1 shown, no console errors"
+      ],
       "blocker": null
     },
     {

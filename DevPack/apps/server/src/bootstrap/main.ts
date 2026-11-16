@@ -1,5 +1,6 @@
 import { createEndpoint, createRouter, defineServer } from "@colyseus/core";
 import { WebSocketTransport } from "@colyseus/ws-transport";
+import { CONFIG_VERSION, PROTOCOL_VERSION } from "@stopthatguy/shared";
 import { readServerConfig } from "./config.js";
 
 const config = readServerConfig(process.env);
@@ -10,7 +11,9 @@ const server = defineServer({
   greet: false,
   rooms: {},
   routes: createRouter({
-    health: createEndpoint("/health", { method: "GET" }, async (ctx) => ctx.json({ status: "ok" })),
+    health: createEndpoint("/health", { method: "GET" }, async (ctx) =>
+      ctx.json({ status: "ok", protocolVersion: PROTOCOL_VERSION, configVersion: CONFIG_VERSION }),
+    ),
   }),
 });
 

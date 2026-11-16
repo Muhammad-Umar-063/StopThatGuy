@@ -27,3 +27,10 @@
 - Added TypeScript configuration, Vite client with a temporary Babylon.js renderer smoke scene, and a Colyseus server with a `/health` route and no rooms.
 - Added root `dev:client`, `dev:server`, `build`, `typecheck`, `check`, `start:server` and `preview:client` commands, a server `.env.example`, and setup instructions in README.md.
 - No gameplay, networking between client and server, or deployment.
+
+## 2026-11-16 — T002 shared contracts and fixtures
+
+- Added `@stopthatguy/shared`: IDs and versions, phase/participation/locomotion enumerations, input frames, room commands, authoritative records, results, events, world data, the simulation boundary, UI view models/intents, protocol limits and provisional tuning.
+- Added stateless runtime validation for join options and client commands. It rejects malformed, oversized, non-finite and unknown data, and any client-declared outcomes.
+- Added `@stopthatguy/test-support` with deterministic fixtures (world, lobby/chase/vehicle/wanted/arrest/result snapshots, event streams, UI views, command samples), consistency checks, and 97 focused tests (`npm test`).
+- Wired shared into the client and server (source in dev, compiled output for the production server). `/health` now reports protocol and config versions. Recorded the main-branch-only workflow.
