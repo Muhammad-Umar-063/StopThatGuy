@@ -3,7 +3,7 @@
 Updated: 16 November 2026.
 
 Coordinator: Chat D (Claude Code).
-Repository / remote: local Git repository (root is the parent of this pack folder); no remote.
+Repository / remote: Git root is the parent of this pack folder; remote `origin` on GitHub. The user pushes manually; agents do not push.
 Integrated baseline commit: 9a6dd22 on main (T001 toolchain).
 Current gate: foundation (T001 done; T002 ready, unassigned).
 
