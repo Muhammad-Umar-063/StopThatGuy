@@ -17,7 +17,7 @@
       "id": "T001",
       "title": "Repository and toolchain setup",
       "lane": "D",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [],
       "owner": "Chat D (coordinator, Claude Code)",
       "branch": "task/T001-toolchain",
@@ -36,13 +36,14 @@
         "apps/server/.env.example",
         "README.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "9a6dd22",
       "evidence": [
         "coordination/handoffs/T001.md",
         "npm ci (clean, lockfile) OK",
         "npm run check (typecheck + build) exit 0",
         "server /health OK in dev and built modes",
-        "client renders in headless Chrome 154 (dev + preview), no console errors"
+        "client renders in headless Chrome 154 (dev + preview), no console errors",
+        "integrated into main at 9a6dd22 (fast-forward); npm ci + npm run check re-run on main, exit 0"
       ],
       "blocker": null
     },
@@ -50,7 +51,7 @@
       "id": "T002",
       "title": "Shared contracts and fixtures",
       "lane": "D",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T001"
       ],

@@ -4,19 +4,19 @@ Updated: 16 November 2026.
 
 Coordinator: Chat D (Claude Code).
 Repository / remote: local Git repository (root is the parent of this pack folder); no remote.
-Integrated baseline commit: 8d4fd1a (documentation only).
-Current gate: T001 toolchain setup in progress.
+Integrated baseline commit: 9a6dd22 on main (T001 toolchain).
+Current gate: foundation (T001 done; T002 ready, unassigned).
 
 ## Active claims
 
 | Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
 |---|---|---|---|---|---|
-| T001 | Chat D (coordinator) | task/T001-toolchain | 8d4fd1a | package.json, package-lock.json, .npmrc, .gitignore, tsconfig*, apps/*/package.json, apps/*/tsconfig*, apps/*/src/bootstrap/, apps/client/index.html, apps/client/vite.config.ts, apps/server/.env.example, README.md | in_review |
+| None | — | — | — | — | T001 integrated at 9a6dd22; claim released |
 
 ## Ready queue
 
-- None while T001 is in progress.
-- T002–T048 — Planned; wait for recorded dependencies and ownership.
+- T002 — Shared contracts and fixtures (dependency T001 integrated at 9a6dd22). Not started; needs an owner claim.
+- T003–T048 — Planned; wait for recorded dependencies and ownership.
 
 ## Pending decisions/evidence
 
