@@ -4,19 +4,19 @@ Updated: 16 November 2026.
 
 Coordinator: Chat D (Claude Code).
 Repository / remote: Git root is the parent of this pack folder; remote `origin` on GitHub. The user pushes manually; agents do not push.
-Integrated baseline commit: 9a6dd22 on main (T001 toolchain).
-Current gate: foundation (T001 done; T002 in progress).
+Integrated baseline commit: eb090b0 on main (T001 toolchain, T002 shared contracts).
+Current gate: foundation (T001–T002 done; T003 ready, unassigned).
 
 ## Active claims
 
 | Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
 |---|---|---|---|---|---|
-| T002 | Chat D (coordinator) | main (no task branches, per user) | 70d675c | packages/shared/; packages/test-support/{package.json,tsconfig.json,src/index.ts,src/fixtures/,test/} (leased from T004 scope); root package.json + lockfile; apps/*/package.json, apps/*/tsconfig*, apps/client/vite.config.ts, apps/*/src/bootstrap/main.ts (shared wiring only); docs/CONTRACTS.md, DECISIONS.md, README.md, CHANGELOG.md | in_review |
+| None | — | — | — | — | T002 integrated at eb090b0; claim released |
 
 ## Ready queue
 
-- None while T002 is in progress.
-- T003–T048 — Planned; wait for recorded dependencies and ownership.
+- T003 — Fixed-step simulation foundation (dependency T002 integrated at eb090b0). Not started; needs an owner claim.
+- T004–T048 — Planned; wait for recorded dependencies and ownership.
 
 ## Pending decisions/evidence
 

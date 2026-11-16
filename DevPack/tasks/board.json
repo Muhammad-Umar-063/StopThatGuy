@@ -51,7 +51,7 @@
       "id": "T002",
       "title": "Shared contracts and fixtures",
       "lane": "D",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T001"
       ],
@@ -76,13 +76,14 @@
         "README.md",
         "CHANGELOG.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "eb090b0",
       "evidence": [
         "coordination/handoffs/T002.md",
         "npm ci (clean, lockfile) OK",
         "npm run check (typecheck + 97 tests + build) exit 0",
         "dev (source) and production (dist) resolution verified for client and server; /health reports versions",
-        "client dev + preview in headless Chrome 154: protocol v1 shown, no console errors"
+        "client dev + preview in headless Chrome 154: protocol v1 shown, no console errors",
+        "committed on main at eb090b0 after clean npm ci + npm run check (exit 0)"
       ],
       "blocker": null
     },
@@ -90,7 +91,7 @@
       "id": "T003",
       "title": "Fixed-step simulation foundation",
       "lane": "A",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T002"
       ],
