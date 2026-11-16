@@ -2,7 +2,7 @@
   "schema_version": 1,
   "updated": "2026-11-16",
   "project": "Stop That Guy!",
-  "implementation_started": false,
+  "implementation_started": true,
   "status_values": [
     "planned",
     "ready",
@@ -17,20 +17,33 @@
       "id": "T001",
       "title": "Repository and toolchain setup",
       "lane": "D",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (coordinator, Claude Code)",
+      "branch": "task/T001-toolchain",
+      "base_commit": "8d4fd1a",
       "write_paths": [
         "package.json",
         "package-lock.json",
-        "apps/*/package.json",
+        ".npmrc",
+        ".gitignore",
         "tsconfig*",
-        "apps/*/src/bootstrap/"
+        "apps/*/package.json",
+        "apps/*/tsconfig*",
+        "apps/*/src/bootstrap/",
+        "apps/client/index.html",
+        "apps/client/vite.config.ts",
+        "apps/server/.env.example",
+        "README.md"
       ],
       "integration_commit": null,
-      "evidence": [],
+      "evidence": [
+        "coordination/handoffs/T001.md",
+        "npm ci (clean, lockfile) OK",
+        "npm run check (typecheck + build) exit 0",
+        "server /health OK in dev and built modes",
+        "client renders in headless Chrome 154 (dev + preview), no console errors"
+      ],
       "blocker": null
     },
     {

@@ -2,20 +2,20 @@
 
 Updated: 16 November 2026.
 
-Coordinator: unassigned.
-Repository / remote: not created by this documentation task.
-Integrated baseline commit: not yet available.
-Current gate: documentation prepared; implementation not started.
+Coordinator: Chat D (Claude Code).
+Repository / remote: local Git repository (root is the parent of this pack folder); no remote.
+Integrated baseline commit: 8d4fd1a (documentation only).
+Current gate: T001 toolchain setup in progress.
 
 ## Active claims
 
 | Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
 |---|---|---|---|---|---|
-| None | — | — | — | — | No coding work started |
+| T001 | Chat D (coordinator) | task/T001-toolchain | 8d4fd1a | package.json, package-lock.json, .npmrc, .gitignore, tsconfig*, apps/*/package.json, apps/*/tsconfig*, apps/*/src/bootstrap/, apps/client/index.html, apps/client/vite.config.ts, apps/server/.env.example, README.md | in_review |
 
 ## Ready queue
 
-- T001 — Repository and toolchain setup.
+- None while T001 is in progress.
 - T002–T048 — Planned; wait for recorded dependencies and ownership.
 
 ## Pending decisions/evidence

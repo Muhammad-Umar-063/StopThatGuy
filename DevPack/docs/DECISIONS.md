@@ -51,3 +51,21 @@ Append dated entries with the reason, source (user or implementation evidence), 
 ### 16 November 2026 — Physics option clarified
 
 User asked whether the project uses Three.js and offered cannon-es if needed. Current rendering choice remains Babylon.js; cannon-es is an allowed option for a demonstrated physics need. No game dependencies have been installed.
+
+### 16 November 2026 — T001 toolchain versions pinned
+
+Implementation evidence (T001). D010 is now pinned with exact versions in the workspace manifests and the root `package-lock.json`. Versions were selected from npm registry metadata on 16 November 2026 (latest releases with satisfied peer/engine ranges) and verified by clean install, typecheck, build, and client/server startup.
+
+| Package | Version | Where | Note |
+|---|---|---|---|
+| typescript | 7.0.2 | root dev | Native TS 7 compiler; typechecks Babylon and Colyseus declarations |
+| @types/node | 22.20.5 | root dev | Matches the minimum supported Node major; also satisfies Vite's peer |
+| @babylonjs/core | 9.37.0 | client | ES module deep imports |
+| vite | 8.3.8 | client dev | Requires Node ≥ 20.19 / ≥ 22.12 |
+| @colyseus/sdk | 0.18.10 | client | Pinned for server compatibility; first used by T014 |
+| @colyseus/core | 0.18.28 | server | Used directly instead of the `colyseus` meta-package, which pulls in auth/monitor/playground/Redis |
+| @colyseus/ws-transport | 0.18.5 | server | Pulls in express 5.3.0 as a required peer (lockfile) |
+| @colyseus/schema | 5.0.48 | server | Pinned for T006 adapters |
+| tsx | 4.23.15 | server dev | Watch-mode TS runner; production uses `tsc` output |
+
+Node engine: ≥ 22.12 (Colyseus 0.18 requires ≥ 22). Tested only on Node 24.22.0 / npm 11.19.1. `.npmrc` sets `save-exact=true`. Affected tasks: all; version changes go through the coordinator. Migration impact: none (first install).

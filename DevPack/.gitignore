@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Local environment (keep the committed .env.example files)
+.env
+.env.*
+!.env.example
+
+# Logs and caches
+npm-debug.log*
+*.log
+.vite/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/

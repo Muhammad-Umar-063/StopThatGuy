@@ -1,0 +1,26 @@
+{
+  "name": "stop-that-guy",
+  "private": true,
+  "description": "Stop That Guy! — 3D multiplayer browser chase game (npm workspaces root)",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev:client": "npm run dev --workspace @stopthatguy/client",
+    "dev:server": "npm run dev --workspace @stopthatguy/server",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run typecheck && npm run build",
+    "start:server": "npm run start --workspace @stopthatguy/server",
+    "preview:client": "npm run preview --workspace @stopthatguy/client"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "7.0.2"
+  }
+}
