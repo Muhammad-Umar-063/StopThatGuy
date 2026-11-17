@@ -1,0 +1,4 @@
+{
+  "sourceRoots": ["lobby", "menu"],
+  "ownership": { "Select/Listbox": "native" }
+}
