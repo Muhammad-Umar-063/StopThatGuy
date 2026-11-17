@@ -40,11 +40,14 @@ loader, compression decoder or serializer dependency is used.
 The shared manifest regression now validates the repository's actual status and
 content, with a separate synthetic test for empty-development data.
 
-The browser runner starts its own server on **5208** with strict port selection,
+The browser runner starts its own server on **5208** by default (override with
+`ASSET_BROWSER_PORT`) with strict port selection,
 and stops only its own server/browser. Default mode builds the standalone demo
 into ignored `scripts/assets/.demo-dist/` and serves that production bundle;
-`--dev` serves source. Both record actual browser JSON/screenshots in
-`assets/evidence/`. A missing loader/browser or a busy port fails, never skips.
+`--dev` serves source. Both record actual browser JSON/screenshots in ignored
+`test-results/assets/`, so verification does not modify another task's tracked
+evidence. The asset owner may set `ASSET_EVIDENCE_DIR=assets/evidence` to refresh
+curated evidence deliberately. A missing loader/browser or a busy port fails, never skips.
 Chrome/Chromium must be installed (or set `CHROME_PATH`). SwiftShader evidence is
 functional rendering evidence only, not a real-GPU or Android benchmark.
 Both browser modes and all 14 focused asset tests pass with the locked install.

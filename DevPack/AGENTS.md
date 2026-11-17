@@ -26,6 +26,23 @@ Implement assigned tasks and required fixes within their scope. Do not implement
 
 One chat is the coordinator/integrator. It alone updates tasks/board.json, ACTIVE_WORK.md, the task catalog, shared dependency versions, and project-wide decisions during parallel work. Workers return change notes for these files. Shared contracts and simulation configuration changes require a coordinated migration; do not fork duplicate types.
 
+## Codex chat coordination
+
+For the user-authorized next batch T009–T012, Chat D/T012 is the sole coordinator;
+Chats A/T009, B/T010 and C/T011 implement in separate worktrees. The user authorizes
+direct task messages and replies for routine ownership/dependency coordination.
+Each launch prompt supplies that authorization directly. Verify actual chat IDs
+against their current task assignment and record them in main's
+coordination/CHAT_REGISTRY.md; do not infer a destination from an old chat title.
+Use available chat tools to route requests and decisions without user relaying.
+If tools cannot reach/read a chat, report the actual limitation. Never claim
+successful delivery or approval without evidence, and do not poll continuously.
+Chat D may grant routine exclusive file leases within the assigned scope and
+must record the exact file and owning checkout. This does not grant OS/network
+permissions, authorize Git writes, or make another branch's code available.
+Escalate unavailable access, destructive actions, costs and product scope changes
+to the user. Main tracking edits remain serial; workers never change them.
+
 ## Implementation rules
 
 - Keep rendering, simulation, room transport, UI, and content separate as defined in ARCHITECTURE.md.
@@ -50,7 +67,7 @@ A task is done only when its acceptance checks pass, changes are integrated, and
 ## Git workflow
 
 Current user direction (17 November 2026, after worktree setup):
-- Use the existing assigned task worktree and branch for implementation. T005–T008 have separate worktrees listed in docs/PARALLEL_WORK.md. The main checkout is for coordination and reviewed integration. This supersedes the earlier single-main rule.
+- Use the existing assigned task worktree and branch for implementation. The current batch has separate worktrees listed in docs/PARALLEL_WORK.md. The main checkout is for coordination and reviewed integration. This supersedes the earlier single-main rule.
 - Before editing, verify `pwd`, `git rev-parse --show-toplevel`, `git branch --show-current` and `git status --short`. A multi-folder VS Code window does not bind a chat to a folder. Use the assigned absolute working directory for every command; do not switch branches, create extra worktrees, or edit another checkout.
 - Do not stage, commit, amend, push, merge, rebase or tag. Leave changes uncommitted for the user to review and commit; read-only Git commands are fine. The existing task branches/worktrees were explicitly authorized by the user.
 - Workers write only their claimed paths and their own coordination/handoffs/Txxx.md. Read current claims from the main checkout's coordination/ACTIVE_WORK.md and tasks/board.json; task-worktree copies are snapshots. Only the coordinator updates shared tracking in main. Report needed shared-file edits rather than copying them into every worktree.

@@ -139,3 +139,14 @@ T005's provisional world limits (15% wheeled grade, 80% foot grade, 0.3 m ground
 tolerance) remain tuning defaults, not measured realism. Missing escape routes
 are a documented blockout warning until later map/robber work. Keyboard and asset
 tests now run in standard verification; separate browser gates also run in CI.
+
+### 17 November 2026 — Batch 2 Codex coordination and setup
+
+The user is closing Claude and moving all four next tasks to Codex, with direct
+inter-chat coordination for routine permissions. T012/Chat D owns coordination;
+T009/A, T010/B, T011/C own separate worktrees. Launch prompts include explicit
+permission to message and reply, and main CHAT_REGISTRY records actual IDs.
+Tool delivery and OS permissions remain real constraints; no automatic message
+access is assumed. Batch-1 local integration is complete; the user chose to push
+personally after HTTPS authentication was unavailable in this session. Batch-2
+implementation retains manual commits/merges. Old worktrees are preserved.

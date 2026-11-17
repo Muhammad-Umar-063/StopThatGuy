@@ -10,7 +10,7 @@ import { build, createServer, preview } from 'vite';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const mode = process.argv.includes('--dev') ? 'dev' : 'built';
-const results = resolve(root, 'assets/evidence');
+const results = resolve(root, process.env.ASSET_EVIDENCE_DIR ?? 'test-results/assets');
 const outDir = resolve(root, 'scripts/assets/.demo-dist');
 const assetBrowserPort = Number(process.env.ASSET_BROWSER_PORT ?? 5208);
 assert.ok(Number.isInteger(assetBrowserPort) && assetBrowserPort > 0 && assetBrowserPort <= 65535, 'ASSET_BROWSER_PORT must be a valid TCP port');

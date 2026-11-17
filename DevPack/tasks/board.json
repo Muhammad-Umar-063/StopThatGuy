@@ -114,7 +114,7 @@
       "integration_commit": "50d552d",
       "evidence": [
         "coordination/handoffs/T003.md",
-        "npm run check (typecheck → build → test) exit 0: simulation 30/30, shared/fixtures 97/97",
+        "npm run check (typecheck \u2192 build \u2192 test) exit 0: simulation 30/30, shared/fixtures 97/97",
         "replay equality, seeded choice, RNG reference, tick/phase schedule, invalid delta/input, exactly-once actions, event drain, isolation and immutability tests",
         "compiled dist resolves under plain Node and matches the source build",
         "dev/built server /health and client dev/preview in headless Chrome 154 OK",
@@ -166,7 +166,7 @@
       "id": "T005",
       "title": "First street and route blockout",
       "lane": "D",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T004"
       ],
@@ -183,21 +183,23 @@
         "package-lock.json (lease: packages/world workspace entry only)",
         "coordination/handoffs/T005.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "ff78e06",
       "evidence": [
         "coordination/handoffs/T005.md (in .worktrees/T005)",
         "npm ci in .worktrees/T005/DevPack: 115 packages, 0 vulnerabilities (lockfile in sync)",
         "npm run check exit 0: simulation 30/30, test-support 155/155, world 14/14, root tests 5/5, validate (first-street-1: 0 errors, 1 expected warning), smoke passed",
         "real simulation runs 6 players on first-street-1 for 400 ticks; validator geometry matches simulation poseOnRoute to 1e-9",
-        "git diff --check clean; uncommitted on task/T005-street-graph"
+        "git diff --check clean; uncommitted on task/T005-street-graph",
+        "coordination/integration/BATCH_1.md",
+        "Combined integration ff78e06: clean install, 277 tests, smoke, keyboard and asset browser gates passed"
       ],
-      "blocker": "awaiting user review, manual commit and integration"
+      "blocker": null
     },
     {
       "id": "T006",
       "title": "Room and session lifecycle",
       "lane": "A",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "T004"
       ],
@@ -213,15 +215,18 @@
         "apps/server/tsconfig.build.json (lease: exclude test files from the production build only)",
         "coordination/handoffs/T006.md"
       ],
-      "integration_commit": null,
-      "evidence": [],
-      "blocker": "partial: package-lock.json lease (held by T005) and the runtime world source (@stopthatguy/world, T005) transfer only after T005 is integrated into main"
+      "integration_commit": "ff78e06",
+      "evidence": [
+        "coordination/integration/BATCH_1.md",
+        "Combined integration ff78e06: clean install, 277 tests, smoke, keyboard and asset browser gates passed"
+      ],
+      "blocker": null
     },
     {
       "id": "T007",
       "title": "Keyboard input and action mapping",
       "lane": "B",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "T004"
       ],
@@ -232,15 +237,18 @@
         "apps/client/src/input/keyboard/",
         "coordination/handoffs/T007.md"
       ],
-      "integration_commit": null,
-      "evidence": [],
+      "integration_commit": "ff78e06",
+      "evidence": [
+        "coordination/integration/BATCH_1.md",
+        "Combined integration ff78e06: clean install, 277 tests, smoke, keyboard and asset browser gates passed"
+      ],
       "blocker": null
     },
     {
       "id": "T008",
       "title": "Asset workflow and provenance",
       "lane": "C",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "T004"
       ],
@@ -255,25 +263,31 @@
         "apps/client/public/assets/",
         "coordination/handoffs/T008.md"
       ],
-      "integration_commit": null,
-      "evidence": [],
-      "blocker": "partial: approved dependency @babylonjs/loaders 9.37.0 (+ required peer babylonjs-gltf2interface 9.37.0) is added by the coordinator in main after T005 integration; until it reaches task/T008-asset-pipeline, only a local --no-save install is allowed and T008 cannot be in_review"
+      "integration_commit": "ff78e06",
+      "evidence": [
+        "coordination/integration/BATCH_1.md",
+        "Combined integration ff78e06: clean install, 277 tests, smoke, keyboard and asset browser gates passed"
+      ],
+      "blocker": null
     },
     {
       "id": "T009",
       "title": "Road movement, lanes and stamina",
       "lane": "A",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T005",
         "T007"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "Chat A (Codex; reserved)",
+      "branch": "task/T009-road-movement",
       "base_commit": null,
       "write_paths": [
         "packages/simulation/src/movement/",
-        "packages/simulation/src/collision/"
+        "packages/simulation/src/collision/",
+        "packages/simulation/test/movement.test.ts",
+        "packages/simulation/test/collision.test.ts",
+        "coordination/handoffs/T009.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -283,16 +297,17 @@
       "id": "T010",
       "title": "Automatic third-person camera",
       "lane": "B",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T005",
         "T007"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "Chat B (Codex; reserved)",
+      "branch": "task/T010-follow-camera",
       "base_commit": null,
       "write_paths": [
-        "apps/client/src/camera/"
+        "apps/client/src/camera/",
+        "coordination/handoffs/T010.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -302,19 +317,20 @@
       "id": "T011",
       "title": "Finished street visual slice",
       "lane": "C",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T005",
         "T008"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "Chat C (Codex; reserved)",
+      "branch": "task/T011-street-visuals",
       "base_commit": null,
       "write_paths": [
         "apps/client/src/render/environment/",
         "apps/client/public/assets/environment/",
         "assets-source/environment/",
-        "assets/manifest-environment.json"
+        "assets/manifest-environment.json",
+        "coordination/handoffs/T011.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -324,17 +340,18 @@
       "id": "T012",
       "title": "Keyboard-accessible lobby screens",
       "lane": "D",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T006",
         "T007"
       ],
-      "owner": null,
-      "branch": null,
+      "owner": "Chat D (Codex; reserved)",
+      "branch": "task/T012-lobby-ui",
       "base_commit": null,
       "write_paths": [
         "apps/client/src/ui/lobby/",
-        "apps/client/src/ui/menu/"
+        "apps/client/src/ui/menu/",
+        "coordination/handoffs/T012.md"
       ],
       "integration_commit": null,
       "evidence": [],

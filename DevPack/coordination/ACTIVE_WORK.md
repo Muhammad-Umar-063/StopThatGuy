@@ -2,41 +2,71 @@
 
 Updated: 17 November 2026.
 
-Coordinator: Chat D (Claude Code).
-Repository / remote: Git root is the parent of this pack folder; remote `origin` on GitHub. The user reviews, commits and pushes manually. Agents run no Git write commands and leave changes uncommitted (AGENTS.md "Git workflow", 17 November 2026).
-Integrated baseline commit: 46f57d4 on main (T001–T004 implementation through 24e07e2, plus completed tracking). All four prepared task worktrees start at 46f57d4.
-Current gate: parallel batch 1. T005 in review (Chat D; awaiting user review, manual commit and integration); T006 in progress (Chat A); T008 in progress (Chat C); T007 reserved for Chat B and not yet started. Coordination edits in main remain serial.
+Coordinator: Codex integration/setup chat until launch handoff to Chat D (T012).
+The user reports all previous chats finished and is closing Claude. Do not resume
+T005–T008 implementation or create a competing coordinator.
 
-This file and tasks/board.json in `/home/umar/Downloads/StopThatGuy/DevPack/` are the live coordination records. Copies in task worktrees are snapshots; workers read main and return updates in their own handoff. The prepared task-to-worktree map and write scopes are in docs/PARALLEL_WORK.md. Setup does not assign owners or start tasks.
+Verified implementation baseline: `ff78e06` on main. T001–T008 are integrated;
+batch 1 acceptance and resolved blockers: coordination/integration/BATCH_1.md.
+The user authorized local commits/integration/setup for this operation, then chose
+to push to GitHub personally. Future feature chats leave edits uncommitted.
 
-## Active claims
+## Batch 2 reservations
 
-| Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
-|---|---|---|---|---|---|
-| T005 | Chat D (coordinator; T005 implementer) | task/T005-street-graph, `.worktrees/T005` | 46f57d4 | packages/world/; leases: packages/test-support/src/validation/world.ts, packages/test-support/src/fixtures/invalid-worlds.ts, scripts/validate-data.ts, tests/street-world.test.ts, package.json (root build order only), package-lock.json (packages/world workspace entry only); coordination/handoffs/T005.md | in_review: awaiting user review, manual commit and integration |
-| T006 | Chat A | task/T006-room-lifecycle, `.worktrees/T006` | 46f57d4 | apps/server/src/rooms/, apps/server/src/adapters/, apps/server/src/validation/; leases (17 Nov): apps/server/src/bootstrap/main.ts, apps/server/package.json, apps/server/tsconfig.build.json (exclude tests from the build only); queued: package-lock.json after T005 integration; coordination/handoffs/T006.md | in_progress (lockfile and runtime world wiring wait for T005 integration) |
-| T007 | Chat B (reserved) | task/T007-keyboard-input, `.worktrees/T007` | 46f57d4 | apps/client/src/input/keyboard/; coordination/handoffs/T007.md | reserved, not started |
-| T008 | Chat C | task/T008-asset-pipeline, `.worktrees/T008` | 46f57d4 | assets/, assets-source/, scripts/assets/, apps/client/src/render/assets/, apps/client/public/assets/; coordination/handoffs/T008.md | in_progress (approved loaders dependency arrives from main after T005 integration) |
+These are prepared assignments, not running implementations. Worktrees are created
+from the committed batch-2 setup on top of ff78e06. Chat D records each actual
+HEAD as base_commit and the chat ID at launch before changing status to in_progress.
+Start Chat D/T012 first so it can register the coordinator and worker assignments.
 
-## Ready queue
+| Task | Owner | Branch / worktree | Exclusive paths relative to DevPack | Status |
+|---|---|---|---|---|
+| T009 | Chat A (Codex) | `task/T009-road-movement` / `.worktrees/T009` | `packages/simulation/src/movement/`; `packages/simulation/src/collision/`; `packages/simulation/test/movement.test.ts`; `packages/simulation/test/collision.test.ts`; `coordination/handoffs/T009.md` | ready; reserved |
+| T010 | Chat B (Codex) | `task/T010-follow-camera` / `.worktrees/T010` | `apps/client/src/camera/`; `coordination/handoffs/T010.md` | ready; reserved |
+| T011 | Chat C (Codex) | `task/T011-street-visuals` / `.worktrees/T011` | `apps/client/src/render/environment/`; `apps/client/public/assets/environment/`; `assets-source/environment/`; `assets/manifest-environment.json`; `coordination/handoffs/T011.md` | ready; reserved |
+| T012 | Chat D (Codex) | `task/T012-lobby-ui` / `.worktrees/T012` | `apps/client/src/ui/lobby/`; `apps/client/src/ui/menu/`; `coordination/handoffs/T012.md` | ready; reserved |
 
-- T006, T007 and T008 are ready and reserved for Chats A, B and C (see claims above). Each worker verifies its worktree, branch and these paths before editing; reservation is not a start.
-- Tests belong inside each task's claimed paths unless separately leased. Coordinator-controlled and not leased: packages/shared/, other packages/test-support/ files, packages/simulation/, apps/*/package.json, tsconfig*, apps/*/src/bootstrap/, .github/, docs and instructions. Root package.json and package-lock.json are leased to T005 for the listed narrow changes; other tasks request lockfile/manifest changes through the user, and the coordinator assigns one exclusive owner and checkout.
-- T009–T048 — Planned; wait for recorded dependencies and ownership.
+## Coordination authority
 
-## Pending decisions/evidence
+Only `/home/umar/Downloads/StopThatGuy/DevPack/coordination/ACTIVE_WORK.md` and
+`tasks/board.json` in main are live. Task-worktree copies are snapshots. Main's
+CHAT_REGISTRY.md records verified chat IDs; placeholders are not destinations.
+Workers message Chat D directly when tools are available and authorized by their
+launch prompts. Chat D records decisions before replying. No worker edits main.
 
-- Approved dependency (coordinator, 17 Nov, for T008): `@babylonjs/loaders@9.37.0` plus its required peer `babylonjs-gltf2interface@9.37.0`, both Apache-2.0 and exact-pinned in `apps/client/package.json`. A trial in a scratch copy showed the import `@babylonjs/loaders/glTF/2.0/index.js` typechecks and builds. Imported statically from bootstrap it adds about +547 kB (+124 kB gzip) to the main chunk, plus lazy PBR chunks, so it must be loaded on demand from T008's module, not eagerly; T031 owns budgets. Single owner and checkout: Chat D in main, after T005 is integrated (main edits beyond coordination records need the user's go-ahead at that point). The user commits, then updates task branches from main. T008 does not edit either file. Interim: in its own worktree only, T008 may run `npm install --no-save @babylonjs/loaders@9.37.0 -w @stopthatguy/client`, which was verified to leave package.json and the lockfile unchanged; a later `npm ci` removes it. T008 cannot be in_review until the tracked dependency is on its branch and `npm ci` plus `npm run check` pass.
-- Lease queue for `package-lock.json`: T005 (current) → Chat D in main (T008's approved dependency) → T006 (apps/server workspace metadata). T006's turn starts after that main update is committed and its branch is updated. After the user updates `task/T006-room-lifecycle` from main, T006 runs `npm install` once to record only the `apps/server` workspace metadata. Until then T006 must not run `npm install` or `npm ci` (its package.json will not match the lockfile), and its clean-install verification is pending.
-- Runtime world source (coordinator decision, 17 Nov): the server runs `FIRST_STREET_WORLD` (`first-street-1`) from `@stopthatguy/world`, the T005 package. It becomes usable in T006 only after T005 is integrated and T006's branch includes it; never copy T005's uncommitted files. Until then rooms take the world as an injected option, and only tests use `FIXTURE_WORLD`. Server bootstrap and production code must not import `@stopthatguy/test-support`.
+All T005–T008 leases are released following verified integration. Shared contracts,
+tuning, simulation wiring outside T009's listed paths, package manifests/lockfile,
+compiler/build/CI settings, client bootstrap and shared asset catalog/manifest are
+reserved for the coordinator. Grant one exact-file lease in one checkout at a time.
+Never add independent copies of shared types or overwrite another task's data.
+T011 owns a separate environment manifest; aggregation into the central catalog
+and validator is coordinated. Additional preview/test paths must also be leased.
+The T012 chat performs its UI implementation only in T012; its coordination edits
+in main are a separate, explicit role. No other chat may edit T012 UI concurrently.
 
-- Exact baseline laptop/Android devices are not identified.
-- Hold-Up movement is a provisional default.
-- Final asset sources and hosting are not selected.
-- User visual feedback follows the first finished-street build.
+## Dependency and completion gates
 
-## Handoff discipline
+T009/T010 depend on integrated T005/T007; T011 on T005/T008; T012 on T006/T007.
+All four are ready. Camera, visual street and lobby work use committed contracts
+and labeled fixtures where later movement/network integration is still pending.
+No task may rely on another task's uncommitted implementation. Record shared-change
+prerequisites and request manual commits/branch updates when needed; do not copy
+uncommitted code across worktrees. Parallel folders cannot guarantee conflict-free
+merges, so integrate sequentially and run combined checks.
 
-Only the coordinator edits this shared file during parallel work. Workers provide updates in their task handoffs. Remove a claim only after integration, cancellation or explicit ownership transfer; do not infer it from a silent chat.
+After acceptance passes, workers write their own handoff and Chat D records
+in_review. The user handles commits and merges unless explicitly authorizing the
+coordinator. Done requires actual integration into main plus combined verification.
+T013 onward remains planned until its dependencies and ownership are recorded.
 
-A task stays `in_review` until the user commits and merges it into main and the combined checks pass. Record the actual main integration commit, not merely the task branch commit. Agents leave all edits uncommitted.
+## Local run isolation
+
+See docs/PARALLEL_WORK.md for per-task server, client and browser-test ports.
+Use each worktree's independent node_modules and local .env. Stop only processes
+you start. Prior task worktrees are preserved for reference, outside active VS Code
+folders; do not edit them.
+
+## Remaining product evidence
+
+Baseline laptop/Android hardware, final art acceptance, hosting and final asset
+sources are still unconfirmed. Hold-Up remains provisional. The client is still a
+smoke scene; batch 2 creates the next pieces, not a finished online chase.

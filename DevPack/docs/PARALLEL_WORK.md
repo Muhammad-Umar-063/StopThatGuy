@@ -1,19 +1,14 @@
-# Working with 3–4 Claude / ChatGPT chats
+# Working with four Codex chats
 
-## Model allocation
+## Current allocation
 
-Both assistants can implement any lane. This is a useful division of responsibilities, not a claim that one model is inherently better at a category. Keep ownership stable so each chat builds context; use the other assistant for review where risk justifies it. Follow TOKEN_EFFICIENCY.md; do not duplicate implementation or automatically run two full reviews per task.
-
-| Chat/lane | Suggested assistant | Main responsibility |
-|---|---|---|
-| A | Claude | Pure gameplay simulation, robber AI, vehicles, crime, police, server validation |
-| B | ChatGPT/Codex | Controls, camera, client networking/presentation, HUD and touch/keyboard UI |
-| C | Either; ChatGPT is a convenient starting allocation | 3D scene, assets, animation, lighting and performance; Blender/asset tools when needed |
-| D | Either; use a coding environment with repository access | Coordinator, integration, world data in early batches, tests, deployment and documentation |
-
-For three chats: A and B remain dedicated; C handles both art and coordination/QA serially. Do not run C's art task and D's integration task as if they were two independent owners in the same chat. Expect less concurrency. For four chats, D coordinates while A/B/C implement their tasks; D can run independent tests/map work with its own write scope.
-
-Coordination is a role, not an additional AI model. Claude/ChatGPT browser chats without repository tools cannot automatically edit files, run tests or share another chat's state. Supply the relevant committed files and transfer returned changes deliberately. Do not claim cross-chat synchronization exists merely because the conversations belong to the same user.
+The user has switched the next batch to Codex. Use one chat per task; Chat D
+coordinates while implementing its own UI task in a separate worktree. The roles
+are A/T009 movement, B/T010 camera, C/T011 environment, D/T012 lobby/coordinator.
+Main's CHAT_REGISTRY.md identifies actual chat IDs after launch. User-authorized
+messages/replies carry ownership requests and recorded decisions directly where
+tools support them. Tools and file permissions must be verified in each chat;
+sharing a model, window or project does not automatically share execution context.
 
 ## Start sequence
 
@@ -53,20 +48,22 @@ T040 tests the pre-final balance build; T044 reruns the final merged rules. T042
 
 ## Isolation and merge rules
 
-Use one existing Git branch and worktree per active task. Never have multiple chats change the same checkout at the same time. Opening all folders in one VS Code window is convenient, but does not isolate chat tools: bind each chat and terminal to its assigned absolute path and verify its branch before editing. Keep coordination edits in main serial, including when lane D also owns T005 in its task worktree.
+Use one existing Git branch and worktree per active task. Never have multiple chats change the same checkout at the same time. Opening all folders in one VS Code window is convenient, but does not isolate chat tools: bind each chat and terminal to its assigned absolute path and verify its branch before editing. Keep coordination edits in main serial, including when lane D also owns T012 in its task worktree.
 
-### Current batch: T005–T008
+### Current batch: T009–T012
 
-Repository root: `/home/umar/Downloads/StopThatGuy`. Run application commands inside each worktree's `DevPack/` directory. All four task branches start at `46f57d4`, which includes the T004 implementation at `24e07e2` and its completed tracking.
+Git root: `/home/umar/Downloads/StopThatGuy`. Application cwd is each task's
+`DevPack/`. Baseline implementation ff78e06 integrates T001–T008. Worktrees start
+from the subsequent committed setup; read actual HEAD at claim time.
 
-| Task | Worktree relative to repository root | Required branch | Primary write paths relative to DevPack |
+| Task | Worktree relative to Git root | Branch | Primary scope |
 |---|---|---|---|
-| T005 | `.worktrees/T005` | `task/T005-street-graph` | `packages/world/` |
-| T006 | `.worktrees/T006` | `task/T006-room-lifecycle` | `apps/server/src/rooms/`, `apps/server/src/adapters/`, `apps/server/src/validation/` |
-| T007 | `.worktrees/T007` | `task/T007-keyboard-input` | `apps/client/src/input/keyboard/` |
-| T008 | `.worktrees/T008` | `task/T008-asset-pipeline` | `assets/`, `assets-source/`, `scripts/assets/`, `apps/client/src/render/assets/` |
+| T009 | `.worktrees/T009` | `task/T009-road-movement` | `packages/simulation/src/movement/`, `packages/simulation/src/collision/`, `packages/simulation/test/movement.test.ts`, `packages/simulation/test/collision.test.ts` |
+| T010 | `.worktrees/T010` | `task/T010-follow-camera` | `apps/client/src/camera/` |
+| T011 | `.worktrees/T011` | `task/T011-street-visuals` | `apps/client/src/render/environment/`, `apps/client/public/assets/environment/`, `assets-source/environment/`, `assets/manifest-environment.json` |
+| T012 | `.worktrees/T012` | `task/T012-lobby-ui` | `apps/client/src/ui/lobby/`, `apps/client/src/ui/menu/` |
 
-This is a prepared assignment map, not an active claim. The coordinator must record an owner and exact paths before implementation starts. Each task may write its own `coordination/handoffs/Txxx.md`; include task tests inside the claimed scope or obtain a lease for a separate test path. Do not rewrite shared test fixtures, validators, exports or test configuration merely because a task needs them. For example, T005 validator work in `packages/test-support/` needs an exclusive lease.
+This is a prepared assignment map, not an active claim. The coordinator must record an owner and exact paths before implementation starts. Each task may write its own `coordination/handoffs/Txxx.md`; include task tests inside the claimed scope or obtain a lease for a separate test path. Do not rewrite shared test fixtures, validators, exports or test configuration merely because a task needs them. Shared tuning, validators and bootstrap wiring need an exclusive lease.
 
 Only the main checkout's `tasks/board.json` and `coordination/ACTIVE_WORK.md` are live coordination records. Workers read these records from main and report proposed changes in their own handoff; they do not edit the snapshots in their task worktrees. The same rule applies to shared instructions, decisions and backlog. An explicitly requested instruction repair may be synchronized once across checkouts; it is not permission for ongoing cross-worktree editing.
 
@@ -89,3 +86,19 @@ The reviewing assistant should return findings or use a separate review branch. 
 ## Completion record
 
 Use HANDOFF_TEMPLATE.md. Store each completed handoff under coordination/handoffs/Txxx.md. The coordinator updates shared status. Prompts are generated only when the user asks, using the current task, specs and integrated state.
+
+## Batch 2 ports and launch
+
+| Task | Server PORT | Vite port | KEYBOARD_BROWSER_PORT | ASSET_BROWSER_PORT |
+|---|---|---|---|---|
+| T009 | 2609 | 5209 | 5409 | 5509 |
+| T010 | 2610 | 5210 | 5410 | 5510 |
+| T011 | 2611 | 5211 | 5411 | 5511 |
+| T012 | 2612 | 5212 | 5412 | 5512 |
+
+Start T012 first using coordination/prompts/T012.md; start T009–T011 after it
+registers the coordinator/reservations. Each prompt is self-contained and grants
+project-scoped direct messaging. Prompts do not launch chats or implement tasks.
+Use assigned Vite ports with `--strictPort`; pass the two browser port environment
+variables when running `npm run test:browser`. The full check's smoke runner picks
+free ports automatically. Local .env supplies server PORT in each new worktree.

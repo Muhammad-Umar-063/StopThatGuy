@@ -105,5 +105,6 @@ bootstrap tests, world tests, asset export consistency and actual GLB runtime
 tests. The client uses a separate tsconfig for tests so Node types do not leak
 into the browser application. `npm run test:browser` runs 10 keyboard browser
 tests and the asset dev/built acceptance runners; CI runs it after the full check.
-Browser gates currently use ports 5207 and 5208 and should run serially across
-worktrees. They shut down only their own processes. See coordination/integration/BATCH_1.md.
+Browser gates default to ports 5207 and 5208; set KEYBOARD_BROWSER_PORT and
+ASSET_BROWSER_PORT to the assigned worktree ports for parallel runs. Asset browser
+artifacts default to ignored test-results/assets, keeping tracked evidence stable. They shut down only their own processes. See coordination/integration/BATCH_1.md.
