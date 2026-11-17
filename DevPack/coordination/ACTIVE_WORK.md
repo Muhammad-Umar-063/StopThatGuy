@@ -4,19 +4,23 @@ Updated: 17 November 2026.
 
 Coordinator: Chat D (Claude Code).
 Repository / remote: Git root is the parent of this pack folder; remote `origin` on GitHub. The user reviews, commits and pushes manually. Agents run no Git write commands and leave changes uncommitted (AGENTS.md "Git workflow", 17 November 2026).
-Integrated baseline commit: 50d552d on main (T001 toolchain, T002 shared contracts, T003 simulation foundation).
-Current gate: foundation (T001–T003 done; T004 in review, awaiting user review and manual commit). T005–T008 start only after T004 is committed and recorded.
+Integrated baseline commit: 24e07e2 on main (T001–T004: toolchain, shared contracts, simulation foundation, verification tooling).
+Current gate: foundation complete (T001–T004 done). Parallel batch 1 (T005–T008) is ready; each task needs an owner claim before work starts.
 
 ## Active claims
 
 | Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
 |---|---|---|---|---|---|
-| T004 | Chat D (coordinator) | main, uncommitted (user commits manually) | c8758a1 | scripts/, tests/, packages/test-support/, repo-root .github/workflows/, assets/manifest.json, root package.json + lockfile + tsconfig.tools.json + .gitignore, packages/shared/src/world.ts (issue code), AGENTS.md, docs/TESTING.md, DECISIONS.md, README.md, CHANGELOG.md | in_review: awaiting user review and manual commit |
+| None | — | — | — | — | T004 integrated at 24e07e2 (user commit); claim released |
 
 ## Ready queue
 
-- None. T005–T008 become ready once T004 is committed by the user and recorded as integrated.
-- T005–T048 — Planned; wait for recorded dependencies and ownership.
+- T005 — First street and route blockout (lane D; write scope packages/world/).
+- T006 — Room and session lifecycle (lane A).
+- T007 — Keyboard input and action mapping (lane B).
+- T008 — Asset workflow and provenance (lane C).
+- All four depend only on T004 (integrated at 24e07e2). None is claimed or started; claim from base 24e07e2 and record exclusive write paths before editing.
+- T009–T048 — Planned; wait for recorded dependencies and ownership.
 
 ## Pending decisions/evidence
 

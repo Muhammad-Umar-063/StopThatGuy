@@ -126,14 +126,14 @@
       "id": "T004",
       "title": "Validation and integration tooling",
       "lane": "D",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T001",
         "T002",
         "T003"
       ],
       "owner": "Chat D (coordinator, Claude Code)",
-      "branch": "main (uncommitted; user commits manually)",
+      "branch": "main",
       "base_commit": "c8758a1",
       "write_paths": [
         "scripts/",
@@ -152,20 +152,21 @@
         "README.md",
         "CHANGELOG.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "24e07e2",
       "evidence": [
         "coordination/handoffs/T004.md",
         "npm run check exit 0 in workspace and in a clean-checkout copy after npm ci (simulation 30/30, test-support 147/147, root tests 3/3, validate passed, smoke passed)",
         "negative checks: invalid world file, missing browser and injected console error each fail with exit 1",
-        "GitHub Actions workflow written at repo root; not yet run remotely"
+        "GitHub Actions workflow written at repo root; not yet run remotely",
+        "user committed on main at 24e07e2; coordinator re-ran npm run check on the committed tree: exit 0 (30/30, 147/147, 3/3, validate and smoke passed)"
       ],
-      "blocker": "awaiting user review and manual commit"
+      "blocker": null
     },
     {
       "id": "T005",
       "title": "First street and route blockout",
       "lane": "D",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T004"
       ],
@@ -183,7 +184,7 @@
       "id": "T006",
       "title": "Room and session lifecycle",
       "lane": "A",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T004"
       ],
@@ -203,7 +204,7 @@
       "id": "T007",
       "title": "Keyboard input and action mapping",
       "lane": "B",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T004"
       ],
@@ -221,7 +222,7 @@
       "id": "T008",
       "title": "Asset workflow and provenance",
       "lane": "C",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T004"
       ],
