@@ -15,7 +15,7 @@
     "dev:server": "npm run dev --workspace @stopthatguy/server",
     "check": "npm run typecheck && npm run build && npm run test && npm run validate && npm run smoke",
     "typecheck": "npm run typecheck --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json",
-    "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
+    "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/world && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
     "test": "npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts",
     "validate": "tsx --conditions=stopthatguy-source scripts/validate-data.ts",
     "smoke": "tsx --conditions=stopthatguy-source scripts/smoke.ts",
