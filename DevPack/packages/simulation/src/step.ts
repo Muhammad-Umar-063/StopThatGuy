@@ -10,7 +10,9 @@ import {
 } from "@stopthatguy/shared";
 import { FIXED_DELTA_TOLERANCE_MS } from "./clock.js";
 import { clonePlain } from "./copy.js";
-import type { MovementInput, MovementKernel, MovementResult, MovementState } from "./movement/kernel.js";
+import { copyMovementMemory, type MovementInput, type MovementKernel, type MovementResult, type MovementState } from "./movement/kernel.js";
+import { validMovementMemory } from "./movement/memory.js";
+import { queryRoadActions } from "./movement/road.js";
 import { toInternal, type InternalState, type SimulationState } from "./state.js";
 
 interface TickIntent extends MovementInput {
@@ -135,6 +137,7 @@ function moveGroundedPlayers(s: InternalState, intents: ReadonlyMap<PlayerId, Ti
       speedMps: player.speedMps,
       stamina: player.stamina,
       locomotion: player.locomotion,
+      motion: copyMovementMemory(s.movementByPlayer.get(player.id)),
     };
     const input: MovementInput = intent
       ? {
@@ -148,13 +151,14 @@ function moveGroundedPlayers(s: InternalState, intents: ReadonlyMap<PlayerId, Ti
       : { ...NEUTRAL_INPUT };
     const result = movement(current, input, context);
     checkMovementResult(s, current, result);
-    updates.push([player, result]);
+    updates.push([player, clonePlain(result)]);
   }
   for (const [player, result] of updates) {
     player.route = clonePlain(result.state.route);
     player.speedMps = result.state.speedMps;
     player.stamina = result.state.stamina;
     player.pose = clonePlain(result.pose);
+    s.movementByPlayer.set(player.id, copyMovementMemory(result.state.motion));
   }
 }
 
@@ -164,6 +168,7 @@ function checkMovementResult(s: InternalState, current: MovementState, result: M
   const { position, yaw } = result.pose;
   const valid =
     edge !== undefined &&
+    Number.isFinite(route.distanceM) &&
     route.distanceM >= 0 &&
     route.distanceM <= edge.lengthM + 1e-6 &&
     Number.isInteger(route.laneIndex) &&
@@ -177,7 +182,7 @@ function checkMovementResult(s: InternalState, current: MovementState, result: M
     stamina <= s.tuning.movement.staminaMax &&
     locomotion === current.locomotion &&
     [position.x, position.y, position.z, yaw].every(Number.isFinite);
-  if (!valid) throw new Error("movement kernel returned an invalid or out-of-range result");
+  if (!valid || !validMovementMemory(result.state.motion, { world: s.world, tuning: s.tuning, dtMs: s.fixedDeltaMs })) throw new Error("movement kernel returned an invalid or out-of-range result");
 }
 
 // Stage 6. Escape resolution arrives with T013; only the time limit is implemented here.
@@ -205,9 +210,15 @@ const NOTHING_AVAILABLE: Readonly<LegalActions> = Object.freeze<LegalActions>({
   canSabotage: false,
 });
 
-export function queryLegalActions(state: SimulationState, playerId: PlayerId): LegalActions {
-  if (!toInternal(state).playersById.has(playerId)) throw new RangeError(`unknown player ${playerId}`);
-  return clonePlain(NOTHING_AVAILABLE);
+export function queryLegalActions(state: SimulationState, playerId: PlayerId, roadRules = true): LegalActions {
+  const s = toInternal(state);
+  const player = s.playersById.get(playerId);
+  if (!player) throw new RangeError(`unknown player ${playerId}`);
+  if (!roadRules || s.match.phase !== "chase" || player.participation !== "active"
+    || player.locomotion === "passenger" || !player.route) return clonePlain(NOTHING_AVAILABLE);
+  return clonePlain(queryRoadActions({ route: player.route, speedMps: player.speedMps, stamina: player.stamina,
+    locomotion: player.locomotion, motion: s.movementByPlayer.get(playerId)! },
+    { world: s.world, tuning: s.tuning, dtMs: s.fixedDeltaMs }));
 }
 
 export function collectEvents(state: SimulationState): GameEvent[] {

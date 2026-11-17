@@ -24,6 +24,7 @@ import {
 } from "@stopthatguy/shared";
 import { getFixedDeltaMs, msToTicks } from "./clock.js";
 import { clonePlain } from "./copy.js";
+import { copyMovementMemory, type MovementMemory } from "./movement/kernel.js";
 import { poseOnRoute } from "./movement/geometry.js";
 import { indexWorld, type WorldIndex } from "./movement/world-index.js";
 import { createRng, nextInt, type RngState } from "./rng.js";
@@ -48,6 +49,7 @@ export interface InternalState {
   readonly match: MatchRecord;
   /** Ordered by joinOrder. */
   readonly players: PlayerRecord[];
+  readonly movementByPlayer: Map<PlayerId, MovementMemory>;
   readonly playersById: ReadonlyMap<string, PlayerRecord>;
   readonly robber: RobberRecord;
   readonly vehicles: VehicleRecord[];
@@ -74,6 +76,15 @@ function validateSetup(setup: SimulationSetup): void {
   const { tuning, world } = setup;
   const t = tuning.timing;
   getFixedDeltaMs(tuning);
+  const m = tuning.movement;
+  if (![m.runSpeedMps, m.sprintSpeedMps, m.staminaMax, m.sprintStaminaPerSecond,
+    m.accelerationMps2, m.coastMps2, m.brakeMps2, m.laneShiftMs,
+    m.bodyRadiusM, m.bodyHeightM, tuning.junction.approachTimeMs,
+    tuning.junction.approachWindowMinM, tuning.junction.approachWindowMaxM].every((n) => Number.isFinite(n) && n > 0)
+    || ![m.staminaRecoveryPerSecond, m.staminaRecoveryDelayMs, m.collisionSkinM,
+      tuning.junction.turnInputBufferMs].every((n) => Number.isFinite(n) && n >= 0)
+    || tuning.junction.approachWindowMaxM < tuning.junction.approachWindowMinM
+    || tuning.junction.turnInputBufferMs > 250 || m.sprintSpeedMps < m.runSpeedMps) invalidSetup("invalid movement tuning");
   if (![t.countdownMs, t.introMs].every((ms) => Number.isFinite(ms) && ms >= 0)) invalidSetup("countdown/intro must be ≥ 0 ms");
   if (!Number.isFinite(t.chaseTimeLimitMs) || msToTicks(t.chaseTimeLimitMs, tuning) < 1) invalidSetup("chase must last at least one tick");
   if (world.schemaVersion !== WORLD_SCHEMA_VERSION) invalidSetup(`world schema ${world.schemaVersion} ≠ ${WORLD_SCHEMA_VERSION}`);
@@ -215,6 +226,7 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
     fixedDeltaMs: getFixedDeltaMs(tuning),
     match,
     players,
+    movementByPlayer: new Map(players.map((p) => [p.id, copyMovementMemory()])),
     playersById: new Map<PlayerId, PlayerRecord>(players.map((p) => [p.id, p])),
     robber,
     vehicles,
