@@ -5,7 +5,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FIXTURE_WORLD, validateWorldData } from "@stopthatguy/test-support";
 import { AUTHORED_WORLDS } from "@stopthatguy/world";
-import { validateAssetManifestFile } from "@stopthatguy/test-support/node";
+import { validateAssetManifestFile, validateAssetManifest, type AssetManifest, type AssetManifestReport } from "@stopthatguy/test-support/node";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -44,17 +44,32 @@ for (const world of worlds) {
 console.log("  ℹ checked: structure, references, foot reachability, per-mode continuation, spawn clearance, grades, turn-path ground");
 console.log("  ℹ not checked: collider placement relative to routes, lateral slope, moving blockers (later tasks)");
 
-console.log("\nAsset manifest (assets/manifest.json)");
-const assets = validateAssetManifestFile(join(ROOT, "assets/manifest.json"), {
-  projectRoot: ROOT,
-  publicDir: join(ROOT, "apps/client/public"),
-});
-failed ||= !assets.ok;
-const empty = assets.status === "empty-development" ? " (explicitly empty development manifest; no asset files to check)" : "";
-console.log(`  ${assets.ok ? "✔" : "✖"} status ${assets.status ?? "invalid"}, ${assets.assetCount} assets${empty}`);
-for (const issue of assets.issues) console.log(`      ${issue.severity} ${issue.code} [${issue.ref}]: ${issue.message}`);
-console.log("  ℹ a passing manifest check does not verify:");
-for (const item of assets.notVerified) console.log(`      - ${item}`);
+const assetOptions = { projectRoot: ROOT, publicDir: join(ROOT, "apps/client/public") };
+const assetManifests: AssetManifest[] = [];
+const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json"];
+function printAssets(label: string, report: AssetManifestReport): void {
+  failed ||= !report.ok;
+  console.log(`\nAsset manifest (${label})`);
+  const empty = report.status === "empty-development" ? " (explicitly empty development manifest; no asset files to check)" : "";
+  console.log(`  ${report.ok ? "✔" : "✖"} status ${report.status ?? "invalid"}, ${report.assetCount} assets${empty}`);
+  for (const issue of report.issues) console.log(`      ${issue.severity} ${issue.code} [${issue.ref}]: ${issue.message}`);
+}
+for (const path of manifestPaths) {
+  const report = validateAssetManifestFile(join(ROOT, path), assetOptions);
+  printAssets(path, report);
+  if (report.ok) assetManifests.push(JSON.parse(readFileSync(join(ROOT, path), "utf8")) as AssetManifest);
+}
+if (assetManifests.length === manifestPaths.length) {
+  const assets = validateAssetManifest({
+    schemaVersion: 1, status: "active", description: "All shipped asset categories",
+    assets: assetManifests.flatMap((manifest) => manifest.assets),
+  }, assetOptions);
+  printAssets("combined categories; duplicate IDs and runtime paths", assets);
+  console.log("  ℹ a passing manifest check does not verify:");
+  for (const item of assets.notVerified) console.log(`      - ${item}`);
+} else {
+  console.log("  ✖ combined asset validation requires every valid category manifest");
+}
 
 console.log(failed ? "\nValidation FAILED" : "\nValidation passed");
 process.exitCode = failed ? 1 : 0;
