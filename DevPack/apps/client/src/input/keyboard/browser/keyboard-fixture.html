@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T007 keyboard input fixture (test only)</title>
+    <link rel="icon" href="data:," />
+    <style>
+      body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; }
+      #surface { width: 320px; height: 160px; background: #23384d; color: #fff; padding: 8px; }
+      #surface:focus { outline: 3px solid #f0b400; }
+      .spacer { height: 4000px; }
+    </style>
+  </head>
+  <body>
+    <p>Test fixture for T007 keyboard input. Served only by the Vite dev server for browser checks; not part of the game build.</p>
+    <div id="surface" tabindex="0" aria-label="Gameplay surface (test fixture)">Gameplay surface (fixture)</div>
+    <p><label>Text field <input id="name" type="text" autocomplete="off" /></label></p>
+    <p><button id="outside" type="button">Button outside the gameplay surface</button></p>
+    <div class="spacer"></div>
+    <script type="module" src="./keyboardFixture.ts"></script>
+  </body>
+</html>
