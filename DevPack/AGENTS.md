@@ -49,11 +49,13 @@ A task is done only when its acceptance checks pass, changes are integrated, and
 
 ## Git workflow
 
-User direction (17 November 2026):
-- Work in the existing checkout on `main`. Do not create branches or worktrees.
-- Do not stage, commit, amend, push, merge, rebase or tag. Leave task changes uncommitted for the user to review and commit; read-only Git commands are fine.
-- When a task's checks pass, set it to `in_review` with "awaiting user review and manual commit" and leave `integration_commit` unset. After the user commits, the coordinator verifies and records that commit and marks the task done. Uncommitted work is never "integrated".
-- This replaces the earlier permission for automatic local commits. Historical handoffs keep their original wording.
+Current user direction (17 November 2026, after worktree setup):
+- Use the existing assigned task worktree and branch for implementation. T005–T008 have separate worktrees listed in docs/PARALLEL_WORK.md. The main checkout is for coordination and reviewed integration. This supersedes the earlier single-main rule.
+- Before editing, verify `pwd`, `git rev-parse --show-toplevel`, `git branch --show-current` and `git status --short`. A multi-folder VS Code window does not bind a chat to a folder. Use the assigned absolute working directory for every command; do not switch branches, create extra worktrees, or edit another checkout.
+- Do not stage, commit, amend, push, merge, rebase or tag. Leave changes uncommitted for the user to review and commit; read-only Git commands are fine. The existing task branches/worktrees were explicitly authorized by the user.
+- Workers write only their claimed paths and their own coordination/handoffs/Txxx.md. Read current claims from the main checkout's coordination/ACTIVE_WORK.md and tasks/board.json; task-worktree copies are snapshots. Only the coordinator updates shared tracking in main. Report needed shared-file edits rather than copying them into every worktree.
+- When checks pass, the worker reports `in_review`, "awaiting user review, manual commit and integration", with no integration_commit. The coordinator records that status in main. A task-branch commit alone is not integration: the user merges reviewed work into main, combined checks pass, then the coordinator records the actual main integration commit and marks done.
+- Historical handoffs retain their original wording. Follow the current rules here and the latest workflow decision, not superseded historical entries.
 
 Run `npm run check` from `DevPack/` before handing off; see docs/TESTING.md "Local verification workflow".
 

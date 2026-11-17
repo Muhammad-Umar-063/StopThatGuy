@@ -70,7 +70,9 @@ Implementation evidence (T001). D010 is now pinned with exact versions in the wo
 
 Node engine: ≥ 22.12 (Colyseus 0.18 requires ≥ 22). Tested only on Node 24.22.0 / npm 11.19.1. `.npmrc` sets `save-exact=true`. Affected tasks: all; version changes go through the coordinator. Migration impact: none (first install).
 
-### 16 November 2026 — Workflow: single `main` branch
+### 16 November 2026 — Workflow: single `main` branch (superseded)
+
+Historical record: the manual-commit decision below superseded automatic commits; the later task-worktree decision supersedes single-main development.
 
 Source: the user. All work is committed directly on `main`. Task branches and worktrees are not used, which overrides the branch-per-task suggestion in PARALLEL_WORK.md. The user pushes to the GitHub remote manually; agents commit locally and never push. Affected tasks: all. With a single checkout, exclusive write paths in ACTIVE_WORK.md remain the conflict guard.
 
@@ -100,6 +102,8 @@ Source: implementation (T003). Affected tasks: T006, T009, T013, T017, T021–T0
 
 ### 17 November 2026 — Workflow: manual commits by the user
 
+Manual Git operations remain current. The single-main restriction and completion-after-commit wording below are historical and superseded by the later task-worktree decision.
+
 Source: the user, while assigning T004. Agents no longer stage, commit, amend, push, merge, rebase or tag. Task changes stay uncommitted for the user to review and commit. A finished task is set to `in_review` with "awaiting user review and manual commit" and no `integration_commit`; the coordinator records the user's commit and marks the task done afterwards. This **supersedes** the 16 November "agents commit locally" part of the single-`main` workflow entry. Working only on `main`, with no task branches, still applies. The rule is written into AGENTS.md "Git workflow". The T001–T003 handoffs describe the earlier practice and were left unchanged. Affected tasks: T004 onward.
 
 ### 17 November 2026 — T004 verification tooling choices
@@ -111,3 +115,11 @@ Source: implementation (T004). Affected tasks: all; T005 and T008 in particular.
 - **World validation.** `validateWorldData` (`@stopthatguy/test-support`) checks untrusted data's structure first, then identities, references and local topology, reporting shared `WorldIssueCode`s. Reachability, spawn/collider overlap, slopes and collider placement remain T005 work. It lives in test-support for now; T005 or T006 may move it into a runtime package if the server must validate maps at startup.
 - **Asset manifest, schema 1.** `assets/manifest.json` is explicitly `"empty-development"` with no entries. Entries require the ASSETS.md provenance fields, runtime files must exist with matching sizes, and paths must be safe and relative. A license text file is required when a `textPath` is given; a missing source file is only a warning. The check prints what it cannot verify. T008 owns real entries and the import pipeline.
 - **CI.** GitHub Actions at the repository root (`.github/workflows/ci.yml`): `ubuntu-24.04`, Node 24, `actions/checkout@v7`, `actions/setup-node@v7` (npm cache keyed on `DevPack/package-lock.json`) and `actions/upload-artifact@v7`. Action versions and runner Chrome availability were checked against GitHub's published metadata on 17 November 2026; the workflow has not run remotely yet.
+
+### 17 November 2026 — Workflow: task worktrees with manual integration (current)
+
+Source: the user requested worktrees for T005–T008, then requested correction of conflicting instructions after setup. This supersedes the earlier requirement to implement only on main. Four existing task worktrees/branches use baseline `46f57d4`; paths and exclusive scopes are listed in PARALLEL_WORK.md. Use one implementation chat per task worktree, even in a single VS Code window. Main is reserved for serial coordination and reviewed integration.
+
+The prohibition on automatic staging, commits, pushes, merges, rebases and tags remains. Workers leave changes uncommitted and provide their own handoff. The user reviews and commits task work, then merges it into main. Only after combined checks pass does the coordinator record the main integration commit and mark the task done; committing on a task branch alone does not finish integration.
+
+Main's board and ACTIVE_WORK are authoritative; workers do not edit their worktree copies or shared instructions. Shared files require one recorded exclusive owner and checkout. This repair synchronizes instructions across the five existing checkouts once, without committing or starting any gameplay task. Subsequent changes are integrated through the manual workflow. Affected tasks: T005 onward. Historical task handoffs remain unchanged.
