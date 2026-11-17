@@ -4,15 +4,16 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FIXTURE_WORLD, validateWorldData } from "@stopthatguy/test-support";
+import { AUTHORED_WORLDS } from "@stopthatguy/world";
 import { validateAssetManifestFile } from "@stopthatguy/test-support/node";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-/**
- * World data checked on every run. T005 registers the authored world here (one entry per exported
- * world) so its data is validated by `npm run check` and CI.
- */
-const REGISTERED_WORLDS: { name: string; data: unknown }[] = [{ name: "FIXTURE_WORLD (@stopthatguy/test-support)", data: FIXTURE_WORLD }];
+/** World data checked on every run: every authored world (@stopthatguy/world) plus the test fixture. */
+const REGISTERED_WORLDS: { name: string; data: unknown }[] = [
+  ...AUTHORED_WORLDS.map((world) => ({ name: `${world.worldVersion} (@stopthatguy/world)`, data: world })),
+  { name: "FIXTURE_WORLD (@stopthatguy/test-support)", data: FIXTURE_WORLD },
+];
 
 let failed = false;
 
@@ -40,8 +41,8 @@ for (const world of worlds) {
   console.log(`  ${report.ok ? "✔" : "✖"} ${world.name} [${report.worldVersion || "no version"}]: ${errors.length} errors, ${warnings.length} warnings`);
   for (const issue of report.issues) console.log(`      ${issue.severity} ${issue.code}: ${issue.message}`);
 }
-console.log("  ℹ authored map data: none registered yet (packages/world is created by T005)");
-console.log("  ℹ not checked yet (T005): reachability from spawns, spawn/collider overlap, slopes and ground heights");
+console.log("  ℹ checked: structure, references, foot reachability, per-mode continuation, spawn clearance, grades, turn-path ground");
+console.log("  ℹ not checked: collider placement relative to routes, lateral slope, moving blockers (later tasks)");
 
 console.log("\nAsset manifest (assets/manifest.json)");
 const assets = validateAssetManifestFile(join(ROOT, "assets/manifest.json"), {

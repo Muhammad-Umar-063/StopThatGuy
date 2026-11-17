@@ -2,6 +2,7 @@
 // lists the issue codes it must produce (and nothing else) plus a record the report must name, so a
 // sample can only pass for its intended reason. FIXTURE_WORLD itself must validate cleanly.
 import type { WorldIssueCode } from "@stopthatguy/shared";
+import { polylineLength } from "../validation/world.js";
 import { deepFreeze } from "./freeze.js";
 import { FIXTURE_WORLD } from "./world.js";
 
@@ -61,4 +62,35 @@ export const INVALID_WORLD_SAMPLES: readonly InvalidWorldSample[] = deepFreeze([
   // Document shape
   variant("unknown top-level field", ["invalidValue"], "$.lanes", (w) => (w.lanes = [])),
   variant("unsupported schema version", ["invalidValue"], "$.schemaVersion", (w) => (w.schemaVersion = 99)),
+  // Layout (T005): referentially valid data, so only phase 3 can object
+  variant("spawn inside a collider", ["spawnInsideCollider"], "sp-player-1", (w) => (byId(w.colliders, "c-fountain").center = { x: -1.5, y: 0.5, z: 4 })),
+  variant("two spawns on the same spot", ["invalidValue"], "sp-player-2", (w) => {
+    byId(w.spawns, "sp-player-2").placement = { edgeId: "e-bank-north", distanceM: 4, laneIndex: 0 };
+  }),
+  variant("alley unreachable from the spawns", ["disconnectedStart"], "e-junction-west", (w) => {
+    const junction = byId(w.junctions, "j-bank-north");
+    junction.branches = junction.branches.filter((b: Draft) => b.side !== "left");
+  }),
+  variant("exit nobody can reach", ["disconnectedStart", "unreachableExit"], "n-pier", (w) => {
+    w.nodes.push({ id: "n-dock", position: { x: 70, y: -1, z: 60 }, kind: "waypoint", sectorId: "s-river" });
+    w.nodes.push({ id: "n-pier", position: { x: 70, y: -1, z: 70 }, kind: "exit", sectorId: "s-river" });
+    const centerline = [{ x: 70, y: -1, z: 60 }, { x: 70, y: -1, z: 70 }];
+    w.edges.push({ id: "e-dock-pier", from: "n-dock", to: "n-pier", centerline, lengthM: 10, laneOffsetsM: [0], allowedModes: ["foot"], speedLimitMps: null, label: null, sectorId: "s-river" });
+  }),
+  variant("scooter stranded where only foot and bicycle continue", ["missingTurnaround"], "e-junction-east", (w) => {
+    byId(w.junctions, "j-east").branches.find((b: Draft) => b.side === "forward").allowedModes = ["foot", "bicycle", "lift"];
+  }),
+  variant("vehicle street steeper than the wheeled limit", ["illegalVehicleRoute"], "e-east-road", (w) => {
+    const road = byId(w.edges, "e-east-road");
+    road.centerline[1].y = 6;
+    road.lengthM = polylineLength(road.centerline);
+  }),
+  variant("stairs steeper than walkable", ["invalidValue"], "e-east-stairs", (w) => {
+    const stairs = byId(w.edges, "e-east-stairs");
+    stairs.centerline.splice(1, 0, { x: 30, y: 30, z: 41 });
+    stairs.lengthM = polylineLength(stairs.centerline);
+  }),
+  variant("turn path floating above the ground", ["invalidValue"], "j-bank-north", (w) => {
+    byId(w.junctions, "j-bank-north").branches.find((b: Draft) => b.side === "right").turnPath[2].y = 2;
+  }),
 ]);

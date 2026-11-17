@@ -1,0 +1,29 @@
+{
+  "name": "@stopthatguy/world",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Versioned authored world data (route graph, lanes, junctions, colliders, spawns). Plain data on the shared contracts; no engine, network or browser dependencies.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "stopthatguy-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+    "test": "tsx --conditions=stopthatguy-source --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@stopthatguy/shared": "0.0.0"
+  },
+  "devDependencies": {
+    "@stopthatguy/test-support": "0.0.0"
+  }
+}

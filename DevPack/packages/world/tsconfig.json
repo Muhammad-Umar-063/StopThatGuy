@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // ES library only: world data cannot depend on DOM or Node APIs.
+    "lib": ["ES2022"],
+    "types": [],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "customConditions": ["stopthatguy-source"],
+    "noEmit": true
+  },
+  "include": ["src"]
+}

@@ -2,9 +2,10 @@
 //
 // Phase 1 checks the structure of untrusted data: unknown fields, types, finite coordinates, positive
 // dimensions, lane and mode definitions, enumerations. Phase 2 runs only on structurally valid data and
-// checks identities, references and local topology. Not covered yet (T005): reachability from spawns
-// (disconnectedStart / unreachableExit beyond authored routes), spawn/collider overlap
-// (spawnInsideCollider), slope and ground-height rules, collider placement.
+// checks identities, references and local topology. Phase 3 (T005) runs only when phases 1–2 found no
+// errors and checks layout: foot reachability from player spawns, reachable exits, per-mode continuation
+// (no mode stranded at an edge end), spawn/collider and spawn/spawn clearance, grade limits and turn-path
+// ground heights. Not covered: collider placement relative to routes, lateral slope, dynamic blockers.
 import {
   BRANCH_SIDES,
   ROUTE_NODE_KINDS,
@@ -13,7 +14,9 @@ import {
   VEHICLE_TYPES,
   WORLD_SCHEMA_VERSION,
   ZONE_KINDS,
+  type ColliderPrimitive,
   type RouteEdge,
+  type Spawn,
   type TravelMode,
   type Vec3,
   type WorldData,
@@ -34,7 +37,10 @@ type Add = (severity: WorldValidationIssue["severity"], code: WorldIssueCode, me
 export function validateWorldData(input: unknown): WorldValidationReport {
   const issues: WorldValidationIssue[] = [];
   const add: Add = (severity, code, message, refs) => issues.push({ severity, code, message, refs });
-  if (checkStructure(input, add)) checkReferences(input as WorldData, add);
+  if (checkStructure(input, add)) {
+    checkReferences(input as WorldData, add);
+    if (!issues.some((issue) => issue.severity === "error")) checkLayout(input as WorldData, add);
+  }
   const record = typeof input === "object" && input !== null ? (input as Record<string, unknown>) : {};
   return {
     schemaVersion: typeof record.schemaVersion === "number" ? record.schemaVersion : -1,
@@ -326,4 +332,210 @@ function checkReferences(world: WorldData, add: Add): void {
 function placement(edge: RouteEdge, distanceM: number, laneIndex: number, label: string, id: string, error: (code: WorldIssueCode, message: string, ...refs: string[]) => void) {
   if (distanceM > edge.lengthM + EPSILON_M) error("invalidValue", `${label}: distance beyond ${edge.id}`, id);
   if (laneIndex >= edge.laneOffsetsM.length) error("invalidValue", `${label}: lane ${laneIndex} outside ${edge.id}`, id);
+}
+
+// --- Phase 3: layout (T005) ---------------------------------------------------------------------
+
+/** Provisional blockout limits (assistant-selected in T005; revisit with real movement and maps). */
+export const WORLD_LAYOUT_LIMITS = Object.freeze({
+  /** Steepest centerline grade (rise / horizontal run) on edges open to bicycles, scooters or the lift. */
+  maxWheeledGrade: 0.15,
+  /** Steepest grade on foot-only edges (stairs). */
+  maxFootGrade: 0.8,
+  /** Turn-path ends must lie within this vertical distance (m) of the ground of the edges they join. */
+  groundToleranceM: 0.3,
+  /** Footprint reserved at a spawn (m) when checking colliders and other spawns. */
+  spawnFootprint: Object.freeze({
+    player: Object.freeze({ radiusM: 0.45, heightM: 1.8 }),
+    robber: Object.freeze({ radiusM: 0.45, heightM: 1.8 }),
+    police: Object.freeze({ radiusM: 0.45, heightM: 1.8 }),
+    bicycle: Object.freeze({ radiusM: 0.9, heightM: 1.4 }),
+    scooter: Object.freeze({ radiusM: 1.0, heightM: 1.4 }),
+    lift: Object.freeze({ radiusM: 2.2, heightM: 2.5 }),
+  }),
+});
+
+/**
+ * Point on an edge centerline at `distanceM` (clamped to the polyline), offset horizontally to the right
+ * of travel by `lateralOffsetM`; yaw follows the containing segment. Same convention as shared
+ * geometry.ts and the simulation's poseOnRoute (cross-checked by tests/street-world.test.ts).
+ */
+export function pointOnEdge(edge: RouteEdge, distanceM: number, lateralOffsetM = 0): { position: Vec3; yaw: number } {
+  const points = edge.centerline;
+  const cumulative = [0];
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1]!;
+    const b = points[i]!;
+    cumulative.push(cumulative[i - 1]! + Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z));
+  }
+  const distance = Math.min(Math.max(distanceM, 0), cumulative[cumulative.length - 1]!);
+  let i = 1;
+  while (i < points.length - 1 && (cumulative[i]! < distance || cumulative[i]! === cumulative[i - 1]!)) i++;
+  const a = points[i - 1]!;
+  const b = points[i]!;
+  const length = cumulative[i]! - cumulative[i - 1]!;
+  const t = length > 0 ? (distance - cumulative[i - 1]!) / length : 0;
+  const yaw = Math.atan2(b.x - a.x, b.z - a.z);
+  return {
+    position: {
+      x: a.x + (b.x - a.x) * t + Math.cos(yaw) * lateralOffsetM,
+      y: a.y + (b.y - a.y) * t,
+      z: a.z + (b.z - a.z) * t - Math.sin(yaw) * lateralOffsetM,
+    },
+    yaw,
+  };
+}
+
+/** World position of a spawn placement, or undefined when its edge or lane does not exist. */
+export function spawnPosition(world: WorldData, spawn: Spawn): Vec3 | undefined {
+  const edge = world.edges.find((e) => e.id === spawn.placement.edgeId);
+  const offset = edge?.laneOffsetsM[spawn.placement.laneIndex];
+  return edge && offset !== undefined ? pointOnEdge(edge, spawn.placement.distanceM, offset).position : undefined;
+}
+
+/** Edges reachable in `mode` from the start edges by following junction branches open to that mode. */
+export function reachableEdges(world: WorldData, startEdgeIds: Iterable<string>, mode: TravelMode): Set<string> {
+  const edges = new Map(world.edges.map((e) => [e.id as string, e]));
+  const junctions = new Map(world.junctions.map((j) => [j.fromEdgeId as string, j]));
+  const reached = new Set<string>();
+  const queue: string[] = [];
+  for (const id of startEdgeIds) {
+    if (edges.get(id)?.allowedModes.includes(mode) && !reached.has(id)) {
+      reached.add(id);
+      queue.push(id);
+    }
+  }
+  for (let next = queue.shift(); next !== undefined; next = queue.shift()) {
+    for (const branch of junctions.get(next)?.branches ?? []) {
+      const target = edges.get(branch.toEdgeId);
+      if (branch.allowedModes.includes(mode) && target?.allowedModes.includes(mode) && !reached.has(target.id)) {
+        reached.add(target.id);
+        queue.push(target.id);
+      }
+    }
+  }
+  return reached;
+}
+
+/** Ground height of the edge centerline at the point nearest (horizontally) to x/z. */
+function groundHeightNear(edge: RouteEdge, x: number, z: number): number {
+  let best = { distance: Infinity, y: edge.centerline[0]!.y };
+  for (let i = 1; i < edge.centerline.length; i++) {
+    const a = edge.centerline[i - 1]!;
+    const b = edge.centerline[i]!;
+    const dx = b.x - a.x;
+    const dz = b.z - a.z;
+    const run = dx * dx + dz * dz;
+    const t = run > 0 ? Math.min(Math.max(((x - a.x) * dx + (z - a.z) * dz) / run, 0), 1) : 0;
+    const distance = Math.hypot(a.x + dx * t - x, a.z + dz * t - z);
+    if (distance < best.distance) best = { distance, y: a.y + (b.y - a.y) * t };
+  }
+  return best.y;
+}
+
+type Footprint = { radiusM: number; heightM: number };
+const footprintOf = (spawn: Spawn): Footprint =>
+  spawn.kind === "vehicle" ? WORLD_LAYOUT_LIMITS.spawnFootprint[spawn.vehicleType] : WORLD_LAYOUT_LIMITS.spawnFootprint[spawn.kind];
+
+function overlapsCollider(p: Vec3, footprint: Footprint, c: ColliderPrimitive): boolean {
+  const halfHeight = c.shape === "box" ? c.halfExtents.y : c.heightM / 2;
+  if (p.y + footprint.heightM <= c.center.y - halfHeight || p.y >= c.center.y + halfHeight) return false;
+  const dx = p.x - c.center.x;
+  const dz = p.z - c.center.z;
+  if (c.shape === "cylinder") return Math.hypot(dx, dz) < c.radiusM + footprint.radiusM;
+  // Box local axes: +X = right (cos yaw, 0, -sin yaw), +Z = forward (sin yaw, 0, cos yaw).
+  const localX = dx * Math.cos(c.yaw) - dz * Math.sin(c.yaw);
+  const localZ = dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw);
+  const outsideX = Math.max(Math.abs(localX) - c.halfExtents.x, 0);
+  const outsideZ = Math.max(Math.abs(localZ) - c.halfExtents.z, 0);
+  return Math.hypot(outsideX, outsideZ) < footprint.radiusM;
+}
+
+function checkLayout(world: WorldData, add: Add): void {
+  const limits = WORLD_LAYOUT_LIMITS;
+  const edges = new Map(world.edges.map((e) => [e.id as string, e]));
+  const nodes = new Map(world.nodes.map((n) => [n.id as string, n]));
+  const junctions = new Map(world.junctions.map((j) => [j.fromEdgeId as string, j]));
+
+  // Reachability on foot (players start on foot) from every player spawn, and reachable exits.
+  const footEdges = world.edges.filter((e) => e.allowedModes.includes("foot")).map((e) => e.id as string);
+  const reachedByAny = new Set<string>();
+  for (const spawn of world.spawns.filter((s) => s.kind === "player")) {
+    const reached = reachableEdges(world, [spawn.placement.edgeId], "foot");
+    reached.forEach((id) => reachedByAny.add(id));
+    const missing = footEdges.filter((id) => !reached.has(id));
+    if (missing.length > 0) {
+      add("error", "disconnectedStart", `player spawn ${spawn.id} cannot reach on foot: ${missing.join(", ")}`, [spawn.id, ...missing]);
+    }
+  }
+  for (const node of world.nodes.filter((n) => n.kind === "exit")) {
+    if (!world.edges.some((e) => e.to === node.id && reachedByAny.has(e.id))) {
+      add("error", "unreachableExit", `exit ${node.id} cannot be reached on foot from any player spawn`, [node.id]);
+    }
+  }
+
+  // Every mode allowed on an edge must have a way on where the edge ends (branch or turnaround).
+  for (const edge of world.edges) {
+    if (nodes.get(edge.to)?.kind === "exit") continue;
+    const junction = junctions.get(edge.id);
+    for (const mode of edge.allowedModes) {
+      if (!junction?.branches.some((b) => b.allowedModes.includes(mode))) {
+        add("error", "missingTurnaround", `edge ${edge.id}: ${mode} has no branch or turnaround at ${edge.to}`, [edge.id, ...(junction ? [junction.id] : [])]);
+      }
+    }
+  }
+
+  // Ground: grade limits per edge and turn-path ends on the ground of the edges they join.
+  for (const edge of world.edges) {
+    let steepest = 0;
+    for (let i = 1; i < edge.centerline.length; i++) {
+      const a = edge.centerline[i - 1]!;
+      const b = edge.centerline[i]!;
+      const run = Math.hypot(b.x - a.x, b.z - a.z);
+      const rise = Math.abs(b.y - a.y);
+      if (rise > 0) steepest = Math.max(steepest, run > 0 ? rise / run : Infinity);
+    }
+    const percent = (n: number) => `${(n * 100).toFixed(1)}%`;
+    if (edge.allowedModes.some((m) => m !== "foot") && steepest > limits.maxWheeledGrade) {
+      add("error", "illegalVehicleRoute", `edge ${edge.id}: grade ${percent(steepest)} exceeds ${percent(limits.maxWheeledGrade)} for wheeled modes`, [edge.id]);
+    } else if (steepest > limits.maxFootGrade) {
+      add("error", "invalidValue", `edge ${edge.id}: grade ${percent(steepest)} exceeds ${percent(limits.maxFootGrade)} for foot routes`, [edge.id]);
+    }
+  }
+  for (const junction of world.junctions) {
+    for (const branch of junction.branches) {
+      const ends: [Vec3 | undefined, RouteEdge | undefined, string][] = [
+        [branch.turnPath[0], edges.get(junction.fromEdgeId), "start"],
+        [branch.turnPath[branch.turnPath.length - 1], edges.get(branch.toEdgeId), "end"],
+      ];
+      for (const [point, edge, which] of ends) {
+        if (!point || !edge) continue;
+        const offset = point.y - groundHeightNear(edge, point.x, point.z);
+        if (Math.abs(offset) > limits.groundToleranceM) {
+          add("error", "invalidValue", `junction ${junction.id}: ${branch.side} turn path ${which} is ${offset.toFixed(2)} m off the ground of ${edge.id}`, [junction.id]);
+        }
+      }
+    }
+  }
+
+  // Spawns: clear of colliders and of each other.
+  const placed = world.spawns.map((spawn) => ({ spawn, position: spawnPosition(world, spawn)!, footprint: footprintOf(spawn) }));
+  for (const { spawn, position, footprint } of placed) {
+    for (const collider of world.colliders) {
+      if (overlapsCollider(position, footprint, collider)) {
+        add("error", "spawnInsideCollider", `spawn ${spawn.id} overlaps collider ${collider.id}`, [spawn.id, collider.id]);
+      }
+    }
+  }
+  for (let i = 0; i < placed.length; i++) {
+    for (let j = i + 1; j < placed.length; j++) {
+      const a = placed[i]!;
+      const b = placed[j]!;
+      const verticalOverlap = a.position.y < b.position.y + b.footprint.heightM && b.position.y < a.position.y + a.footprint.heightM;
+      const horizontal = Math.hypot(a.position.x - b.position.x, a.position.z - b.position.z);
+      if (verticalOverlap && horizontal < a.footprint.radiusM + b.footprint.radiusM) {
+        add("error", "invalidValue", `spawns ${a.spawn.id} and ${b.spawn.id} overlap (${horizontal.toFixed(2)} m apart)`, [a.spawn.id, b.spawn.id]);
+      }
+    }
+  }
 }
