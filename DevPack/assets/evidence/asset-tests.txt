@@ -1,0 +1,33 @@
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Length in header does not match actual data length: 12764 != 40
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+✔ importing the public API does not eagerly register the glTF plugin (0.889162ms)
+✔ catalog URL supports a deployment subpath and rejects unknown IDs (0.403371ms)
+✔ official loader: metre bounds, upright/forward/right landmarks, origin, technical metadata and yaw (386.859552ms)
+✔ repeated and concurrent loads own separate resources and dispose to baseline (17.743231ms)
+✔ HTTP 404 reports a named asset error and leaves no scene resources (1.279432ms)
+✔ invalid GLB reports a named asset error and leaves no scene resources (1.153598ms)
+✔ truncated GLB reports a named asset error and leaves no scene resources (1.109695ms)
+✔ pre-cancelled load performs no fetch (0.752972ms)
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+✔ timeout and scene disposal abort in-flight work without attaching resources (10.435926ms)
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+BJS - [20:10:07]: Babylon.js v9.37.0 - Null engine
+✔ late successful decode after cancellation is disposed (12.084471ms)
+✔ scene disposal releases an already loaded instance; right-handed scenes are rejected (3.679309ms)
+✔ right-handed scenes cannot silently change the project coordinate convention (0.835022ms)
+✔ source export is byte-reproducible and checked-in runtime/metadata have not drifted (7.008164ms)
+✔ real provenance validates schema 1 without warnings, and catalog covers every runtime file (1.141551ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1682.695353

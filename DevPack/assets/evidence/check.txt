@@ -1,0 +1,373 @@
+
+> check
+> npm run typecheck && npm run build && npm run test && npm run validate && npm run smoke
+
+
+> typecheck
+> npm run typecheck --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json
+
+
+> @stopthatguy/client@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/server@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/shared@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/simulation@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json
+
+
+> @stopthatguy/test-support@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> build
+> npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server
+
+
+> @stopthatguy/shared@0.0.0 build
+> tsc -p tsconfig.build.json
+
+
+> @stopthatguy/simulation@0.0.0 build
+> tsc -p tsconfig.build.json
+
+
+> @stopthatguy/client@0.0.0 build
+> vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 472 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                           0.97 kB │ gzip:   0.57 kB
+dist/assets/postprocess.vertex-CM4S6Zlv.js                0.45 kB │ gzip:   0.30 kB
+dist/assets/rgbdDecode.fragment-TKHD7Yvo.js               0.51 kB │ gzip:   0.34 kB
+dist/assets/postprocess.vertex-DqZ9H1DQ.js                0.57 kB │ gzip:   0.35 kB
+dist/assets/rgbdDecode.fragment-DWzh7Sgh.js               0.65 kB │ gzip:   0.38 kB
+dist/assets/mesh.vertexData.functions-CD4JOR2q.js         0.93 kB │ gzip:   0.48 kB
+dist/assets/ddsTextureLoader-DPCHs6I5.js                  1.25 kB │ gzip:   0.62 kB
+dist/assets/logger-CuBYPcDK.js                            1.88 kB │ gzip:   0.82 kB
+dist/assets/logDepthDeclaration-R4--gx13.js               2.15 kB │ gzip:   0.85 kB
+dist/assets/hdrTextureLoader-BQVwkxK1.js                  2.31 kB │ gzip:   1.13 kB
+dist/assets/iesTextureLoader-D_8i95BZ.js                  2.46 kB │ gzip:   1.07 kB
+dist/assets/logDepthDeclaration-B-dvF4re.js               2.60 kB │ gzip:   0.86 kB
+dist/assets/tgaTextureLoader-CqhhocF6.js                  3.40 kB │ gzip:   1.35 kB
+dist/assets/cubemapToSphericalPolynomial-AdQm0UKb.js      3.56 kB │ gzip:   1.57 kB
+dist/assets/halfFloat-CXxwV7oo.js                         4.87 kB │ gzip:   1.80 kB
+dist/assets/helperFunctions-Ksp1eMgb.js                   6.57 kB │ gzip:   2.20 kB
+dist/assets/dds.pure-CnJeUDOS.js                          6.91 kB │ gzip:   2.51 kB
+dist/assets/helperFunctions-DbJtZjkV.js                   6.92 kB │ gzip:   2.32 kB
+dist/assets/exrTextureLoader-dvewcIoq.js                 13.09 kB │ gzip:   4.81 kB
+dist/assets/ktxTextureLoader-BZAJQvE6.js                 16.69 kB │ gzip:   4.91 kB
+dist/assets/basisTextureLoader-DStwAMzq.js               29.59 kB │ gzip:   8.93 kB
+dist/assets/default.vertex-C7jOJIxE.js                   29.86 kB │ gzip:   6.03 kB
+dist/assets/envTextureLoader-lXwOfx1V.js                 31.44 kB │ gzip:   8.82 kB
+dist/assets/default.vertex-DvQcpfVg.js                   50.31 kB │ gzip:   8.23 kB
+dist/assets/default.fragment-CM32k_RR.js                112.54 kB │ gzip:  23.03 kB
+dist/assets/default.fragment-DqQLxsl-.js                120.92 kB │ gzip:  23.16 kB
+dist/assets/index-C2bPGmRE.js                         1,081.73 kB │ gzip: 256.58 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 693ms
+
+> @stopthatguy/server@0.0.0 build
+> tsc -p tsconfig.build.json
+
+
+> test
+> npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts
+
+
+> @stopthatguy/simulation@0.0.0 test
+> tsx --conditions=stopthatguy-source --test test/*.test.ts
+
+▶ dependency boundaries
+  ✔ production dependencies are limited to @stopthatguy/shared (1.631671ms)
+  ✔ source imports only shared and its own modules, and reads no clocks, randomness, timers or host globals (1.401213ms)
+✔ dependency boundaries (4.158269ms)
+▶ package resolution
+  ✔ the compiled package resolves without the source condition and matches the source build (52.446242ms)
+✔ package resolution (52.635049ms)
+▶ seeded RNG
+  ✔ seed 0 matches the reference sequence (1.587119ms)
+  ✔ seed 1 matches the reference sequence (0.203473ms)
+  ✔ seed 20261116 matches the reference sequence (0.117806ms)
+  ✔ seed 4294967295 matches the reference sequence (0.092104ms)
+  ✔ a cloned state continues identically and independently (0.219339ms)
+  ✔ nextInt is in range and roughly uniform; nextFloat is in [0, 1) (4.727774ms)
+  ✔ rejects invalid seeds and ranges (0.56629ms)
+✔ seeded RNG (8.885703ms)
+▶ tick conversion
+  ✔ 30 Hz defaults give the documented tick counts (0.256469ms)
+✔ tick conversion (0.514416ms)
+▶ fixed-step clock
+  ✔ one second of 60 Hz frames yields exactly 30 steps (0.4863ms)
+  ✔ carries the sub-step remainder (0.396981ms)
+  ✔ bounds catch-up after a stall and reports dropped time (0.224508ms)
+  ✔ rejects invalid elapsed time without changing the clock (0.324836ms)
+✔ fixed-step clock (1.786109ms)
+▶ initial state
+  ✔ places players in join order on the world's spawns and schedules phases from tuning (4.066244ms)
+  ✔ rejects invalid setups (1.322524ms)
+✔ initial state (6.367855ms)
+▶ determinism
+  ✔ the same setup and inputs reproduce every snapshot and event (17.414927ms)
+  ✔ the seed selects the robber route reproducibly (8.849919ms)
+✔ determinism (26.590639ms)
+▶ fixed-step clock and phases
+  ✔ each step advances exactly one tick through countdown → intro → chase → results (9.077595ms)
+  ✔ zero-length countdown and intro start the chase on the first step (0.593068ms)
+  ✔ invalid fixed deltas throw and leave the state unchanged (1.381683ms)
+✔ fixed-step clock and phases (11.565126ms)
+▶ inputs
+  ✔ malformed adapter input throws before any change (0.670091ms)
+  ✔ edge actions apply exactly once despite resends; omitted players get neutral input (0.652739ms)
+  ✔ future actions are explicitly unavailable (0.411599ms)
+  ✔ an invalid movement kernel result is rejected (0.526736ms)
+✔ inputs (2.602787ms)
+▶ events and isolation
+  ✔ events drain once and drained copies cannot change the state (0.814236ms)
+  ✔ mutating a snapshot cannot corrupt internal state (0.451118ms)
+  ✔ setup data and frozen fixtures are not mutated (8.984513ms)
+  ✔ the state handle exposes no internals (0.3971ms)
+✔ events and isolation (10.89497ms)
+ℹ tests 30
+ℹ suites 10
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 373.242943
+
+> @stopthatguy/test-support@0.0.0 test
+> tsx --conditions=stopthatguy-source --test test/*.test.ts
+
+▶ fixture UI adapter
+  ✔ serves fixture views, notifies subscribers and only records intents (1.629733ms)
+  ✔ refuses views that are not labelled as fixture data (0.789631ms)
+✔ fixture UI adapter (3.858992ms)
+▶ fixture simulation setup
+  ✔ uses valid, normalized participant data and accepts overrides (0.941767ms)
+✔ fixture simulation setup (1.093715ms)
+▶ asset manifest validation
+  ✖ the repository's development manifest is explicitly empty and valid (6.458226ms)
+  ✔ a complete entry with matching files passes (0.804594ms)
+  ✔ a source outside the repository is only a warning (0.399699ms)
+  ✔ rejects: empty manifest not declared as empty (0.230249ms)
+  ✔ rejects: empty-development manifest listing assets (0.347634ms)
+  ✔ rejects: unknown top-level field (0.472155ms)
+  ✔ rejects: missing creator (1.144177ms)
+  ✔ rejects: missing field (0.405631ms)
+  ✔ rejects: invalid ID (0.345103ms)
+  ✔ rejects: absolute runtime path (0.351418ms)
+  ✔ rejects: path traversal (0.235002ms)
+  ✔ rejects: runtime path outside assets/ (0.213725ms)
+  ✔ rejects: duplicate IDs (0.200295ms)
+  ✔ rejects: duplicate runtime paths (0.209476ms)
+  ✔ rejects: missing runtime file (1.446708ms)
+  ✔ rejects: size mismatch (0.132187ms)
+  ✔ rejects: license without text or URL (0.08057ms)
+  ✔ rejects: missing license text (0.100359ms)
+  ✔ rejects: required attribution without text (0.229165ms)
+  ✔ rejects: generated asset without terms check date (0.156431ms)
+  ✔ rejects: unknown technical field (0.200954ms)
+  ✔ unreadable or invalid JSON is reported as malformed (0.445139ms)
+✖ asset manifest validation (21.591149ms)
+▶ fixture world
+  ✔ conforms to the world contract (5.029734ms)
+  ✔ represents turns, a dead-end turnaround, a single-lane alley, a foot-only shortcut and all route kinds (0.675461ms)
+  ✔ the checker reports broken references (not vacuous) (1.553999ms)
+✔ fixture world (9.269068ms)
+▶ fixture snapshots
+  ✔ lobby conforms to the state contract (2.92012ms)
+  ✔ chase conforms to the state contract (0.408865ms)
+  ✔ vehicles conforms to the state contract (0.433691ms)
+  ✔ wanted conforms to the state contract (0.417805ms)
+  ✔ arrested conforms to the state contract (1.062415ms)
+  ✔ captureResult conforms to the state contract (0.547387ms)
+  ✔ escapeResult conforms to the state contract (0.363474ms)
+  ✔ timeoutResult conforms to the state contract (0.245978ms)
+  ✔ cover the required scenarios (0.602783ms)
+  ✔ a capture winner keeps the win despite a theft deduction (0.203226ms)
+  ✔ the checker reports inconsistent ownership (not vacuous) (0.680979ms)
+✔ fixture snapshots (9.115117ms)
+▶ fixture events
+  ✔ sequences have increasing IDs and non-decreasing ticks (0.409891ms)
+  ✔ together cover every event type (0.250593ms)
+  ✔ matchEnded carries the same result as the results snapshot (0.149516ms)
+✔ fixture events (1.069964ms)
+▶ fixture views
+  ✔ lobby conforms and is labelled as fixture data (0.391479ms)
+  ✔ chase conforms and is labelled as fixture data (0.084523ms)
+  ✔ arrest conforms and is labelled as fixture data (0.08945ms)
+  ✔ captureResults conforms and is labelled as fixture data (0.079032ms)
+  ✔ noWinnerResults conforms and is labelled as fixture data (0.091118ms)
+  ✔ cover lobby, chase, arrest and results (0.128686ms)
+✔ fixture views (1.199639ms)
+✔ fixtures are frozen, JSON-serializable plain data (3.948256ms)
+▶ client commands
+  ✔ accepts ready (3.266835ms)
+  ✔ accepts unready (0.250812ms)
+  ✔ accepts host start (0.176652ms)
+  ✔ accepts input frame with edge actions (0.678307ms)
+  ✔ accepts neutral heartbeat frame (0.446312ms)
+  ✔ accepts maximum actions per frame (0.33426ms)
+  ✔ accepts resume handshake (0.394333ms)
+  ✔ accepts leave (0.140481ms)
+  ✔ accepts rematch (0.193326ms)
+  ✔ rejects null (0.515999ms)
+  ✔ rejects array (0.157819ms)
+  ✔ rejects string (0.127861ms)
+  ✔ rejects class instance (0.114029ms)
+  ✔ rejects missing type (0.103236ms)
+  ✔ rejects numeric type (0.118263ms)
+  ✔ rejects unknown command (0.110506ms)
+  ✔ rejects ready as string (0.116102ms)
+  ✔ rejects extra field on leave (0.247777ms)
+  ✔ rejects __proto__ injection (0.155189ms)
+  ✔ rejects frame missing brakeHeld (0.140055ms)
+  ✔ rejects frame brakeHeld undefined (0.112092ms)
+  ✔ rejects frame not an object (0.099474ms)
+  ✔ rejects negative sequence (0.109678ms)
+  ✔ rejects fractional sequence (0.098348ms)
+  ✔ rejects sequence above uint32 (0.104897ms)
+  ✔ rejects sequence as string (0.106864ms)
+  ✔ rejects NaN sequence (0.098806ms)
+  ✔ rejects Infinity clientTimeMs (0.122957ms)
+  ✔ rejects negative clientTimeMs (0.14546ms)
+  ✔ rejects held flag as number (0.107823ms)
+  ✔ rejects actions not an array (0.079272ms)
+  ✔ rejects oversized actions array (0.103362ms)
+  ✔ rejects invalid action kind (0.112563ms)
+  ✔ rejects action ID zero (0.106592ms)
+  ✔ rejects duplicate action IDs (0.107796ms)
+  ✔ rejects descending action IDs (0.10224ms)
+  ✔ rejects resume with oversized version label (0.094878ms)
+  ✔ rejects resume with path-like version label (0.12242ms)
+  ✔ rejects resume with protocol 0 (1.373599ms)
+  ✔ rejects huge unknown key (0.263639ms)
+✔ client commands (14.933703ms)
+▶ client-declared authoritative outcomes
+  ✔ rejects declare winner command (0.279531ms)
+  ✔ rejects capture result command (0.095731ms)
+  ✔ rejects match result command (0.098709ms)
+  ✔ rejects position in input frame (0.115671ms)
+  ✔ rejects velocity in input frame (0.149398ms)
+  ✔ rejects vehicle ownership in input frame (0.144547ms)
+  ✔ rejects hit result on sabotage action (0.148036ms)
+  ✔ rejects capture target on action (0.156491ms)
+  ✔ rejects reward claim on ready (0.112194ms)
+  ✔ rejects host claim on start (0.1422ms)
+  ✔ rejects client-assigned winner on rematch (0.106183ms)
+✔ client-declared authoritative outcomes (2.07444ms)
+▶ join options
+  ✔ create accepts create normal room (1.190896ms)
+  ✔ create accepts create practice room, nickname normalized (0.349421ms)
+  ✔ create accepts 16-code-point nickname with accents (0.112023ms)
+  ✔ join accepts join by code (0.404462ms)
+  ✔ join accepts lowercase code is normalized (0.148681ms)
+  ✔ create rejects empty nickname (0.867553ms)
+  ✔ create rejects 17-character nickname (0.120207ms)
+  ✔ create rejects 10k-character nickname (0.080143ms)
+  ✔ create rejects bidi override in nickname (0.489135ms)
+  ✔ create rejects newline in nickname (0.102179ms)
+  ✔ create rejects unknown mode (0.102388ms)
+  ✔ create rejects missing versions (0.08706ms)
+  ✔ create rejects host claim (0.083426ms)
+  ✔ join rejects ambiguous characters in code (0.148167ms)
+  ✔ join rejects short code (0.07426ms)
+  ✔ join rejects oversized code (0.073915ms)
+  ✔ join rejects numeric code (0.075594ms)
+  ✔ join rejects reconnect token smuggled in join (0.098647ms)
+✔ join options (5.402603ms)
+▶ validation output safety
+  ✔ error messages and paths do not echo input values (0.320052ms)
+  ✔ normalizes nicknames to NFC and collapses spaces (0.212036ms)
+  ✔ version mismatch names the differing fields (0.170539ms)
+  ✔ phase table matches the documented command lifecycle (0.109665ms)
+✔ validation output safety (1.011863ms)
+▶ world data validation
+  ✔ the fixture world is valid, including after a JSON round trip (6.171075ms)
+  ✔ non-object input is rejected, not thrown (0.48663ms)
+  ✔ rejects: duplicate node ID (2.08978ms)
+  ✔ rejects: duplicate edge ID (0.487617ms)
+  ✔ rejects: edge to a missing node (0.726085ms)
+  ✔ rejects: junction branch to a missing edge (0.412018ms)
+  ✔ rejects: spawn on a missing edge (0.598683ms)
+  ✔ rejects: escape route to a missing zone (0.837263ms)
+  ✔ rejects: escape route to a shop zone (0.698918ms)
+  ✔ rejects: robber route skipping a junction (1.92306ms)
+  ✔ rejects: no robber spawn (0.693656ms)
+  ✔ rejects: non-finite node coordinate (0.338441ms)
+  ✔ rejects: infinite turn-path point (0.47123ms)
+  ✔ rejects: zero-size box collider (0.185741ms)
+  ✔ rejects: negative cylinder radius (0.189313ms)
+  ✔ rejects: edge length not matching its centerline (0.346744ms)
+  ✔ rejects: lane offsets out of order (0.225746ms)
+  ✔ rejects: unknown travel mode (0.239025ms)
+  ✔ rejects: spawn lane outside its edge (0.239959ms)
+  ✔ rejects: scooter spawned on foot-only stairs (0.213111ms)
+  ✔ rejects: branch letting scooters into the alley (0.223124ms)
+  ✔ rejects: dead end without a forward turnaround (0.168738ms)
+  ✔ rejects: unknown top-level field (0.182652ms)
+  ✔ rejects: unsupported schema version (0.13563ms)
+  ✔ a missing escape route is a warning, not an error (0.458301ms)
+✔ world data validation (22.203439ms)
+ℹ tests 147
+ℹ suites 12
+ℹ pass 146
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 429.758168
+
+✖ failing tests:
+
+test at test/asset-manifest.test.ts:50:3
+✖ the repository's development manifest is explicitly empty and valid (6.458226ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      true,
+  +   'active',
+  +   1,
+  -   'empty-development',
+  -   0,
+      []
+    ]
+
+      at TestContext.<anonymous> (/home/umar/Downloads/StopThatGuy/.worktrees/T008/DevPack/packages/test-support/test/asset-manifest.test.ts:55:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1905:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ true, 'active', 1, [] ],
+    expected: [ true, 'empty-development', 0, [] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /home/umar/Downloads/StopThatGuy/.worktrees/T008/DevPack/packages/test-support
+npm error workspace @stopthatguy/test-support@0.0.0
+npm error location /home/umar/Downloads/StopThatGuy/.worktrees/T008/DevPack/packages/test-support
+npm error command failed
+npm error command sh -c tsx --conditions=stopthatguy-source --test test/*.test.ts

@@ -1,0 +1,166 @@
+{
+  "mode": "built",
+  "url": "http://127.0.0.1:5208/src/render/assets/demo.html?autoload=0",
+  "ok": true,
+  "browser": "Chrome/154.0.8037.92",
+  "steps": [
+    {
+      "name": "glTF loader chunk requested only after loading an asset",
+      "evidence": true
+    },
+    {
+      "name": "real GLB loads with correct metre bounds, origin and axes",
+      "evidence": {
+        "frames": 13,
+        "failure": null,
+        "inspection": {
+          "ok": true,
+          "errors": [],
+          "boundsM": {
+            "min": [
+              -0.18,
+              0,
+              -0.075
+            ],
+            "max": [
+              0.5,
+              1,
+              1
+            ]
+          },
+          "landmarksM": {
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "right": [
+              0.5,
+              0,
+              0
+            ]
+          },
+          "triangles": 128,
+          "materials": 3,
+          "textures": 0,
+          "animations": []
+        },
+        "counts": {
+          "meshes": 8,
+          "materials": 7,
+          "textures": 0,
+          "geometries": 7,
+          "transformNodes": 5,
+          "animations": 0
+        },
+        "baseline": {
+          "meshes": 4,
+          "materials": 4,
+          "textures": 0,
+          "geometries": 4,
+          "transformNodes": 0,
+          "animations": 0
+        },
+        "sharedSceneTextures": 1,
+        "totalTextures": 1,
+        "yaw": 0,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      }
+    },
+    {
+      "name": "positive 90 degree yaw points forward toward +X",
+      "evidence": {
+        "ok": true,
+        "errors": [],
+        "boundsM": {
+          "min": [
+            -0.18,
+            0,
+            -0.075
+          ],
+          "max": [
+            0.5,
+            1,
+            1
+          ]
+        },
+        "landmarksM": {
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "forward": [
+            1,
+            0,
+            2.220446049250313e-16
+          ],
+          "right": [
+            1.1102230246251565e-16,
+            0,
+            -0.5
+          ]
+        },
+        "triangles": 128,
+        "materials": 3,
+        "textures": 0,
+        "animations": []
+      }
+    },
+    {
+      "name": "unload and three reload cycles return resources to baseline",
+      "evidence": {
+        "meshes": 4,
+        "materials": 4,
+        "textures": 0,
+        "geometries": 4,
+        "transformNodes": 0,
+        "animations": 0
+      }
+    },
+    {
+      "name": "visible 404 failure has asset ID and no leaked scene resources",
+      "evidence": "Could not load visual asset dev.axis-marker: HTTP 404; retry or check the asset deployment"
+    },
+    {
+      "name": "visible invalid failure has asset ID and no leaked scene resources",
+      "evidence": "Could not load visual asset dev.axis-marker: Unable to load from binary data: RangeError: Length is out of range."
+    },
+    {
+      "name": "retry after each failure succeeds",
+      "evidence": {
+        "expectedErrors": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ]
+      }
+    },
+    {
+      "name": "page shutdown disposes renderer and scene resources",
+      "evidence": {
+        "meshes": 0,
+        "materials": 0,
+        "textures": 0,
+        "geometries": 0,
+        "transformNodes": 0,
+        "animations": 0
+      }
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

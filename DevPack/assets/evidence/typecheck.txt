@@ -1,0 +1,23 @@
+
+> typecheck
+> npm run typecheck --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json
+
+
+> @stopthatguy/client@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/server@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/shared@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @stopthatguy/simulation@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json
+
+
+> @stopthatguy/test-support@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
