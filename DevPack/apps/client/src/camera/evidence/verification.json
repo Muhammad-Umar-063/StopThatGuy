@@ -1,0 +1,71 @@
+{
+  "task": "T010",
+  "date": "2026-11-17",
+  "branch": "task/T010-follow-camera",
+  "baseCommit": "251e5f3807319513e683721c83f3f57648c2ce95",
+  "dataSource": "fixture",
+  "status": "in_review",
+  "commands": [
+    {
+      "command": "node_modules/.bin/tsx --conditions=stopthatguy-source --test apps/client/src/camera/*.test.ts",
+      "exitCode": 0,
+      "tests": 14,
+      "passed": 14,
+      "skipped": 0
+    },
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "tests": 277,
+      "passed": 277,
+      "includesNewCameraTests": false,
+      "notes": "Existing typecheck, build, unit/integration, data/assets validation and real browser/server smoke passed; camera tests run separately."
+    },
+    {
+      "command": "npm run typecheck --workspace @stopthatguy/client",
+      "exitCode": 0,
+      "notes": "Rerun after adding transient fixture-frame-rate test."
+    },
+    {
+      "command": "node apps/client/src/camera/browser/acceptance.mjs --dev",
+      "exitCode": 0,
+      "checks": 10,
+      "report": "browser-dev.json"
+    },
+    {
+      "command": "node apps/client/src/camera/browser/acceptance.mjs",
+      "exitCode": 0,
+      "checks": 10,
+      "report": "browser-built.json"
+    },
+    {
+      "command": "KEYBOARD_BROWSER_PORT=5410 ASSET_BROWSER_PORT=5510 npm run test:browser",
+      "exitCode": 0,
+      "notes": "10 keyboard browser tests; asset source and production gates passed."
+    }
+  ],
+  "browser": "Chrome/154.0.8037.92; headless SwiftShader WebGL; 1280x800 camera evidence",
+  "cameraAcceptance": [
+    "Automatic follow and 90-degree turn; shared yaw convention; no input bindings or pointer control",
+    "30/60/144 FPS: constant-velocity exact damping, transient fixture position difference below 0.12 m in both motion modes",
+    "Committed uphill/downhill and first-street narrow passage; fixed FOV and zero roll",
+    "Authored rotated boxes and capped cylinders, immediate wall retraction, eased recovery, camera volume and sight-line clearance",
+    "Frozen source data unchanged, explicit target reset, stalls, teleport, invalid delta handling",
+    "Live OS reduced-motion and user override; repeated remounts and idempotent disposal release scene resources and preference listeners"
+  ],
+  "screenshots": [
+    "built-turn.png",
+    "built-slope.png",
+    "built-wall.png",
+    "built-narrow.png",
+    "built-reduced.png"
+  ],
+  "limitations": [
+    "Scripted fixtures only. T009 live movement and T011 visual integration pending at T020.",
+    "Headless software renderer; no real-device performance or user camera-feel acceptance claimed.",
+    "Shared scripts/bootstrap unchanged. Explicit camera test commands need coordinator registration in standard gates after manual integration.",
+    "Existing Vite large-chunk warning and expected blockout world warning remain.",
+    "Cross-chat messaging unavailable; no coordinator delivery or registration claimed."
+  ],
+  "processes": "All acceptance-owned preview/browser processes stopped. No live preview left running; README provides launch command."
+}

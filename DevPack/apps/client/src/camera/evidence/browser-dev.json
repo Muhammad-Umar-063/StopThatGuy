@@ -1,0 +1,167 @@
+{
+  "mode": "dev",
+  "url": "http://127.0.0.1:5210/src/camera/browser/demo.html",
+  "dataSource": "fixture",
+  "ok": true,
+  "browser": "Chrome/154.0.8037.92",
+  "checks": [
+    {
+      "name": "real Babylon render loop runs with no camera input bindings",
+      "details": {
+        "frames": 9
+      }
+    },
+    {
+      "name": "keyboard-only navigation and playback",
+      "details": true
+    },
+    {
+      "name": "turn: 30/60/144 FPS, no wall penetration, level horizon, fixed FOV",
+      "details": [
+        {
+          "fps": 30,
+          "position": {
+            "x": 11.569878146849838,
+            "y": 3.7713252174996748,
+            "z": 39.99999999997383
+          },
+          "yaw": 1.570796326789664
+        },
+        {
+          "fps": 60,
+          "position": {
+            "x": 11.56987814684982,
+            "y": 3.7713252185186277,
+            "z": 39.99999999996915
+          },
+          "yaw": 1.5707963267887306
+        },
+        {
+          "fps": 144,
+          "position": {
+            "x": 11.569878146850275,
+            "y": 3.77132521801637,
+            "z": 39.99999999997143
+          },
+          "yaw": 1.5707963267891918
+        }
+      ]
+    },
+    {
+      "name": "slope: 30/60/144 FPS, no wall penetration, level horizon, fixed FOV",
+      "details": [
+        {
+          "fps": 30,
+          "position": {
+            "x": 21.54108519898575,
+            "y": 4.43607234659905,
+            "z": 40
+          },
+          "yaw": 1.5707963267948966
+        },
+        {
+          "fps": 60,
+          "position": {
+            "x": 21.54108519898573,
+            "y": 4.436072346599048,
+            "z": 40
+          },
+          "yaw": 1.5707963267948966
+        },
+        {
+          "fps": 144,
+          "position": {
+            "x": 21.541085198986174,
+            "y": 4.436072346599079,
+            "z": 40
+          },
+          "yaw": 1.5707963267948966
+        }
+      ]
+    },
+    {
+      "name": "wall: 30/60/144 FPS, no wall penetration, level horizon, fixed FOV",
+      "details": [
+        {
+          "fps": 30,
+          "position": {
+            "x": 4.700123402595282,
+            "y": 2.999958089684619,
+            "z": 29.999999999999996
+          },
+          "yaw": 1.5707963267948961
+        },
+        {
+          "fps": 60,
+          "position": {
+            "x": 4.700127363952881,
+            "y": 2.999956744317884,
+            "z": 29.999999999999996
+          },
+          "yaw": 1.5707963267948957
+        },
+        {
+          "fps": 144,
+          "position": {
+            "x": 4.700129898412777,
+            "y": 2.9999558835580418,
+            "z": 29.99999999999999
+          },
+          "yaw": 1.5707963267948943
+        }
+      ]
+    },
+    {
+      "name": "narrow: 30/60/144 FPS, no wall penetration, level horizon, fixed FOV",
+      "details": [
+        {
+          "fps": 30,
+          "position": {
+            "x": -20.69999999999997,
+            "y": 3,
+            "z": 60
+          },
+          "yaw": -1.5707963267948966
+        },
+        {
+          "fps": 60,
+          "position": {
+            "x": -20.69999999999995,
+            "y": 3,
+            "z": 60
+          },
+          "yaw": -1.5707963267948966
+        },
+        {
+          "fps": 144,
+          "position": {
+            "x": -20.700000000000305,
+            "y": 3,
+            "z": 60
+          },
+          "yaw": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "name": "drag and wheel never control the camera",
+      "details": true
+    },
+    {
+      "name": "live OS preference and restrained reduced-motion turn",
+      "details": {
+        "standardYaw": 1.0132576916185163,
+        "reducedYaw": 0.8171931291330606
+      }
+    },
+    {
+      "name": "user setting overrides OS and can return to system preference",
+      "details": true
+    },
+    {
+      "name": "four remounts and shutdown release cameras, media listeners, scene resources and render loop",
+      "details": true
+    }
+  ],
+  "errors": []
+}

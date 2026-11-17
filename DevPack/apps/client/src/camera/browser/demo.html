@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>T010 · Automatic camera fixture</title>
+    <style>
+      * { box-sizing: border-box; } body { margin: 0; background: #14252c; color: #f4f2e9; font: 16px/1.5 system-ui, sans-serif; }
+      header { padding: 16px 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; }
+      h1 { font-size: 20px; margin: 0; } p { margin: 0; color: #c6d4d7; font-size: 14px; }
+      nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+      button, select { min-height: 42px; padding: 8px 12px; border: 1px solid #9bb0b6; border-radius: 4px; color: inherit; background: #253d46; font: inherit; }
+      button:focus-visible, select:focus-visible, canvas:focus-visible { outline: 3px solid #f4be58; outline-offset: 2px; }
+      canvas { width: 100%; height: calc(100vh - 165px); min-height: 280px; display: block; }
+      footer { padding: 8px 24px; display: flex; justify-content: space-between; gap: 12px; font-size: 14px; flex-wrap: wrap; }
+      #status { font-variant-numeric: tabular-nums; color: #ffda91; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div><h1>Stop That Guy! · Camera lab</h1><p>Fixture motion · temporary blockout · live movement integration pending</p></div>
+      <nav aria-label="Camera fixture controls">
+        <label for="scenario">Scenario</label>
+        <select id="scenario"><option value="turn">90° turn</option><option value="slope">Slope</option><option value="wall">Wall obstruction</option><option value="narrow">Narrow street</option></select>
+        <button id="play">Pause</button><button id="restart">Restart</button>
+        <label for="motion">Motion</label><select id="motion"><option value="system">System preference</option><option value="reduced">Reduced</option><option value="standard">Standard</option></select>
+      </nav>
+    </header>
+    <canvas id="view" tabindex="0" aria-label="Automatic third-person camera fixture. No mouse controls."></canvas>
+    <footer><span>Tab to controls · Enter to activate · camera follows automatically</span><output id="status" aria-label="Camera state"></output></footer>
+    <script type="module" src="./demo.ts"></script>
+  </body>
+</html>
