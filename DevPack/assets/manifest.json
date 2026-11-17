@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "status": "empty-development",
+  "description": "Provenance manifest for shipped runtime assets (docs/ASSETS.md). No assets exist yet; T008 adds the first entries and switches status to \"active\". Validated by npm run validate.",
+  "assets": []
+}

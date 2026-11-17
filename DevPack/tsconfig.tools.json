@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // Node tooling: scripts/ (validate, smoke) and tests/ (cross-package checks).
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "customConditions": ["stopthatguy-source"],
+    "noEmit": true
+  },
+  "include": ["scripts", "tests"]
+}

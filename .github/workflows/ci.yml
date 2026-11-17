@@ -1,0 +1,49 @@
+# Required checks for Stop That Guy! The npm workspace lives in DevPack/ (the Git root is its parent).
+# Runs the same single command developers run locally: npm run check
+# (typecheck → build → tests → data validation → browser smoke check). No secrets are needed.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: npm run check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: DevPack
+    steps:
+      - uses: actions/checkout@v7
+
+      # Node 24 is the verified runtime (engines allow >= 22.12).
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: DevPack/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      # The smoke step uses the runner's preinstalled Google Chrome (headless, SwiftShader WebGL).
+      - name: Required checks
+        run: npm run check
+
+      - name: Upload smoke-check artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-check
+          path: DevPack/test-results/smoke/
+          if-no-files-found: ignore
+          retention-days: 14

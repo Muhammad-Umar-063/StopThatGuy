@@ -121,6 +121,7 @@ export type AuthoredRoute =
 
 /** Checks named in CITY.md "Graph and collision"; produced by world validation tooling (T004/T005). */
 export const WORLD_ISSUE_CODES = [
+  "duplicateId",
   "danglingReference",
   "disconnectedStart",
   "unreachableExit",

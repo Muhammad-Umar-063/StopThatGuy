@@ -47,6 +47,16 @@ Run checks appropriate to the changed behavior. Use meaningful rule tests, integ
 
 A task is done only when its acceptance checks pass, changes are integrated, and the coordinator records the evidence. Supply a short handoff using coordination/HANDOFF_TEMPLATE.md. Leave the working tree coherent; do not revert another person's changes. Never rewrite shared Git history or delete branches/work without authorization.
 
+## Git workflow
+
+User direction (17 November 2026):
+- Work in the existing checkout on `main`. Do not create branches or worktrees.
+- Do not stage, commit, amend, push, merge, rebase or tag. Leave task changes uncommitted for the user to review and commit; read-only Git commands are fine.
+- When a task's checks pass, set it to `in_review` with "awaiting user review and manual commit" and leave `integration_commit` unset. After the user commits, the coordinator verifies and records that commit and marks the task done. Uncommitted work is never "integrated".
+- This replaces the earlier permission for automatic local commits. Historical handoffs keep their original wording.
+
+Run `npm run check` from `DevPack/` before handing off; see docs/TESTING.md "Local verification workflow".
+
 ## Changes and permissions
 
 An explicit user request to change the game authorizes recording and implementing that change within scope. Do not repeatedly ask for confirmation of already authorized work. Pause only the affected action when essential information, credentials, a purchase, destructive operation, or required access is missing; continue independent work. Do not publish from a preparation-only task. Public release is performed when its release task is assigned and required access is available.

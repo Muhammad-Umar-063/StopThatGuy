@@ -126,24 +126,40 @@
       "id": "T004",
       "title": "Validation and integration tooling",
       "lane": "D",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T001",
         "T002",
         "T003"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (coordinator, Claude Code)",
+      "branch": "main (uncommitted; user commits manually)",
+      "base_commit": "c8758a1",
       "write_paths": [
         "scripts/",
         "tests/",
         "packages/test-support/",
-        ".github/"
+        "../.github/workflows/ (repository root, outside DevPack)",
+        "assets/manifest.json",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.tools.json",
+        ".gitignore",
+        "packages/shared/src/world.ts (issue-code addition)",
+        "AGENTS.md (git workflow rule)",
+        "docs/TESTING.md",
+        "docs/DECISIONS.md",
+        "README.md",
+        "CHANGELOG.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "coordination/handoffs/T004.md",
+        "npm run check exit 0 in workspace and in a clean-checkout copy after npm ci (simulation 30/30, test-support 147/147, root tests 3/3, validate passed, smoke passed)",
+        "negative checks: invalid world file, missing browser and injected console error each fail with exit 1",
+        "GitHub Actions workflow written at repo root; not yet run remotely"
+      ],
+      "blocker": "awaiting user review and manual commit"
     },
     {
       "id": "T005",

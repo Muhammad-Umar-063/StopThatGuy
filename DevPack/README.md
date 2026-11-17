@@ -6,7 +6,7 @@ This pack is the source of truth for developing a 3D multiplayer browser chase g
 
 ## Local development
 
-Verified on Linux with Node.js 24.22.0 and npm 11.19.1. `package.json` requires Node.js ≥ 22.12 (Vite 8 and Colyseus 0.18 minimum); only Node 24 has been tested. Run every command from this folder (the workspace root).
+Verified on Linux with Node.js 24.22.0 and npm 11.19.1. `package.json` requires Node.js ≥ 22.12 (Vite 8 and Colyseus 0.18 minimum); only Node 24 has been tested. The smoke check also needs Google Chrome, Chromium or Microsoft Edge (or `CHROME_PATH`). Run every command from this folder (the workspace root).
 
 ```bash
 npm ci                 # install exactly what package-lock.json pins
@@ -20,10 +20,12 @@ Workspaces: `apps/client` (Vite + Babylon.js), `apps/server` (Colyseus), `packag
 
 | Command | Purpose |
 |---|---|
-| `npm run typecheck` | `tsc --noEmit` for every workspace |
+| `npm run check` | **The required check:** `typecheck`, `build`, `test`, `validate`, `smoke`, in that order. Run it before every handoff; CI runs the same command. |
+| `npm run typecheck` | `tsc --noEmit` for every workspace plus `scripts/` and `tests/` |
 | `npm test` | Contract validation, fixture consistency and simulation tests (Node test runner via tsx). The compiled-package test is skipped until `npm run build` has run. |
 | `npm run build` | `packages/shared/dist`, `packages/simulation/dist`, then the client bundle → `apps/client/dist/` and the server JavaScript → `apps/server/dist/` |
-| `npm run check` | `typecheck`, `build`, then `test` (so compiled packages are tested too) |
+| `npm run validate` | World-data and asset-manifest validation (`scripts/validate-data.ts`); add `-- file.json` to check extra world files |
+| `npm run smoke` | Built server `/health` plus the built client rendered in headless Chrome, with no console errors (`scripts/smoke.ts`); needs `npm run build` first |
 | `npm run start:server` | Run the built server (after `npm run build`) |
 | `npm run preview:client` | Serve the built client at http://localhost:4173/ |
 
@@ -84,4 +86,4 @@ Forty-eight tasks are reviewable work packages, not forty-eight prompts or equal
 
 ## First action
 
-T001 (toolchain), T002 (shared contracts and fixtures) and T003 (fixed-step simulation foundation) are complete; see [coordination/handoffs/](coordination/handoffs/). T004 (validation and integration tooling) is next. Check [board.json](tasks/board.json) for the current status before starting work.
+T001–T003 are complete. T004 (validation and integration tooling) is implemented and awaiting the user's review and manual commit; see [coordination/handoffs/](coordination/handoffs/). The full verification workflow, CI and troubleshooting are in [TESTING.md](docs/TESTING.md#local-verification-workflow). Agents leave changes uncommitted (see AGENTS.md "Git workflow"). Check [board.json](tasks/board.json) for the current status before starting work.

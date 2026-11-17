@@ -1,9 +1,9 @@
-// Contract-conformance checks for fixtures (and, later, other plain data). Each returns a list of
-// human-readable issues; an empty list means consistent. These are referential/semantic checks the
-// TypeScript types cannot express. Full world validation (reachability, colliders) belongs to T004/T005.
+// Contract-conformance checks for fixtures (and other plain data). Each returns a list of human-readable
+// issues; an empty list means consistent. These are referential/semantic checks the TypeScript types
+// cannot express. World data is checked by validation/world.ts (validateWorldData); checkWorldConsistency
+// below is the message-only view kept for existing callers.
 import {
   AWARD_KINDS,
-  BRANCH_SIDES,
   CLIENT_CONNECTION_STATES,
   CONNECTION_STATUSES,
   DEDUCTION_REASONS,
@@ -22,13 +22,9 @@ import {
   QUALITY_PRESETS,
   ROBBER_AI_STATES,
   ROBBER_LOCOMOTION,
-  ROUTE_NODE_KINDS,
-  TRAVEL_MODES,
   VEHICLE_ACCESS,
   VEHICLE_AVAILABILITY,
   VEHICLE_TYPES,
-  WORLD_SCHEMA_VERSION,
-  ZONE_KINDS,
   parseNickname,
   parseRoomCode,
   type AuthoritativeSnapshot,
@@ -38,29 +34,15 @@ import {
   type PlayerRecord,
   type RouteEdge,
   type RouteProgress,
-  type TravelMode,
   type UiViewModel,
-  type Vec3,
-  type Volume,
   type WorldData,
 } from "@stopthatguy/shared";
+import { validateWorldData } from "../validation/world.js";
 
 const EPSILON_M = 0.01;
 
 const isOneOf = (value: unknown, allowed: readonly string[]) => typeof value === "string" && allowed.includes(value);
-const isFiniteVec = (v: Vec3) => [v.x, v.y, v.z].every(Number.isFinite);
-const samePoint = (a: Vec3, b: Vec3) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 1e-6;
 const isUint32 = (n: number) => Number.isInteger(n) && n >= 0 && n <= PROTOCOL_LIMITS.maxUint32;
-
-export function polylineLength(points: readonly Vec3[]): number {
-  let total = 0;
-  for (let i = 1; i < points.length; i++) {
-    const a = points[i - 1]!;
-    const b = points[i]!;
-    total += Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z);
-  }
-  return total;
-}
 
 function indexById<T extends { id: string }>(items: readonly T[], label: string, add: (m: string) => void): Map<string, T> {
   const map = new Map<string, T>();
@@ -71,138 +53,9 @@ function indexById<T extends { id: string }>(items: readonly T[], label: string,
   return map;
 }
 
-function volumeIssues(volume: Volume, label: string): string[] {
-  if (!isFiniteVec(volume.center)) return [`${label}: non-finite center`];
-  if (volume.shape === "box") {
-    const h = volume.halfExtents;
-    return h.x > 0 && h.y > 0 && h.z > 0 && Number.isFinite(volume.yaw) ? [] : [`${label}: box extents must be positive`];
-  }
-  return volume.radiusM > 0 && volume.heightM > 0 ? [] : [`${label}: cylinder size must be positive`];
-}
-
-const VEHICLE_MODE: Record<string, TravelMode> = { bicycle: "bicycle", scooter: "scooter", lift: "lift" };
-
+/** Messages of every world-validation issue (errors and warnings); empty for a valid world. */
 export function checkWorldConsistency(world: WorldData): string[] {
-  const issues: string[] = [];
-  const add = (m: string) => issues.push(m);
-  if (world.schemaVersion !== WORLD_SCHEMA_VERSION) add(`schemaVersion ${world.schemaVersion} ≠ ${WORLD_SCHEMA_VERSION}`);
-
-  const sectors = indexById(world.sectors, "sector", add);
-  const nodes = indexById(world.nodes, "node", add);
-  const edges = indexById(world.edges, "edge", add);
-  indexById(world.junctions, "junction", add);
-  indexById([...world.colliders, ...world.cameraObstructions], "collider", add);
-  const zones = indexById(world.zones, "zone", add);
-  indexById(world.spawns, "spawn", add);
-  indexById(world.routes, "route", add);
-
-  for (const node of world.nodes) {
-    if (!sectors.has(node.sectorId)) add(`node ${node.id}: unknown sector`);
-    if (!isOneOf(node.kind, ROUTE_NODE_KINDS)) add(`node ${node.id}: invalid kind`);
-    if (!isFiniteVec(node.position)) add(`node ${node.id}: non-finite position`);
-  }
-
-  for (const edge of world.edges) {
-    const from = nodes.get(edge.from);
-    const to = nodes.get(edge.to);
-    if (!from || !to) add(`edge ${edge.id}: unknown endpoint node`);
-    if (!sectors.has(edge.sectorId)) add(`edge ${edge.id}: unknown sector`);
-    const first = edge.centerline[0];
-    const last = edge.centerline[edge.centerline.length - 1];
-    if (edge.centerline.length < 2 || !first || !last || !edge.centerline.every(isFiniteVec)) {
-      add(`edge ${edge.id}: centerline needs ≥ 2 finite points`);
-    } else {
-      if (from && !samePoint(first, from.position)) add(`edge ${edge.id}: centerline does not start at ${edge.from}`);
-      if (to && !samePoint(last, to.position)) add(`edge ${edge.id}: centerline does not end at ${edge.to}`);
-      const measured = polylineLength(edge.centerline);
-      if (Math.abs(measured - edge.lengthM) > EPSILON_M) add(`edge ${edge.id}: lengthM ${edge.lengthM} ≠ centerline ${measured.toFixed(3)}`);
-    }
-    const lanes = edge.laneOffsetsM;
-    if (lanes.length === 0 || !lanes.every((o, i) => Number.isFinite(o) && (i === 0 || o > lanes[i - 1]!))) {
-      add(`edge ${edge.id}: lane offsets must be non-empty, finite and ascending`);
-    }
-    if (edge.allowedModes.length === 0 || !edge.allowedModes.every((m) => isOneOf(m, TRAVEL_MODES))) {
-      add(`edge ${edge.id}: invalid allowedModes`);
-    }
-    if (edge.speedLimitMps !== null && !(edge.speedLimitMps > 0)) add(`edge ${edge.id}: speed limit must be positive`);
-  }
-
-  const junctionsByEdge = new Map(world.junctions.map((j) => [j.fromEdgeId as string, j]));
-  for (const j of world.junctions) {
-    const from = edges.get(j.fromEdgeId);
-    if (!nodes.has(j.nodeId)) add(`junction ${j.id}: unknown node`);
-    if (!from) add(`junction ${j.id}: unknown incoming edge`);
-    else {
-      if (from.to !== j.nodeId) add(`junction ${j.id}: incoming edge does not end at its node`);
-      if (!(j.window.startM >= 0 && j.window.startM < j.window.endM && j.window.endM <= from.lengthM + EPSILON_M)) {
-        add(`junction ${j.id}: window outside incoming edge`);
-      }
-    }
-    if (j.branches.length === 0) add(`junction ${j.id}: no branches`);
-    const sides = j.branches.map((b) => b.side);
-    if (new Set(sides).size !== sides.length) add(`junction ${j.id}: duplicate branch side`);
-    for (const b of j.branches) {
-      const target = edges.get(b.toEdgeId);
-      if (!isOneOf(b.side, BRANCH_SIDES)) add(`junction ${j.id}: invalid side`);
-      if (!target) add(`junction ${j.id}: unknown branch edge ${b.toEdgeId}`);
-      else {
-        if (target.from !== j.nodeId) add(`junction ${j.id}: branch ${b.toEdgeId} does not start at the junction node`);
-        if (b.allowedModes.length === 0 || !b.allowedModes.every((m) => target.allowedModes.includes(m))) {
-          add(`junction ${j.id}: branch ${b.side} modes must be a non-empty subset of ${target.id}`);
-        }
-      }
-    }
-  }
-
-  // Every incoming edge to a non-exit node needs a way on; dead ends need a forward turnaround.
-  for (const edge of world.edges) {
-    const end = nodes.get(edge.to);
-    if (!end || end.kind === "exit") continue;
-    const j = junctionsByEdge.get(edge.id);
-    if (!j) add(`edge ${edge.id}: no junction where it ends (player would be stranded)`);
-    else if (end.kind === "deadEnd" && !j.branches.some((b) => b.side === "forward")) add(`edge ${edge.id}: dead end without turnaround`);
-  }
-
-  for (const c of [...world.colliders, ...world.cameraObstructions]) issues.push(...volumeIssues(c, `collider ${c.id}`));
-  for (const z of world.zones) {
-    if (!isOneOf(z.kind, ZONE_KINDS)) add(`zone ${z.id}: invalid kind`);
-    if (!sectors.has(z.sectorId)) add(`zone ${z.id}: unknown sector`);
-    issues.push(...volumeIssues(z.volume, `zone ${z.id}`));
-  }
-
-  for (const s of world.spawns) {
-    const edge = edges.get(s.placement.edgeId);
-    if (!edge) {
-      add(`spawn ${s.id}: unknown edge`);
-      continue;
-    }
-    issues.push(...placementIssues(edge, s.placement.distanceM, s.placement.laneIndex, `spawn ${s.id}`));
-    if (s.kind === "vehicle") {
-      if (!isOneOf(s.vehicleType, VEHICLE_TYPES) || !isOneOf(s.access, VEHICLE_ACCESS)) add(`spawn ${s.id}: invalid vehicle`);
-      const mode = VEHICLE_MODE[s.vehicleType];
-      if (mode && !edge.allowedModes.includes(mode)) add(`spawn ${s.id}: ${s.vehicleType} not allowed on ${edge.id}`);
-    }
-  }
-
-  for (const r of world.routes) {
-    if (r.edgeIds.length === 0) add(`route ${r.id}: empty`);
-    r.edgeIds.forEach((edgeId, i) => {
-      const edge = edges.get(edgeId);
-      if (!edge) return add(`route ${r.id}: unknown edge ${edgeId}`);
-      if (r.kind === "lift" && !edge.allowedModes.includes("lift")) add(`route ${r.id}: lift not allowed on ${edgeId}`);
-      const next = r.edgeIds[i + 1];
-      if (next !== undefined && !junctionsByEdge.get(edgeId)?.branches.some((b) => b.toEdgeId === next)) {
-        add(`route ${r.id}: no junction branch from ${edgeId} to ${next}`);
-      }
-    });
-    if (r.kind === "robberEscape") {
-      const exitZone = zones.get(r.exitZoneId);
-      if (exitZone?.kind !== "escape") add(`route ${r.id}: exitZoneId must reference an escape zone`);
-      const lastEdge = edges.get(r.edgeIds[r.edgeIds.length - 1] ?? "");
-      if (!lastEdge || nodes.get(lastEdge.to)?.kind !== "exit") add(`route ${r.id}: must end at an exit node`);
-    }
-  }
-  return issues;
+  return validateWorldData(world).issues.map((issue) => issue.message);
 }
 
 function placementIssues(edge: RouteEdge, distanceM: number, laneIndex: number, label: string): string[] {

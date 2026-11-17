@@ -41,3 +41,10 @@
 - Added a seeded sfc32 RNG with explicit state and a caller-owned fixed-step accumulator with bounded catch-up.
 - Added the pure movement interface (`@stopthatguy/simulation/movement`) and a hold-position placeholder kernel; movement rules arrive in T009.
 - Extended the simulation contract with `SimulationSetup.roomCode` and `ValidatedPlayerInput.sequence`. Fixed the fixture checker for the results phase. The root build now compiles shared, then simulation, then the apps, and `check` runs typecheck, build, then tests.
+
+## 2026-11-17 — T004 validation and integration tooling (awaiting manual commit)
+
+- `npm run check` is now the single required command: typecheck → build → test → validate → smoke. Added `npm run validate` and `npm run smoke`, and typechecking for `scripts/` and `tests/`.
+- Added a browser smoke check of the built server (`/health` versions) and the built client (renderer starts, frames advance, no console errors) in headless Chrome, with bounded timeouts and cleanup limited to the processes it started.
+- Added world-data validation with 22 deliberately invalid samples, an asset-manifest validation skeleton with an explicitly empty development manifest, fixture adapters (`createFixtureUiAdapter`, `createFixtureSimulationSetup`) and cross-package boundary tests.
+- Added GitHub Actions CI at the repository root, the clean-checkout workflow in TESTING.md, and the user's manual-commit rule in AGENTS.md and DECISIONS.md.

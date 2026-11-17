@@ -2,10 +2,11 @@
   "name": "@stopthatguy/test-support",
   "version": "0.0.0",
   "private": true,
-  "description": "Deterministic TEST DATA fixtures and consistency checks. Development/test use only; never a production dependency.",
+  "description": "Deterministic TEST DATA, fixture adapters and data validators. Development/test use only; never a production dependency.",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",

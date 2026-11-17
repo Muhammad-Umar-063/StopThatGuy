@@ -4,3 +4,5 @@ export * from "./snapshots.js";
 export * from "./views.js";
 export * from "./commands.js";
 export * from "./consistency.js";
+export * from "./invalid-worlds.js";
+export * from "./adapters.js";
