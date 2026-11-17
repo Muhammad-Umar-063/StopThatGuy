@@ -166,39 +166,56 @@
       "id": "T005",
       "title": "First street and route blockout",
       "lane": "D",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T004"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (coordinator; T005 implementer)",
+      "branch": "task/T005-street-graph (.worktrees/T005)",
+      "base_commit": "46f57d4",
       "write_paths": [
-        "packages/world/"
+        "packages/world/",
+        "packages/test-support/src/validation/world.ts (lease: layout checks)",
+        "packages/test-support/src/fixtures/invalid-worlds.ts (lease: layout samples)",
+        "scripts/validate-data.ts (lease: register authored world)",
+        "tests/street-world.test.ts (lease: new root integration test)",
+        "package.json (lease: root scripts.build order only)",
+        "package-lock.json (lease: packages/world workspace entry only)",
+        "coordination/handoffs/T005.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "coordination/handoffs/T005.md (in .worktrees/T005)",
+        "npm ci in .worktrees/T005/DevPack: 115 packages, 0 vulnerabilities (lockfile in sync)",
+        "npm run check exit 0: simulation 30/30, test-support 155/155, world 14/14, root tests 5/5, validate (first-street-1: 0 errors, 1 expected warning), smoke passed",
+        "real simulation runs 6 players on first-street-1 for 400 ticks; validator geometry matches simulation poseOnRoute to 1e-9",
+        "git diff --check clean; uncommitted on task/T005-street-graph"
+      ],
+      "blocker": "awaiting user review, manual commit and integration"
     },
     {
       "id": "T006",
       "title": "Room and session lifecycle",
       "lane": "A",
-      "status": "ready",
+      "status": "in_progress",
       "depends_on": [
         "T004"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat A",
+      "branch": "task/T006-room-lifecycle (.worktrees/T006)",
+      "base_commit": "46f57d4",
       "write_paths": [
         "apps/server/src/rooms/",
         "apps/server/src/adapters/",
-        "apps/server/src/validation/"
+        "apps/server/src/validation/",
+        "apps/server/src/bootstrap/main.ts (lease: register room lifecycle and create/join routes)",
+        "apps/server/package.json (lease: @stopthatguy/simulation dependency; @colyseus/sdk 0.18.10 and @stopthatguy/test-support devDependencies; test script; @stopthatguy/world dependency only after T005 is integrated)",
+        "apps/server/tsconfig.build.json (lease: exclude test files from the production build only)",
+        "coordination/handoffs/T006.md"
       ],
       "integration_commit": null,
       "evidence": [],
-      "blocker": null
+      "blocker": "partial: package-lock.json lease (held by T005) and the runtime world source (@stopthatguy/world, T005) transfer only after T005 is integrated into main"
     },
     {
       "id": "T007",
@@ -208,11 +225,12 @@
       "depends_on": [
         "T004"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat B (reserved; not started)",
+      "branch": "task/T007-keyboard-input (.worktrees/T007)",
+      "base_commit": "46f57d4",
       "write_paths": [
-        "apps/client/src/input/keyboard/"
+        "apps/client/src/input/keyboard/",
+        "coordination/handoffs/T007.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -222,22 +240,24 @@
       "id": "T008",
       "title": "Asset workflow and provenance",
       "lane": "C",
-      "status": "ready",
+      "status": "in_progress",
       "depends_on": [
         "T004"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat C",
+      "branch": "task/T008-asset-pipeline (.worktrees/T008)",
+      "base_commit": "46f57d4",
       "write_paths": [
         "assets/",
         "assets-source/",
         "scripts/assets/",
-        "apps/client/src/render/assets/"
+        "apps/client/src/render/assets/",
+        "apps/client/public/assets/",
+        "coordination/handoffs/T008.md"
       ],
       "integration_commit": null,
       "evidence": [],
-      "blocker": null
+      "blocker": "partial: approved dependency @babylonjs/loaders 9.37.0 (+ required peer babylonjs-gltf2interface 9.37.0) is added by the coordinator in main after T005 integration; until it reaches task/T008-asset-pipeline, only a local --no-save install is allowed and T008 cannot be in_review"
     },
     {
       "id": "T009",
