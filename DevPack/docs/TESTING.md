@@ -108,3 +108,21 @@ tests and the asset dev/built acceptance runners; CI runs it after the full chec
 Browser gates default to ports 5207 and 5208; set KEYBOARD_BROWSER_PORT and
 ASSET_BROWSER_PORT to the assigned worktree ports for parallel runs. Asset browser
 artifacts default to ignored test-results/assets, keeping tracked evidence stable. They shut down only their own processes. See coordination/integration/BATCH_1.md.
+
+## Batch 2 verification
+
+`npm run check` includes camera and lobby unit tests, default road movement on
+the authored world, both category manifests and cross-manifest conflicts, and
+original environment export/geometry checks. `npm run test:browser` runs keyboard,
+lobby (source and built), asset source/built, camera source/built and street
+low/medium rendering plus reload/disposal sequentially. CI runs both commands.
+
+Camera uses strict port 5210 and street 5211; lobby uses 5212 for built preview.
+Avoid parallel software-rendered browser suites on one machine. These isolated
+fixture previews are component acceptance; T020 owns real online chase assembly.
+Chrome/SwiftShader results do not establish Android or low-end GPU performance.
+
+Artifacts default to ignored test-results subdirectories; CI uploads them.
+CAMERA_EVIDENCE_DIR and ENVIRONMENT_EVIDENCE_DIR explicitly select curated
+tracked evidence destinations when needed. Do not refresh committed screenshots
+merely by running normal verification.

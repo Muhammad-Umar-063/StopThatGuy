@@ -418,11 +418,11 @@ describe("keyboard input in headless Chrome", { timeout: 120_000 }, () => {
     const { targetId } = await browserCdp.send("Target.createTarget", { url: "about:blank" });
     try {
       const deadline = Date.now() + TIMEOUT.call;
-      while ((await evaluate<string>("document.visibilityState")) !== "hidden") {
-        assert.ok(Date.now() < deadline, "page did not become hidden");
+      while (!(await evaluate<boolean>("document.visibilityState === 'hidden' && lifecycle.includes('blur')"))) {
+        assert.ok(Date.now() < deadline, "page did not emit both hidden and blur");
         await sleep(50);
       }
-      assert.deepEqual(await evaluate<string[]>("lifecycle"), ["blur", "hidden"], "real browser events");
+      assert.deepEqual((await evaluate<string[]>("lifecycle")).sort(), ["blur", "hidden"], "both real browser events; their ordering is browser-defined");
       assert.deepEqual(await fixture<Held>("held()"), NEUTRAL);
     } finally {
       await browserCdp.send("Target.activateTarget", { targetId: pageTargetId });

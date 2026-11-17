@@ -59,8 +59,9 @@ then open `/src/render/environment/preview.html`. Native buttons plus L/M qualit
 and C viewpoint keys work without a mouse. The main application still boots its
 smoke scene until later gameplay assembly.
 
-At serial integration, append the explicit environment unit command and browser
-command above to standard test scripts alongside the camera/lobby commands.
+The environment unit command runs through root `npm run test:environment`,
+`npm run test` and `npm run check`; its browser command is included in root
+`npm run test:browser` alongside the camera/lobby commands.
 The standalone preview requires no root bootstrap or Vite entry change. Catalog
 registration and individual/combined category validation are included in T011;
 core asset provenance and calibration coverage are preserved.

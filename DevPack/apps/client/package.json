@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
-    "test": "tsx --conditions=stopthatguy-source --test src/input/keyboard/*.test.ts src/ui/lobby/*.test.ts",
+    "test": "tsx --conditions=stopthatguy-source --test src/input/keyboard/*.test.ts src/ui/lobby/*.test.ts src/camera/*.test.ts",
     "test:browser": "tsx --test src/input/keyboard/browser/keyboard.browser.test.ts && tsx --test src/ui/lobby/browser/lobby.browser.test.ts"
   },
   "dependencies": {

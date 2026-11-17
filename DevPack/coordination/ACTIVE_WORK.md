@@ -324,3 +324,9 @@ Root now owns T010 camera files for acceptance maintenance: browser output goes
 to ignored test-results/camera by default, with explicit CAMERA_EVIDENCE_DIR
 for curated evidence. No camera behavior change; prevents test runs dirtying
 tracked screenshots. Root serially registers all new tests after merging T012.
+
+Root integration test-race fixes in main: keyboard/browser/keyboard.browser.test.ts
+waits for both real blur and hidden events without requiring their browser-defined
+order; scripts/assets/browser.mjs tolerates a missing documentElement during
+navigation while waiting for the explicit ready state. Both existing failure,
+neutral-input and resource assertions remain.

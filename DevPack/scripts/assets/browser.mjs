@@ -110,7 +110,7 @@ try {
   const snapshot = () => evaluate('window.__assetDemo.snapshot()');
   const click = (id) => evaluate(`document.getElementById(${JSON.stringify(id)}).click()`);
   const state = async (wanted) => until(`asset state ${wanted}`, async () => {
-    const actual = await evaluate('document.documentElement.dataset.assetState');
+    const actual = await evaluate('document.documentElement?.dataset.assetState');
     if (actual === 'failed' && wanted === 'ready') throw new Error(await evaluate('document.getElementById("status").textContent'));
     return actual === wanted;
   });

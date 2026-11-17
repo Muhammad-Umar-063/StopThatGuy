@@ -39,14 +39,14 @@ jobs:
       - name: Required checks
         run: npm run check
 
-      - name: Keyboard and asset browser acceptance
+      - name: Keyboard, lobby, camera, asset and street browser acceptance
         run: npm run test:browser
 
-      - name: Upload smoke-check artifacts
+      - name: Upload verification artifacts
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: smoke-check
-          path: DevPack/test-results/smoke/
+          name: verification
+          path: DevPack/test-results/
           if-no-files-found: ignore
           retention-days: 14

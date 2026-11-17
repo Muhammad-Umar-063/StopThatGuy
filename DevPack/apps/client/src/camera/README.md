@@ -58,13 +58,9 @@ screenshots and writes `test-results/camera/browser-{dev,built}.json` (ignored).
 Set `CAMERA_EVIDENCE_DIR` explicitly to refresh curated evidence. Rendering uses headless
 Chromium/SwiftShader; it is not device/GPU performance evidence.
 
-The camera unit tests are typechecked by the existing client test tsconfig but
-must currently be run explicitly: shared package scripts are reserved and leased
-to T012. After manual integration, the coordinator should append
-`src/camera/*.test.ts` to the client `test` script and add both camera browser
-commands to the browser gate, serializing use of port 5210. No package/config or
-bootstrap files were changed here. `npm run check` and the existing isolated
-keyboard/asset browser suite remain separate regression gates.
+The camera unit tests run in the standard client/root test commands. Both camera
+browser commands run in the root browser gate, serializing port 5210. Fixture
+preview output and browser profiles are ignored; curated evidence is opt-in.
 
 Live T009 movement, T011 final street visuals, network interpolation, spectator
 controls, device performance and user camera-feel acceptance remain later
