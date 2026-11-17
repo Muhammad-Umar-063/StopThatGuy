@@ -91,7 +91,7 @@
       "id": "T003",
       "title": "Fixed-step simulation foundation",
       "lane": "A",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T002"
       ],
@@ -111,13 +111,14 @@
         "README.md",
         "CHANGELOG.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "50d552d",
       "evidence": [
         "coordination/handoffs/T003.md",
         "npm run check (typecheck → build → test) exit 0: simulation 30/30, shared/fixtures 97/97",
         "replay equality, seeded choice, RNG reference, tick/phase schedule, invalid delta/input, exactly-once actions, event drain, isolation and immutability tests",
         "compiled dist resolves under plain Node and matches the source build",
-        "dev/built server /health and client dev/preview in headless Chrome 154 OK"
+        "dev/built server /health and client dev/preview in headless Chrome 154 OK",
+        "committed on main at 50d552d; clean npm ci + npm run check re-run on the committed tree (exit 0, 30/30 + 97/97)"
       ],
       "blocker": null
     },
@@ -125,7 +126,7 @@
       "id": "T004",
       "title": "Validation and integration tooling",
       "lane": "D",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T001",
         "T002",

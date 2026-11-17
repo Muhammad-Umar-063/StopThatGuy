@@ -4,19 +4,19 @@ Updated: 17 November 2026.
 
 Coordinator: Chat D (Claude Code).
 Repository / remote: Git root is the parent of this pack folder; remote `origin` on GitHub. The user pushes manually; agents do not push.
-Integrated baseline commit: eb090b0 on main (T001 toolchain, T002 shared contracts).
-Current gate: foundation (T001–T002 done; T003 in progress).
+Integrated baseline commit: 50d552d on main (T001 toolchain, T002 shared contracts, T003 simulation foundation).
+Current gate: foundation (T001–T003 done; T004 ready, unassigned).
 
 ## Active claims
 
 | Task | Owner/chat | Branch/worktree | Base commit | Exclusive write paths | Status |
 |---|---|---|---|---|---|
-| T003 | Chat D (coordinator, Lane A task) | main (no task branches, per user) | 87a3c85 | packages/simulation/; packages/shared/src/simulation.ts (+ doc comments in ids.ts, entities.ts); packages/test-support/src/fixtures/consistency.ts (lease); root package.json + lockfile; docs/CONTRACTS.md, ARCHITECTURE.md, DECISIONS.md; README.md, CHANGELOG.md | in_review |
+| None | — | — | — | — | T003 integrated at 50d552d; claim released |
 
 ## Ready queue
 
-- None while T003 is in progress.
-- T004–T048 — Planned; wait for recorded dependencies and ownership.
+- T004 — Validation and integration tooling (dependencies T001–T003 integrated; T003 at 50d552d). Not started; needs an owner claim.
+- T005–T048 — Planned; wait for recorded dependencies and ownership.
 
 ## Pending decisions/evidence
 
