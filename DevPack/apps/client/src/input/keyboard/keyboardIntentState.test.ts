@@ -1,4 +1,3 @@
-/// <reference types="node" />
 // Run: npx tsx --conditions=stopthatguy-source --test apps/client/src/input/keyboard/*.test.ts
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";

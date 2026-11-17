@@ -16,14 +16,15 @@ npm run dev:client     # Vite dev server: http://localhost:5173/ (run in a secon
 
 The client currently shows a temporary smoke scene (a moving sphere) to prove the renderer starts. It does not connect to the server yet; that arrives with T014. The server has no room types yet (T006).
 
-Workspaces: `apps/client` (Vite + Babylon.js), `apps/server` (Colyseus), `packages/shared` (contracts, config and validation, imported by both apps), `packages/simulation` (the fixed-step authoritative simulation, which is pure TypeScript) and `packages/test-support` (deterministic test fixtures, for development only). In dev, typecheck and tests, workspace packages are used directly from their TypeScript source through the `stopthatguy-source` export condition, so no prior build is needed. Production builds use the compiled `packages/*/dist`; `npm run build` compiles shared, then simulation, then the apps.
+Workspaces: `apps/client` (Vite + Babylon.js), `apps/server` (Colyseus), `packages/shared` (contracts, config and validation, imported by both apps), `packages/simulation` (the fixed-step authoritative simulation, which is pure TypeScript) plus `packages/world` (the authored street graph), and `packages/test-support` (deterministic test fixtures, for development only). In dev, typecheck and tests, workspace packages are used directly from their TypeScript source through the `stopthatguy-source` export condition, so no prior build is needed. Production builds use the compiled `packages/*/dist`; `npm run build` compiles shared, world, simulation, then the apps.
 
 | Command | Purpose |
 |---|---|
 | `npm run check` | **The required check:** `typecheck`, `build`, `test`, `validate`, `smoke`, in that order. Run it before every handoff; CI runs the same command. |
+| `npm run test:browser` | Keyboard and asset dev/built browser acceptance; needs installed Chrome. CI runs this after the required check. |
 | `npm run typecheck` | `tsc --noEmit` for every workspace plus `scripts/` and `tests/` |
 | `npm test` | Contract validation, fixture consistency and simulation tests (Node test runner via tsx). The compiled-package test is skipped until `npm run build` has run. |
-| `npm run build` | `packages/shared/dist`, `packages/simulation/dist`, then the client bundle → `apps/client/dist/` and the server JavaScript → `apps/server/dist/` |
+| `npm run build` | `packages/shared/dist`, `packages/world/dist`, `packages/simulation/dist`, then the client bundle → `apps/client/dist/` and the server JavaScript → `apps/server/dist/` |
 | `npm run validate` | World-data and asset-manifest validation (`scripts/validate-data.ts`); add `-- file.json` to check extra world files |
 | `npm run smoke` | Built server `/health` plus the built client rendered in headless Chrome, with no console errors (`scripts/smoke.ts`); needs `npm run build` first |
 | `npm run start:server` | Run the built server (after `npm run build`) |

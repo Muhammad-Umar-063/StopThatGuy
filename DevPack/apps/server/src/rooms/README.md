@@ -5,33 +5,15 @@ HTTP endpoints for one Colyseus server process. The caller supplies trusted,
 versioned `WorldData`; default tuning comes from the shared package. The factory
 copies these inputs so later caller mutations cannot change a running room.
 
-## Integration required from Chat D
+## Application integration
 
-This module is **not registered by the current application bootstrap**. Do not
-report the normal application as supporting multiplayer until it is wired and
-verified. Live coordinator records granted the manifest/bootstrap lease on
-17 November; world wiring and lockfile edits must wait for T005 integration.
-Integration state:
-
-- `apps/server/src/bootstrap/main.ts`: construct the lifecycle with an approved
-  world source, pass `lifecycle.rooms` to `defineServer`, and spread
-  `lifecycle.endpoints` into the existing `createRouter` alongside `/health`.
-  The installed WebSocket transport defaults to a 4 KiB payload cap; retain it.
-- `apps/server/package.json`: simulation dependency, pinned SDK/test-support dev
-  dependencies, and lifecycle test script are now declared under the recorded lease.
-  Add `@stopthatguy/world: "0.0.0"` only after T005 is integrated and available here.
-- `apps/server/tsconfig.build.json`: production build explicitly excludes the
-  owned test directory, as requested by Chat D.
-- `package-lock.json`: update only the corresponding server workspace metadata,
-  after Chat D releases/coordinates T005's existing lockfile lease.
-- The coordinator selected `FIRST_STREET_WORLD` (`first-street-1`) from
-  `@stopthatguy/world`. Import it only after T005 integration and the user's branch
-  update. The committed test-support fixture is used by tests only; T005's
-  uncommitted world was not read.
-- Do not run `npm install` or `npm ci` before that lockfile transfer. The manifest
-  temporarily differs from the lockfile as explicitly allowed by the coordinator.
-  After transfer and world wiring, run `npm install` once for the server metadata,
-  followed by `npm ci` and `npm run check`.
+The normal bootstrap registers this lifecycle with `FIRST_STREET_WORLD` from
+`@stopthatguy/world`. `/health` includes the world version. The server declares
+world and simulation runtime dependencies; SDK/test-support remain development
+only. The workspace lockfile is synchronized and a clean install is verified.
+Production code never imports test-support. `test/bootstrap.test.mjs` launches
+the compiled application and verifies real client create/join/ready/start against
+the authored world; run `npm run build` before the server test suite.
 
 ## Client protocol
 

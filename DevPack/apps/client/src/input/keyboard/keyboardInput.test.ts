@@ -1,4 +1,3 @@
-/// <reference types="node" />
 // Run: npx tsx --conditions=stopthatguy-source --test apps/client/src/input/keyboard/*.test.ts
 // DOM-free doubles exercise the binding's rules; keyboard/browser/ verifies the same behavior in Chrome.
 import assert from "node:assert/strict";

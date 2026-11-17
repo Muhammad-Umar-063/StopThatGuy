@@ -7,12 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+    "test": "tsx --conditions=stopthatguy-source --test src/input/keyboard/*.test.ts",
+    "test:browser": "tsx --test src/input/keyboard/browser/keyboard.browser.test.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.37.0",
     "@colyseus/sdk": "0.18.10",
-    "@stopthatguy/shared": "0.0.0"
+    "@stopthatguy/shared": "0.0.0",
+    "@babylonjs/loaders": "9.37.0",
+    "babylonjs-gltf2interface": "9.37.0"
   },
   "devDependencies": {
     "vite": "8.3.8"

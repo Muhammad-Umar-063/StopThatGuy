@@ -26,14 +26,10 @@ coverage, provenance files and the existing schema validator. The runtime tests
 load the actual bytes through Babylon, check transformed vertices/landmarks and
 metadata, and exercise errors, cancellation, timeout, isolation and disposal.
 
-**Dependency gate:** Chat D approved exact `@babylonjs/loaders@9.37.0` and its peer
-`babylonjs-gltf2interface@9.37.0`, matching installed core `9.37.0`. Chat D owns the
-manifest/lockfile update in main after T005 integration; the user then updates this
-branch. The authorized interim command `npm install --no-save
-@babylonjs/loaders@9.37.0 -w @stopthatguy/client` was run here, installed both exact
-versions and left both tracked package files byte-for-byte unchanged. This install
-is temporary: `npm ci` removes it until the tracked dependency update arrives.
-T008 remains blocked until that update and `npm ci` + `npm run check` pass here.
+**Dependencies:** Exact `@babylonjs/loaders@9.37.0` and
+`babylonjs-gltf2interface@9.37.0` pins are tracked with the workspace lockfile.
+A clean install, focused tests, full check and dev/built browser gates passed
+at batch 1 integration. The earlier temporary install is no longer required.
 
 The public `loadVisualAsset.ts` API dynamically imports `gltfSupport.ts` only when
 an asset needs decoding. That adapter owns the approved official glTF imports.
@@ -41,10 +37,8 @@ Do not eagerly import/re-export the adapter from bootstrap. Node and dev/built
 browser tests verify lazy registration/chunk loading. No custom GLB parser, CDN
 loader, compression decoder or serializer dependency is used.
 
-**Shared test gate:** T004's `packages/test-support/test/asset-manifest.test.ts:50`
-still asserts the repository manifest is empty. Chat D must update that assertion
-to accept a valid active manifest and test empty-development with synthetic data.
-T008 does not own or edit that file. The real sample must keep `status: active`.
+The shared manifest regression now validates the repository's actual status and
+content, with a separate synthetic test for empty-development data.
 
 The browser runner starts its own server on **5208** with strict port selection,
 and stops only its own server/browser. Default mode builds the standalone demo
@@ -53,18 +47,17 @@ into ignored `scripts/assets/.demo-dist/` and serves that production bundle;
 `assets/evidence/`. A missing loader/browser or a busy port fails, never skips.
 Chrome/Chromium must be installed (or set `CHROME_PATH`). SwiftShader evidence is
 functional rendering evidence only, not a real-GPU or Android benchmark.
-Both browser modes and all 14 focused asset tests currently pass with the interim
-install. See [evidence/README.md](evidence/README.md) for exact results and blockers.
+Both browser modes and all 14 focused asset tests pass with the locked install.
+See coordination/integration/BATCH_1.md for the combined integration result.
 
 To inspect manually, start `npm run dev:client -- --host 127.0.0.1 --port 5208
 --strictPort` and open
 `http://127.0.0.1:5208/src/render/assets/demo.html`. Append `?autoload=0` to wait for
 the Load button (used to verify on-demand loading). It offers keyboard-accessible
 retry, unload, yaw and top-view buttons. The development page is an independent
-entry point; the normal game/bootstrap is unchanged. The existing `npm run check`
-does not execute T008's focused test/browser commands yet. Chat D can register
-those commands at integration; the standalone production build needs no config
-edit. It is not currently included in the ordinary game's production bundle.
+entry point; the normal game/bootstrap is unchanged. `npm run check` includes the focused asset tests and export check.
+`npm run test:browser` runs keyboard and asset dev/built browser checks; CI runs
+both commands. The standalone production build needs no config edit. It is not currently included in the ordinary game's production bundle.
 
 ## Files and stable IDs
 

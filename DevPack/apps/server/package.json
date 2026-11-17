@@ -15,7 +15,8 @@
     "@colyseus/schema": "5.0.48",
     "@colyseus/ws-transport": "0.18.5",
     "@stopthatguy/shared": "0.0.0",
-    "@stopthatguy/simulation": "0.0.0"
+    "@stopthatguy/simulation": "0.0.0",
+    "@stopthatguy/world": "0.0.0"
   },
   "devDependencies": {
     "@colyseus/sdk": "0.18.10",

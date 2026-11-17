@@ -79,3 +79,12 @@ Settled names and rules:
 - Validation is stateless. Cross-frame monotonicity, rate limits, phase and host permissions, ranges, speeds, cooldowns and vehicle availability belong to the server and simulation tasks.
 - `@stopthatguy/simulation` (T003) implements the contract through `createSimulation({ movement? })`. It also exports the fixed-step clock helpers and the seeded RNG. Its `@stopthatguy/simulation/movement` subpath is the client-safe prediction subset: `MovementKernel`, `MovementState`, `MovementInput`, `poseOnRoute` and `indexWorld`.
 - Deterministic test data lives in `@stopthatguy/test-support` (`packages/test-support/src/fixtures`), which provides `FIXTURE_WORLD`, `FIXTURE_SNAPSHOTS`, `FIXTURE_VIEWS`, event sequences, command samples and consistency checks. It is for development and tests only.
+
+## Batch 1 implemented consumers
+
+`@stopthatguy/world` exports frozen `FIRST_STREET_WORLD`, `FIRST_STREET_IDS`
+and `AUTHORED_WORLDS`. World layout validation stays in test-support; production
+uses trusted authored data. Server bootstrap injects FIRST_STREET_WORLD into
+`createRoomLifecycle`; HTTP/SDK admission and snapshot transport are documented
+in apps/server/src/rooms/README.md. Keyboard intent APIs are exported from
+apps/client/src/input/keyboard/index.ts. These additions do not change protocol v1.

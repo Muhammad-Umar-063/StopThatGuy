@@ -47,13 +47,20 @@ describe("asset manifest validation", () => {
   });
   after(() => rmSync(root, { recursive: true, force: true }));
 
-  test("the repository's development manifest is explicitly empty and valid", () => {
+  test("the repository manifest is valid and its status matches its content", () => {
     const report = validateAssetManifestFile(join(projectDir, "assets/manifest.json"), {
       projectRoot: projectDir,
       publicDir: join(projectDir, "apps/client/public"),
     });
-    assert.deepEqual([report.ok, report.status, report.assetCount, report.issues], [true, "empty-development", 0, []]);
+    assert.equal(report.ok, true);
+    assert.deepEqual(report.issues, []);
+    assert.equal(report.status, report.assetCount === 0 ? "empty-development" : "active");
     assert.ok(report.notVerified.length > 0, "the report states what remains unverified");
+  });
+
+  test("explicit empty-development data is valid", () => {
+    const report = validateAssetManifest(manifest([], "empty-development"), paths);
+    assert.deepEqual([report.ok, report.status, report.assetCount, report.issues], [true, "empty-development", 0, []]);
   });
 
   test("a complete entry with matching files passes", () => {

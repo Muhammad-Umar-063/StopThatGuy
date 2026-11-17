@@ -39,6 +39,9 @@ jobs:
       - name: Required checks
         run: npm run check
 
+      - name: Keyboard and asset browser acceptance
+        run: npm run test:browser
+
       - name: Upload smoke-check artifacts
         if: always()
         uses: actions/upload-artifact@v7

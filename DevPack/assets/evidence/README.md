@@ -1,5 +1,9 @@
 # T008 evidence — interim install, 17 November 2026
 
+Current result: locked-install integration passes; see
+[batch 1 verification](../../coordination/integration/BATCH_1.md). Earlier text logs
+retain the original pre-integration failures; browser JSON/images were refreshed.
+
 **Task status remains blocked.** The functional evidence below uses the approved
 local `--no-save` install of `@babylonjs/loaders@9.37.0` and its required peer
 `babylonjs-gltf2interface@9.37.0`. Both are extraneous until Chat D's exact-pinned

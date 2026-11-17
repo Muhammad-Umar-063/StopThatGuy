@@ -11,7 +11,7 @@
     {
       "name": "real GLB loads with correct metre bounds, origin and axes",
       "evidence": {
-        "frames": 13,
+        "frames": 18,
         "failure": null,
         "inspection": {
           "ok": true,

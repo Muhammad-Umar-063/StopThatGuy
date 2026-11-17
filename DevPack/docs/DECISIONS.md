@@ -127,3 +127,15 @@ Main's board and ACTIVE_WORK are authoritative; workers do not edit their worktr
 ### 17 November 2026 — Batch 1 integration authorization
 
 The user explicitly requested committing and pushing existing work, then preparing the next four tasks. This authorizes the coordinator to commit the existing T005–T008 work, merge it, fix integration blockers, verify and push to origin, and create/install T009–T012 worktrees. It overrides the manual-only rule for this integration/setup operation. Subsequent feature chats still leave work uncommitted unless the user authorizes otherwise. All prior task chats have finished; coordination transfers from Claude to Codex for this operation.
+
+### 17 November 2026 — Batch 1 integration choices
+
+The normal server uses FIRST_STREET_WORLD (first-street-1), with world/simulation
+runtime dependencies and no test-support runtime imports. Room transport uses
+snapshotJson as documented in the room README. Keyboard uses physical key codes;
+left/right edges cancel within one sample. glTF loading is lazy, with loaders and
+its interface peer pinned to 9.37.0. The calibration sample is development art.
+T005's provisional world limits (15% wheeled grade, 80% foot grade, 0.3 m ground
+tolerance) remain tuning defaults, not measured realism. Missing escape routes
+are a documented blockout warning until later map/robber work. Keyboard and asset
+tests now run in standard verification; separate browser gates also run in CI.

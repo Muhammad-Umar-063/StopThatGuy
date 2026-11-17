@@ -1,18 +1,21 @@
 import { createEndpoint, createRouter, defineServer } from "@colyseus/core";
 import { WebSocketTransport } from "@colyseus/ws-transport";
 import { CONFIG_VERSION, PROTOCOL_VERSION } from "@stopthatguy/shared";
+import { FIRST_STREET_WORLD } from "@stopthatguy/world";
+import { createRoomLifecycle } from "../rooms/index.js";
 import { readServerConfig } from "./config.js";
 
 const config = readServerConfig(process.env);
 
-// T001 bootstrap only: no room types are registered yet. Rooms and matchmaking arrive with T006.
+const lifecycle = createRoomLifecycle({ world: FIRST_STREET_WORLD });
 const server = defineServer({
   transport: new WebSocketTransport(),
   greet: false,
-  rooms: {},
+  rooms: lifecycle.rooms,
   routes: createRouter({
+    ...lifecycle.endpoints,
     health: createEndpoint("/health", { method: "GET" }, async (ctx) =>
-      ctx.json({ status: "ok", protocolVersion: PROTOCOL_VERSION, configVersion: CONFIG_VERSION }),
+      ctx.json({ status: "ok", protocolVersion: PROTOCOL_VERSION, configVersion: CONFIG_VERSION, worldVersion: FIRST_STREET_WORLD.worldVersion }),
     ),
   }),
 });

@@ -88,7 +88,7 @@ Expected outcome: every step reports success and the command exits 0. Smoke arti
 
 The package root is browser-safe; Node-only validators are under `@stopthatguy/test-support/node`.
 
-**Adding data:** T005 registers its authored world in `scripts/validate-data.ts` (`REGISTERED_WORLDS`). T008 adds manifest entries and switches `assets/manifest.json` to `"status": "active"`. An empty manifest must keep `"empty-development"`.
+**Adding data:** Authored worlds are exported through `AUTHORED_WORLDS` and registered in `scripts/validate-data.ts`. T008 supplies a real sample in the active `assets/manifest.json`. An empty manifest must keep `"empty-development"`.
 
 **Troubleshooting:**
 - *Smoke: "no Chrome, Chromium or Edge found".* Install a Chromium-family browser or set `CHROME_PATH=/path/to/chrome`.
@@ -97,3 +97,13 @@ The package root is browser-safe; Node-only validators are under `@stopthatguy/t
 - *Smoke: "not ready within 20000 ms".* The failing process's last output lines are printed. A port is never the cause, because the check picks free ports and does not touch running dev servers.
 - *Compiled-package test reported as skipped.* `npm test` run on its own before any build skips that one test and names the reason; `npm run check` always builds first.
 - *npm warns about install scripts for esbuild/msgpackr-extract.* This is expected and harmless (see README).
+
+## Batch 1 acceptance registration
+
+`npm run check` now includes keyboard unit tests, server lifecycle and compiled
+bootstrap tests, world tests, asset export consistency and actual GLB runtime
+tests. The client uses a separate tsconfig for tests so Node types do not leak
+into the browser application. `npm run test:browser` runs 10 keyboard browser
+tests and the asset dev/built acceptance runners; CI runs it after the full check.
+Browser gates currently use ports 5207 and 5208 and should run serially across
+worktrees. They shut down only their own processes. See coordination/integration/BATCH_1.md.

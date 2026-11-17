@@ -1,4 +1,3 @@
-/// <reference types="node" />
 // Browser evidence for T007 keyboard input in headless Chrome. Run from DevPack/:
 //   npx tsx --test apps/client/src/input/keyboard/browser/keyboard.browser.test.ts
 // Starts the client's Vite dev server on port 5207 (KEYBOARD_BROWSER_PORT overrides) to serve

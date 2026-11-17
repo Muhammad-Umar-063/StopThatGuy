@@ -1,7 +1,7 @@
 {
   "name": "stop-that-guy",
   "private": true,
-  "description": "Stop That Guy! — 3D multiplayer browser chase game (npm workspaces root)",
+  "description": "Stop That Guy! \u2014 3D multiplayer browser chase game (npm workspaces root)",
   "type": "module",
   "workspaces": [
     "apps/*",
@@ -16,11 +16,13 @@
     "check": "npm run typecheck && npm run build && npm run test && npm run validate && npm run smoke",
     "typecheck": "npm run typecheck --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json",
     "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/world && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
-    "test": "npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts",
+    "test": "npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts && npm run test:assets",
     "validate": "tsx --conditions=stopthatguy-source scripts/validate-data.ts",
     "smoke": "tsx --conditions=stopthatguy-source scripts/smoke.ts",
     "start:server": "npm run start --workspace @stopthatguy/server",
-    "preview:client": "npm run preview --workspace @stopthatguy/client"
+    "preview:client": "npm run preview --workspace @stopthatguy/client",
+    "test:assets": "tsx scripts/assets/build.ts --check && tsx --conditions=stopthatguy-source --test scripts/assets/workflow.test.ts scripts/assets/runtime.test.mjs",
+    "test:browser": "npm run test:browser -w @stopthatguy/client && node scripts/assets/browser.mjs --dev && node scripts/assets/browser.mjs"
   },
   "devDependencies": {
     "@types/node": "22.20.5",
