@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // ES library only: no DOM and no Node types, so rules cannot read clocks, timers or I/O.
+    "lib": ["ES2022"],
+    "types": [],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "customConditions": ["stopthatguy-source"],
+    "noEmit": true
+  },
+  "include": ["src"]
+}

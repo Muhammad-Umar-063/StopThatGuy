@@ -51,6 +51,15 @@ Static boxes/capsules/segment boundaries approximate building and obstacle colli
 
 Simulation functions accept explicit state, validated inputs, tick duration/config and seeded randomness. They return state updates and typed events. No wall-clock reads or random calls hidden inside rules. Store authoritative event ordering in one place.
 
+Implemented foundation (T003, `packages/simulation`):
+
+- **Tick order.** `stepState` in `src/step.ts` is the only place that orders a tick: phase clock, then inputs, then movement (chase only), then the reserved slots for action effects, theft/police/arrest and capture, and finally escape/timeout.
+- **State.** The state handle is opaque; its internals sit in a module-private map. Snapshots and events are deep copies.
+- **Timing.** Callers own time. A server or client loop measures elapsed time and uses `advanceFixedStepClock`, which keeps an explicit accumulator and bounds catch-up to 5 steps by default (excess whole steps are reported as dropped), to decide how many `step` calls to make.
+- **Randomness.** The only source is the seeded sfc32 state inside the simulation.
+- **Determinism.** Results are repeatable for the same setup and inputs within one JavaScript runtime. The integer-only RNG is exact in every engine, but trigonometric and other `Math` functions may differ in the last bits between engines, so cross-engine bit-identity is not claimed.
+- **Movement.** Rules plug in through a pure `MovementKernel`. The default holds players in place until T009.
+
 ## Client
 
 Bootstrap composes input, connection, world view, entity views, camera and UI. Rendering reads a presentation state, not mutable Colyseus objects scattered through meshes. Local prediction uses the same movement kernel; critical interactions wait for server results. Animation derives from authoritative/predicted movement and discrete events. UI consumes a view model and emits typed intents, allowing UI work against fixtures before the server is complete.

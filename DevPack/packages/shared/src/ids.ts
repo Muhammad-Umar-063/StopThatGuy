@@ -24,7 +24,7 @@ export type RouteId = Brand<string, "RouteId">;
 export type Tick = number;
 /** Client-assigned edge-action ID: positive integer, strictly increasing per player session. */
 export type ActionId = number;
-/** Server-assigned event ID: positive integer, strictly increasing per room. */
+/** Server-assigned event ID: positive integer, strictly increasing within one match (restarts at 1 for a rematch). */
 export type EventId = number;
 
 /** Marks a trusted string (server-generated, world data or fixture) as a branded ID. Never use on client input. */

@@ -240,7 +240,9 @@ export function checkSnapshotConsistency(s: AuthoritativeSnapshot, world: WorldD
   if (m.phase === "lobby" && (s.robber !== null || m.chaseStartTick !== null)) add("lobby: robber and chase ticks must be unset");
   if (m.phase === "chase" || m.phase === "results") {
     if (s.robber === null) add(`${m.phase}: robber missing`);
-    if (m.chaseStartTick === null || m.chaseEndTick === null || m.tick < m.chaseStartTick || m.tick > m.chaseEndTick) {
+    // Ticks keep advancing during results, so a result is checked by the tick it resolved on.
+    const tick = m.phase === "results" && m.result ? m.result.resolvedAtTick : m.tick;
+    if (m.chaseStartTick === null || m.chaseEndTick === null || tick < m.chaseStartTick || tick > m.chaseEndTick) {
       add(`${m.phase}: tick outside chase window`);
     }
   }

@@ -34,3 +34,10 @@
 - Added stateless runtime validation for join options and client commands. It rejects malformed, oversized, non-finite and unknown data, and any client-declared outcomes.
 - Added `@stopthatguy/test-support` with deterministic fixtures (world, lobby/chase/vehicle/wanted/arrest/result snapshots, event streams, UI views, command samples), consistency checks, and 97 focused tests (`npm test`).
 - Wired shared into the client and server (source in dev, compiled output for the production server). `/health` now reports protocol and config versions. Recorded the main-branch-only workflow.
+
+## 2026-11-17 — T003 fixed-step simulation foundation
+
+- Added `@stopthatguy/simulation`, which implements the shared `Simulation` contract. It provides deterministic initialization from world, tuning, seed and participants; an exact one-tick `step` with delta and input validation; the countdown → intro → chase phase clock and the time-limit result; event IDs and draining; and copy-only snapshots.
+- Added a seeded sfc32 RNG with explicit state and a caller-owned fixed-step accumulator with bounded catch-up.
+- Added the pure movement interface (`@stopthatguy/simulation/movement`) and a hold-position placeholder kernel; movement rules arrive in T009.
+- Extended the simulation contract with `SimulationSetup.roomCode` and `ValidatedPlayerInput.sequence`. Fixed the fixture checker for the results phase. The root build now compiles shared, then simulation, then the apps, and `check` runs typecheck, build, then tests.

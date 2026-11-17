@@ -1,0 +1,34 @@
+{
+  "name": "@stopthatguy/simulation",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Authoritative fixed-step game simulation. Pure TypeScript: no engine, network, browser or Node APIs.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "stopthatguy-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./movement": {
+      "stopthatguy-source": "./src/movement/index.ts",
+      "types": "./dist/movement/index.d.ts",
+      "default": "./dist/movement/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+    "test": "tsx --conditions=stopthatguy-source --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@stopthatguy/shared": "0.0.0"
+  },
+  "devDependencies": {
+    "@stopthatguy/test-support": "0.0.0"
+  }
+}

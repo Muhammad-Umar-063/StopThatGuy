@@ -143,7 +143,7 @@ export interface AuthoritativeSnapshot {
   match: MatchRecord;
   /** Ordered by joinOrder. */
   players: PlayerRecord[];
-  /** Null before the intro begins. */
+  /** Null in the lobby (no match running); present from the countdown onward. */
   robber: RobberRecord | null;
   vehicles: VehicleRecord[];
   police: PoliceRecord[];

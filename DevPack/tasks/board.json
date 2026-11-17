@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "project": "Stop That Guy!",
   "implementation_started": true,
   "status_values": [
@@ -91,18 +91,34 @@
       "id": "T003",
       "title": "Fixed-step simulation foundation",
       "lane": "A",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T002"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (coordinator, Claude Code; Lane A task)",
+      "branch": "main",
+      "base_commit": "87a3c85",
       "write_paths": [
-        "packages/simulation/"
+        "packages/simulation/",
+        "packages/shared/src/simulation.ts (setup/input contract extension)",
+        "packages/shared/src/ids.ts, entities.ts (doc comments)",
+        "packages/test-support/src/fixtures/consistency.ts (results-phase rule; coordinator lease)",
+        "package.json",
+        "package-lock.json",
+        "docs/CONTRACTS.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DECISIONS.md",
+        "README.md",
+        "CHANGELOG.md"
       ],
       "integration_commit": null,
-      "evidence": [],
+      "evidence": [
+        "coordination/handoffs/T003.md",
+        "npm run check (typecheck → build → test) exit 0: simulation 30/30, shared/fixtures 97/97",
+        "replay equality, seeded choice, RNG reference, tick/phase schedule, invalid delta/input, exactly-once actions, event drain, isolation and immutability tests",
+        "compiled dist resolves under plain Node and matches the source build",
+        "dev/built server /health and client dev/preview in headless Chrome 154 OK"
+      ],
       "blocker": null
     },
     {

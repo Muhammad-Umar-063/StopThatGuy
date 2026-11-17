@@ -13,10 +13,10 @@
   "scripts": {
     "dev:client": "npm run dev --workspace @stopthatguy/client",
     "dev:server": "npm run dev --workspace @stopthatguy/server",
-    "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
+    "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "check": "npm run typecheck && npm run test && npm run build",
+    "check": "npm run typecheck && npm run build && npm run test",
     "start:server": "npm run start --workspace @stopthatguy/server",
     "preview:client": "npm run preview --workspace @stopthatguy/client"
   },

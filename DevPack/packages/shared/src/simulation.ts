@@ -18,23 +18,29 @@ export interface SimulationParticipant {
   joinOrder: number;
 }
 
+/** Trusted server data for one match. The simulation never mutates it; invalid setups throw. */
 export interface SimulationSetup {
   tuning: GameTuning;
   world: WorldData;
   /** uint32; identical setup + inputs must give identical outcomes. */
   seed: number;
   mode: MatchMode;
-  /** Ordered by joinOrder. */
+  /** Public room code, echoed in MatchRecord.roomCode. */
+  roomCode: string;
+  /** Any order; the simulation orders players by joinOrder. */
   participants: readonly SimulationParticipant[];
 }
 
 /**
- * Input after server-boundary validation, sequencing and deduplication. Players without fresh input
- * receive NEUTRAL_HELD_CONTROLS and no actions.
+ * Input for one player for one step, after server-boundary validation, sequencing and deduplication.
+ * The adapter supplies the player's current held controls every step until the input timeout;
+ * a player omitted from a step is treated as neutral (no held controls, no actions).
  */
 export interface ValidatedPlayerInput extends HeldControls {
   playerId: PlayerId;
-  /** Only actions not applied before, ascending by ID. */
+  /** Sequence of the input frame these controls came from; echoed as lastProcessedInputSequence. */
+  sequence: number;
+  /** New actions, ascending by ID. IDs at or below lastProcessedActionId are ignored (applied once). */
   actions: readonly EdgeAction[];
 }
 
@@ -58,12 +64,18 @@ export interface LegalActions {
   canSabotage: boolean;
 }
 
+/** Implemented by packages/simulation (createSimulation). The state type is opaque to callers. */
 export interface Simulation<TState> {
+  /** Starts a match in the "countdown" phase at tick 0. Lobby and room closing belong to the room. */
   createInitialState(setup: SimulationSetup): TState;
-  /** Advances exactly one fixed step (1000 / tuning.timing.simulationHz ms). Mutates `state`. */
+  /**
+   * Advances exactly one fixed step. `fixedDeltaMs` must equal 1000 / tuning.timing.simulationHz;
+   * any other value (non-finite, ≤ 0 or inconsistent) throws RangeError and leaves the state unchanged.
+   */
   step(state: TState, inputs: readonly ValidatedPlayerInput[], fixedDeltaMs: number): void;
   queryLegalActions(state: TState, playerId: PlayerId): LegalActions;
-  /** Returns and clears events produced since the previous call, in emission order. */
+  /** Returns and clears events produced since the previous call, in emission order (fresh copies). */
   collectEvents(state: TState): GameEvent[];
+  /** A fresh deep copy; mutating it never affects the simulation. */
   readSerializableState(state: TState): AuthoritativeSnapshot;
 }
