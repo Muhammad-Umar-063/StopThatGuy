@@ -114,7 +114,7 @@
       "integration_commit": "50d552d",
       "evidence": [
         "coordination/handoffs/T003.md",
-        "npm run check (typecheck \u2192 build \u2192 test) exit 0: simulation 30/30, shared/fixtures 97/97",
+        "npm run check (typecheck → build → test) exit 0: simulation 30/30, shared/fixtures 97/97",
         "replay equality, seeded choice, RNG reference, tick/phase schedule, invalid delta/input, exactly-once actions, event drain, isolation and immutability tests",
         "compiled dist resolves under plain Node and matches the source build",
         "dev/built server /health and client dev/preview in headless Chrome 154 OK",
@@ -274,14 +274,14 @@
       "id": "T009",
       "title": "Road movement, lanes and stamina",
       "lane": "A",
-      "status": "ready",
+      "status": "in_progress",
       "depends_on": [
         "T005",
         "T007"
       ],
-      "owner": "Chat A (Codex; reserved)",
+      "owner": "Root Codex integration (user-authorized completion; prior worker handoff preserved)",
       "branch": "task/T009-road-movement",
-      "base_commit": null,
+      "base_commit": "251e5f3807319513e683721c83f3f57648c2ce95",
       "write_paths": [
         "packages/simulation/src/movement/",
         "packages/simulation/src/collision/",
@@ -290,41 +290,132 @@
         "coordination/handoffs/T009.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "User relayed verified T009 thread 01a1e9fa-a445-7d90-8f1d-1c33e5e389e5 / local Codex; coordinator reverified task branch and full base HEAD. Launch clean state is historical; current uncommitted edits are within original owned paths.",
+        "Eight exact-file leases recorded in main before approval; see ACTIVE_WORK.md T009 lease decision. No shared implementation changed by coordinator.",
+        "Partial handoff collected from .worktrees/T009/DevPack/coordination/handoffs/T009.md: worker reports collision 7/7 plus movement helpers 8/8, simulation typecheck, assigned keyboard/asset browser checks and diff check pass. These are partial/fixture checks only.",
+        "Worker npm run check failed at packages/simulation/test/boundaries.test.ts: regex rejects junction.window.startM in movement/traversal.ts. Coordinator inspected guard and failure log; no test rerun or implementation fix claimed.",
+        "Previous eight leases remain approved; ninth boundary-test lease recorded before reply. Handoff statement that main has no T009 leases is superseded by current live records. Implementation and authored-world acceptance remain outstanding.",
+        "Current integration: incomplete task resumed under recorded existing leases; implementation and acceptance underway. No done claim yet."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+      "chat_id": "01a1e9fa-a445-7d90-8f1d-1c33e5e389e5",
+      "leases": [
+        {
+          "path": "packages/shared/src/config.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Add the requested provisional movement/collision/lookahead tuning and bump CONFIG_VERSION to provisional-2; preserve PROTOCOL_LIMITS and unrelated tuning."
+        },
+        {
+          "path": "packages/shared/src/simulation.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Add one optional early-buffer cue flag to the existing DirectionalOption turn variant; omission means false. No other shared API or wire changes."
+        },
+        {
+          "path": "packages/simulation/src/state.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Own, initialize and validate explicit per-player movement memory; reset on new match/rematch; no public snapshot changes."
+        },
+        {
+          "path": "packages/simulation/src/step.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Pass and atomically commit movement memory with validated player updates; wire movement legal actions while preserving phase/input validation and action deduplication."
+        },
+        {
+          "path": "packages/simulation/src/simulation.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Make the road movement kernel the default; preserve explicit kernel injection and the Simulation interface."
+        },
+        {
+          "path": "packages/simulation/package.json",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Add existing @stopthatguy/world 0.0.0 as a devDependency only; no scripts, exports, runtime dependencies or package-version changes."
+        },
+        {
+          "path": "package-lock.json",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Update only the packages/simulation importer devDependencies for existing @stopthatguy/world 0.0.0; no resolved-package/version/integrity churn."
+        },
+        {
+          "path": "packages/simulation/test/simulation.test.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Update placeholder hold-position/legal-action expectations as needed and verify the default simulation with real inputs on FIRST_STREET_WORLD; preserve regression assertions."
+        },
+        {
+          "path": "packages/simulation/test/boundaries.test.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T009/DevPack",
+          "owner": "Chat A / T009",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Fix the reproduced Junction.window property false positive in the host-global guard; add focused positive/negative guard regressions while preserving forbidden import/dynamic-import, browser-global, clock, randomness, timer and compiled-package checks. No new package/parser dependency or blanket rule disable."
+        }
+      ],
+      "integration_requirements": [
+        "CONFIG_VERSION provisional-2; no PROTOCOL_VERSION or wire-schema change. Other tasks stay on committed baseline until reviewed manual integration and branch updates.",
+        "Keep early lookahead 1000 ms separate from the existing maximum 250 ms press buffer; clamp eligibility to authored turn windows. T014/T018 must expose a visible early-buffer cue before integrated gameplay uses buffering.",
+        "Private movement memory is not a wire-state addition; T022 reconciliation requirements need a later reviewed contract migration if necessary.",
+        "Run owned movement/collision tests, default-kernel authored-world regression, npm run check, assigned browser gates and git diff --check. Leave all changes uncommitted; no main implementation writes.",
+        "Boundary guard regression must accept plain/optional-chained Junction.window property access while rejecting real host globals, clocks/randomness/timers and forbidden imports. Preserve compiled-package equivalence test. Re-run full check and authored-world movement acceptance after completing implementation."
+      ]
     },
     {
       "id": "T010",
       "title": "Automatic third-person camera",
       "lane": "B",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T005",
         "T007"
       ],
-      "owner": "Chat B (Codex; reserved)",
+      "owner": "Chat B (Codex; registered from verified worker handoff)",
       "branch": "task/T010-follow-camera",
-      "base_commit": null,
+      "base_commit": "251e5f3807319513e683721c83f3f57648c2ce95",
       "write_paths": [
         "apps/client/src/camera/",
         "coordination/handoffs/T010.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "Coordinator read .worktrees/T010/DevPack/coordination/handoffs/T010.md and apps/client/src/camera/evidence/verification.json; branch/base verified.",
+        "Worker-reported acceptance: 14/14 explicitly run camera tests, source/built browser 10 checks each, npm run check 277 baseline tests, assigned keyboard/asset browser gates, typecheck and diff checks passed. Coordinator did not rerun these checks.",
+        "Fixture-only camera; uncommitted and awaiting user review, manual commit and integration. New camera tests executed separately; standard script registration remains an integration follow-up."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T010/DevPack",
+      "chat_id": "01a1ea37-4368-7100-8cd9-6ad2f299df5d",
+      "integration_requirements": [
+        "After manual integration, coordinator serially appends camera unit tests and both explicit camera browser commands to apps/client/package.json. That exact file remains exclusively leased to T012 until its changeset is integrated; no edit in T010 or main during parallel work.",
+        "Live T009 movement/T011 visuals, device performance and user camera feel remain T020/later acceptance."
+      ]
     },
     {
       "id": "T011",
       "title": "Finished street visual slice",
       "lane": "C",
-      "status": "ready",
+      "status": "in_progress",
       "depends_on": [
         "T005",
         "T008"
       ],
-      "owner": "Chat C (Codex; reserved)",
+      "owner": "Root Codex integration (user-authorized completion; prior worker handoff preserved)",
       "branch": "task/T011-street-visuals",
-      "base_commit": null,
+      "base_commit": "251e5f3807319513e683721c83f3f57648c2ce95",
       "write_paths": [
         "apps/client/src/render/environment/",
         "apps/client/public/assets/environment/",
@@ -333,29 +424,100 @@
         "coordination/handoffs/T011.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "User-relayed task/thread identity agrees with .worktrees/T011/DevPack/coordination/handoffs/T011.md. Coordinator reverified task/T011-street-visuals at full base HEAD; current edits remain in originally owned paths.",
+        "Pre-lease worker handoff reports blocked: 5 focused tests pass, but full check fails at core-only asset coverage and actual street rendering is blocked by absent catalog entry. These are not T011 visual acceptance passes.",
+        "Three exact-file leases and isolated preview/test approval recorded before coordinator reply. Local write authorization granted; this did not prove worker resumption, implementation or acceptance.",
+        "Latest user-relayed status and matching worktree handoff: blocked, not in_review. Five focused tests, reproducible export, typecheck/build, existing browser regressions and diff check reported passed; full check fails asset coverage, preview stops at missing environment.lisbon-kit. Coordinator reconfirmed requested shared files remain unchanged and preserved all owned uncommitted work.",
+        "Current integration: incomplete task resumed under recorded existing leases; implementation and acceptance underway. No done claim yet."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack",
+      "chat_id": "01a1e9fc-6fb5-7000-9099-74cf86ed3055",
+      "leases": [
+        {
+          "path": "assets/catalog.json",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack",
+          "owner": "Chat C / T011",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Register only environment.lisbon-kit at assets/environment/lisbon-kit.glb, with an honest acceptance-pending label; preserve dev.axis-marker and all existing metadata."
+        },
+        {
+          "path": "scripts/assets/workflow.test.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack",
+          "owner": "Chat C / T011",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Aggregate core and owned environment manifests; preserve reproducibility/provenance/catalog/public-file coverage and add meaningful cross-manifest duplicate-ID/path rejection coverage. No skipping missing manifests/assets or weakening calibration assertions."
+        },
+        {
+          "path": "scripts/validate-data.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack",
+          "owner": "Chat C / T011",
+          "status": "exclusive; approved; unintegrated",
+          "scope": "Validate assets/manifest.json and assets/manifest-environment.json individually and as a combined set for cross-manifest conflicts; preserve world validation and nonzero exit on invalid/missing data."
+        }
+      ],
+      "preview_approval": {
+        "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack",
+        "paths": [
+          "apps/client/src/render/environment/preview.html",
+          "apps/client/src/render/environment/preview.ts",
+          "apps/client/src/render/environment/environment.test.mjs",
+          "apps/client/src/render/environment/browser.mjs",
+          "apps/client/src/render/environment/evidence/"
+        ],
+        "scope": "Isolated preview/tests within existing ownership; no bootstrap, package, Vite, dependency or lockfile edits. Strict preview port 5211; only owned processes."
+      },
+      "integration_requirements": [
+        "Keep category provenance in assets/manifest-environment.json; preserve the core manifest. Validate both manifests and the combined ID/path space; retain complete catalog/runtime-file coverage with negative duplicate tests.",
+        "After leased edits, run exporter check, explicit environment unit/browser gates, inspect low/medium gameplay-like views and measure actual scene/draw/texture costs, then npm run check, assigned standard browser suite and git diff --check. Existing calibration/keyboard gates alone do not establish street acceptance.",
+        "At reviewed manual integration, Chat D serially registers node_modules/.bin/tsx --conditions=stopthatguy-source --test apps/client/src/render/environment/environment.test.mjs and node apps/client/src/render/environment/browser.mjs in standard test gates. apps/client/package.json and apps/client/vite.config.ts remain exclusively owned by T012; any required Vite entry is reviewed there at integration.",
+        "No bootstrap, T010 camera, authoritative world/collision, package versions, dependencies or lockfile edits. Leave changes uncommitted. Other worktrees require reviewed manual integration and user branch updates; no uncommitted code copying."
+      ]
     },
     {
       "id": "T012",
       "title": "Keyboard-accessible lobby screens",
       "lane": "D",
-      "status": "ready",
+      "status": "in_review",
       "depends_on": [
         "T006",
         "T007"
       ],
-      "owner": "Chat D (Codex; reserved)",
+      "owner": "Chat D (Codex; sole batch-2 coordinator and T012 implementer)",
       "branch": "task/T012-lobby-ui",
-      "base_commit": null,
+      "base_commit": "251e5f3807319513e683721c83f3f57648c2ce95",
       "write_paths": [
         "apps/client/src/ui/lobby/",
         "apps/client/src/ui/menu/",
         "coordination/handoffs/T012.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "coordination/handoffs/T012.md in .worktrees/T012/DevPack; uncommitted, awaiting user review, manual commit and integration",
+        "Final npm run check exit 0: 281/281 tests, typecheck/build, world/asset validation and smoke passed",
+        "KEYBOARD_BROWSER_PORT=5412 ASSET_BROWSER_PORT=5512 npm run test:browser exit 0: 10 keyboard + 14 lobby tests; asset dev/built gates passed",
+        "Lobby browser tests use real keyboard/IME events in Chrome 154, dev 5412 and strict preview 5212; desktop/narrow screenshots inspected; fixture-only transport",
+        "git diff --check clean; no Git write operations; no dependency installation",
+        "UiAdapter integration/cancellation/rejection responsibilities documented for T014/T020; real multiplayer and Android/screen-reader acceptance not claimed"
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T012/DevPack",
+      "chat_id": "01a1ea31-eab3-7e02-a75c-948fa0e4986c",
+      "leases": [
+        {
+          "path": "apps/client/package.json",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T012/DevPack",
+          "owner": "Chat D / T012",
+          "scope": "test scripts only"
+        },
+        {
+          "path": "apps/client/vite.config.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T012/DevPack",
+          "owner": "Chat D / T012",
+          "scope": "isolated demo build entry and preserve source-HTML dependency scanning"
+        }
+      ]
     },
     {
       "id": "T013",

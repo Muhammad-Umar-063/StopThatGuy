@@ -150,3 +150,33 @@ Tool delivery and OS permissions remain real constraints; no automatic message
 access is assumed. Batch-1 local integration is complete; the user chose to push
 personally after HTTPS authentication was unavailable in this session. Batch-2
 implementation retains manual commits/merges. Old worktrees are preserved.
+
+### 17 November 2026 — T009 movement tuning and internal memory lease (pending integration)
+
+Source: Chat A/T009 proposal relayed by the user, approved by sole coordinator
+Chat D after contract review. Exact-file ownership is in ACTIVE_WORK.md and
+board.json; implementation occurs only in the T009 worktree. Approved defaults:
+acceleration/coast/brake 8/6/12 m/s², lane shift 300 ms, stamina recovery 15/s
+after 1,000 ms, body radius/height 0.35/1.8 m, collision skin 0.01 m, and
+1,000 ms speed-based approach lookahead clamped to the existing 5–8 m range and
+authored turn eligibility. The separate press buffer remains at most 250 ms.
+T009 must change CONFIG_VERSION from provisional-1 to provisional-2; old-config
+clients require the normal version mismatch handling after manual integration.
+
+Per-player turn/lane/recovery memory stays private to the simulation; the optional
+early-buffer flag extends only the existing turn legal-action variant, absent
+meaning false. No protocol version or wire schema change is approved. T014/T018
+must make the cue visible before integrated buffered-input use; T022 must review
+private-memory reconstruction before prediction integration. The road kernel
+becomes the default with default-kernel authored-world regression coverage;
+explicit injected kernels remain supported. No main runtime change or merge has
+happened merely because this proposal/lease is approved.
+
+### 17 November 2026 — Batch 2 completion and local integration authorization
+
+The user requests verifying and completing all four current tasks, then committing
+and merging locally. This overrides manual-only Git for this operation; the user
+will push. Root takes integration ownership from finished task chats, preserves
+existing work, completes T009/T011 gaps, verifies T010/T012 and combined checks.
+No task is marked done before accepted integration. Future feature work retains
+manual commits unless separately authorized.
