@@ -12,7 +12,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const mode = process.argv.includes('--dev') ? 'dev' : 'built';
 const results = resolve(root, 'assets/evidence');
 const outDir = resolve(root, 'scripts/assets/.demo-dist');
-const url = 'http://127.0.0.1:5208/src/render/assets/demo.html?autoload=0';
+const assetBrowserPort = Number(process.env.ASSET_BROWSER_PORT ?? 5208);
+assert.ok(Number.isInteger(assetBrowserPort) && assetBrowserPort > 0 && assetBrowserPort <= 65535, 'ASSET_BROWSER_PORT must be a valid TCP port');
+const url = `http://127.0.0.1:${assetBrowserPort}/src/render/assets/demo.html?autoload=0`;
 const report = { mode, url, ok: false, browser: null, steps: [], errors: [], warnings: [] };
 mkdirSync(results, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -50,9 +52,9 @@ try {
   const options = { configFile: resolve(root, 'apps/client/vite.config.ts'), root: resolve(root, 'apps/client') };
   if (mode === 'built') {
     await build({ ...options, build: { outDir, emptyOutDir: true, rollupOptions: { input: resolve(root, 'apps/client/src/render/assets/demo.html') } } });
-    server = await preview({ ...options, build: { outDir }, preview: { host: '127.0.0.1', port: 5208, strictPort: true } });
+    server = await preview({ ...options, build: { outDir }, preview: { host: '127.0.0.1', port: assetBrowserPort, strictPort: true } });
   } else {
-    server = await createServer({ ...options, server: { host: '127.0.0.1', port: 5208, strictPort: true } });
+    server = await createServer({ ...options, server: { host: '127.0.0.1', port: assetBrowserPort, strictPort: true } });
     await server.listen();
   }
   const browserPath = process.env.CHROME_PATH ?? (process.env.PATH ?? '').split(delimiter)

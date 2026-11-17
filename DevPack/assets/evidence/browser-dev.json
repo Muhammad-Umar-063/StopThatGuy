@@ -1,6 +1,6 @@
 {
   "mode": "dev",
-  "url": "http://127.0.0.1:5208/src/render/assets/demo.html?autoload=0",
+  "url": "http://127.0.0.1:5308/src/render/assets/demo.html?autoload=0",
   "ok": true,
   "browser": "Chrome/154.0.8037.92",
   "steps": [
@@ -11,7 +11,7 @@
     {
       "name": "real GLB loads with correct metre bounds, origin and axes",
       "evidence": {
-        "frames": 45,
+        "frames": 47,
         "failure": null,
         "inspection": {
           "ok": true,
