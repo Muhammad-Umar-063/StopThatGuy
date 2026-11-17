@@ -1,0 +1,146 @@
+{
+  "bytes": 1211428,
+  "sha256": "3972e572f310a806bd3884190db43deda6a86bd130f8f274d50d89057060632e",
+  "triangles": 6440,
+  "lods": 1,
+  "materials": 14,
+  "textureSizes": [
+    "256x256",
+    "256x256",
+    "512x512",
+    "256x256",
+    "256x256",
+    "256x256"
+  ],
+  "animations": [],
+  "parts": [
+    {
+      "name": "window/stone",
+      "triangles": 112
+    },
+    {
+      "name": "window/glass",
+      "triangles": 28
+    },
+    {
+      "name": "window/wood",
+      "triangles": 24
+    },
+    {
+      "name": "window/shutter",
+      "triangles": 368
+    },
+    {
+      "name": "portal/stone",
+      "triangles": 372
+    },
+    {
+      "name": "portal/wood",
+      "triangles": 156
+    },
+    {
+      "name": "portal/glass",
+      "triangles": 24
+    },
+    {
+      "name": "portal/brass",
+      "triangles": 96
+    },
+    {
+      "name": "balcony/stone",
+      "triangles": 28
+    },
+    {
+      "name": "balcony/metal",
+      "triangles": 560
+    },
+    {
+      "name": "balcony-detail/metal",
+      "triangles": 1920
+    },
+    {
+      "name": "cornice/stone",
+      "triangles": 84
+    },
+    {
+      "name": "rack/metal",
+      "triangles": 896
+    },
+    {
+      "name": "lamp/metal",
+      "triangles": 820
+    },
+    {
+      "name": "lamp/lantern",
+      "triangles": 56
+    },
+    {
+      "name": "flowerbox/roof",
+      "triangles": 28
+    },
+    {
+      "name": "flowerbox/leaf",
+      "triangles": 448
+    },
+    {
+      "name": "flowerbox/flower",
+      "triangles": 252
+    },
+    {
+      "name": "swatch/stone",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/plaster",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/paving",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/tile",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/roof",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/asphalt",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/glass",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/metal",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/shutter",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/wood",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/brass",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/leaf",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/flower",
+      "triangles": 12
+    },
+    {
+      "name": "swatch/lantern",
+      "triangles": 12
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+LicenseRef-Project-Original
+
+Original procedural architectural geometry and seeded pixel materials authored for
+Stop That Guy! by Chat C (Codex, AI-assisted code authoring), 17 November 2026.
+Scope: this environment source directory and its exported lisbon-kit.glb.
+No downloaded model, photo, texture, font or generative-media service output is used.
+The patterns and shapes are original interpretations, not copies of protected art.
+
+Supplied for use, modification and redistribution with Stop That Guy! and its
+project/development artifacts, without attribution requirement. No third-party
+license is asserted, nor exclusive rights in elementary geometry or traditional
+architectural motifs. Supplied as-is without warranty. This does not license other
+project content. Labels/names in the scene are fictional. The preview's system
+font is rendered by the browser; no font binary is redistributed.
+
+Manifest origin: self-authored procedural code; generatorTermsCheckedAt is null.

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>Stop That Guy! · Rua do Banco visual slice</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#b9ced2;color:#fff;font:14px/1.4 system-ui,sans-serif}canvas{width:100%;height:100%;display:block}.panel{position:absolute;left:24px;top:22px;padding:16px 20px;background:#153c40e8;border:1px solid #e4d6ae75;max-width:570px;box-shadow:0 4px 16px #18312a22}h1{margin:3px 0 6px;font:500 27px Georgia,serif}small{letter-spacing:.14em;color:#e7ca8d}p{margin:6px 0}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{font:inherit;padding:6px 12px;background:#f0e8d5;color:#183d40;border:1px solid #e8d7b0;border-radius:3px;cursor:pointer}button:focus-visible{outline:3px solid #ebac3c;outline-offset:3px}button[aria-pressed=true]{background:#d6ad65}#cost{position:absolute;bottom:20px;left:24px;background:#143a3ee8;padding:10px 14px;font:12px/1.6 ui-monospace,monospace;white-space:pre-line;max-width:760px}.note{font-size:12px;color:#e2e6e2}#state{font-weight:600;color:#ffe8b5}
+</style></head><body>
+<canvas id="view" aria-label="Lisbon-inspired street aligned to the committed world"></canvas>
+<section class="panel"><small>STOP THAT GUY! · T011 / VISUAL SLICE</small><h1>Rua do Banco</h1>
+<p>Lisbon-inspired architecture · final direction, pending art approval</p><p class="note">Provisional fixed preview camera. Amber capsule = player-scale placeholder.<br>No T010 camera, character system, movement or online chase is presented.</p>
+<div class="controls"><button id="low">Low · L</button><button id="medium">Medium · M</button><button id="viewpoint">Next view · C</button><button id="retry">Reload</button></div>
+<p id="state" role="status" aria-live="polite">Loading architectural kit…</p></section><output id="cost">Waiting for scene measurements.</output>
+<script type="module" src="./preview.ts"></script></body></html>

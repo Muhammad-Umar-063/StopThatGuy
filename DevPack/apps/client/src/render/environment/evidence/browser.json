@@ -1,0 +1,558 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:5211/src/render/environment/preview.html",
+  "browser": "Chrome/154.0.8037.92",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "views": [
+    {
+      "state": "ready",
+      "quality": "low",
+      "view": "Bank approach",
+      "frames": 50,
+      "failure": null,
+      "costs": {
+        "quality": "low",
+        "meshes": 28,
+        "instances": 636,
+        "triangles": 103688,
+        "materials": 19,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 0
+      },
+      "drawCalls": 29,
+      "activeMeshes": 29,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 10,
+      "renderSize": [
+        1080,
+        675
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    },
+    {
+      "state": "ready",
+      "quality": "low",
+      "view": "Alley junction",
+      "frames": 92,
+      "failure": null,
+      "costs": {
+        "quality": "low",
+        "meshes": 28,
+        "instances": 636,
+        "triangles": 103688,
+        "materials": 19,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 0
+      },
+      "drawCalls": 22,
+      "activeMeshes": 22,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 10,
+      "renderSize": [
+        1080,
+        675
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    },
+    {
+      "state": "ready",
+      "quality": "low",
+      "view": "Hill grade",
+      "frames": 135,
+      "failure": null,
+      "costs": {
+        "quality": "low",
+        "meshes": 28,
+        "instances": 636,
+        "triangles": 103688,
+        "materials": 19,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 0
+      },
+      "drawCalls": 19,
+      "activeMeshes": 19,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 10,
+      "renderSize": [
+        1080,
+        675
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    },
+    {
+      "state": "ready",
+      "quality": "medium",
+      "view": "Bank approach",
+      "frames": 178,
+      "failure": null,
+      "costs": {
+        "quality": "medium",
+        "meshes": 32,
+        "instances": 716,
+        "triangles": 196904,
+        "materials": 21,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 1024
+      },
+      "drawCalls": 62,
+      "activeMeshes": 33,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 11,
+      "renderSize": [
+        1440,
+        900
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    },
+    {
+      "state": "ready",
+      "quality": "medium",
+      "view": "Alley junction",
+      "frames": 219,
+      "failure": null,
+      "costs": {
+        "quality": "medium",
+        "meshes": 32,
+        "instances": 716,
+        "triangles": 196904,
+        "materials": 21,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 1024
+      },
+      "drawCalls": 55,
+      "activeMeshes": 26,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 11,
+      "renderSize": [
+        1440,
+        900
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    },
+    {
+      "state": "ready",
+      "quality": "medium",
+      "view": "Hill grade",
+      "frames": 261,
+      "failure": null,
+      "costs": {
+        "quality": "medium",
+        "meshes": 32,
+        "instances": 716,
+        "triangles": 196904,
+        "materials": 21,
+        "textures": [
+          {
+            "name": "kit/stone (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/roof (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/plaster (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/paving (Base Color)",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "name": "kit/tile (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "kit/asphalt (Base Color)",
+            "width": 256,
+            "height": 256
+          },
+          {
+            "name": "sign:BANCO DO LARGO",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:CAFÉ AURORA",
+            "width": 512,
+            "height": 128
+          },
+          {
+            "name": "sign:TRAVESSA DO ARCO",
+            "width": 512,
+            "height": 128
+          }
+        ],
+        "estimatedTextureBytes": 3932160,
+        "shadowMapSize": 1024
+      },
+      "drawCalls": 52,
+      "activeMeshes": 23,
+      "sceneMeshes": 48,
+      "sceneMaterials": 23,
+      "sceneTextures": 11,
+      "renderSize": [
+        1440,
+        900
+      ],
+      "worldVersion": "first-street-1",
+      "anchors": [
+        "n-square",
+        "e-main-n1",
+        "e-main-n2",
+        "e-alley-w",
+        "e-steps-up",
+        "c-bank",
+        "c-block-west-mid",
+        "c-block-east-south",
+        "c-block-east-north",
+        "c-alley-house",
+        "c-bike-stand",
+        "c-lamp-1"
+      ],
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    }
+  ],
+  "errors": [],
+  "steps": [
+    {
+      "name": "Reload restores mesh/material/texture counts",
+      "before": {
+        "meshes": 48,
+        "materials": 23,
+        "textures": 11
+      },
+      "unloaded": {
+        "meshes": 1,
+        "materials": 1,
+        "textures": 1
+      },
+      "reloaded": {
+        "meshes": 48,
+        "materials": 23,
+        "textures": 11
+      }
+    },
+    "Shutdown releases all scene assets"
+  ]
+}

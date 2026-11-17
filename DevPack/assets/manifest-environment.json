@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "description": "Original final-direction Lisbon architectural kit. Not final city, characters or visual acceptance.",
+  "assets": [
+    {
+      "id": "environment.lisbon-kit",
+      "kind": "model",
+      "runtimePath": "assets/environment/lisbon-kit.glb",
+      "source": {
+        "path": "assets-source/environment/export.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural art for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets-source/environment/LICENSE.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original geometry/pixel patterns; metres, X reflection and reversed winding for glTF. Reused via thin instances. No external textures, models or generative-media service.",
+      "fileSizeBytes": 1211428,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 6440,
+        "lods": 1,
+        "materials": 14,
+        "textureSizes": [
+          "256x256",
+          "256x256",
+          "512x512",
+          "256x256",
+          "256x256",
+          "256x256"
+        ],
+        "animations": []
+      }
+    }
+  ]
+}

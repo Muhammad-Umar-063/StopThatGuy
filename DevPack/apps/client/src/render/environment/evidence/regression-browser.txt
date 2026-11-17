@@ -1,0 +1,60 @@
+
+> test:browser
+> npm run test:browser -w @stopthatguy/client && node scripts/assets/browser.mjs --dev && node scripts/assets/browser.mjs
+
+
+> @stopthatguy/client@0.0.0 test:browser
+> tsx --test src/input/keyboard/browser/keyboard.browser.test.ts
+
+# browser: Chrome/154.0.8037.92; fixture: http://127.0.0.1:5411/src/input/keyboard/browser/keyboard-fixture.html
+▶ keyboard input in headless Chrome
+  ✔ arrow keys, including key-repeat, do not scroll while gameplay owns focus (323.666923ms)
+  ✔ control: the same keys scroll when gameplay is inactive or focus is on a control outside the surface (541.544176ms)
+  ✔ Chrome marks auto-repeat; holding Left/Right sends one request per press (32.807724ms)
+  ✔ held versus edge: Shift+ArrowUp sprints, E holds interact with one press, F and X are single presses (14.785902ms)
+  ✔ Escape emits one local menu intent per press and no edge action (4.075268ms)
+  ✔ a text field keeps typing, caret movement and Escape; focusing it releases held controls (13.581599ms)
+  ✔ Tab and Shift+Tab keep standard focus navigation while gameplay is active (8.208759ms)
+  ✖ switching tabs (real blur and hidden visibility) releases everything; returning does not restore held keys (39.422372ms)
+  ✔ explicit release (disconnect) and suspension release held keys in the page (12.932204ms)
+  ✔ re-initialization keeps exactly one listener set; dispose removes them and returns keys to the page (283.882829ms)
+✖ keyboard input in headless Chrome (2133.318594ms)
+ℹ tests 10
+ℹ suites 1
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7217.757407
+
+✖ failing tests:
+
+test at src/input/keyboard/browser/keyboard.browser.test.ts:410:3
+✖ switching tabs (real blur and hidden visibility) releases everything; returning does not restore held keys (39.422372ms)
+  AssertionError [ERR_ASSERTION]: real browser events
+  + actual - expected
+
+    [
+  +   'hidden',
+      'blur',
+  -   'hidden'
+    ]
+
+      at TestContext.<anonymous> (/home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack/apps/client/src/input/keyboard/browser/keyboard.browser.test.ts:425:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'hidden', 'blur' ],
+    expected: [ 'blur', 'hidden' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+npm error Lifecycle script `test:browser` failed with error:
+npm error code 1
+npm error path /home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack/apps/client
+npm error workspace @stopthatguy/client@0.0.0
+npm error location /home/umar/Downloads/StopThatGuy/.worktrees/T011/DevPack/apps/client
+npm error command failed
+npm error command sh -c tsx --test src/input/keyboard/browser/keyboard.browser.test.ts

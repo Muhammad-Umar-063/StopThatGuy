@@ -1,0 +1,20 @@
+BJS - [21:58:16]: Babylon.js v9.37.0 - Null engine
+BJS - [21:58:16]: Babylon.js v9.37.0 - Null engine
+✔ the exact committed world supplies every route, facade and street-furniture anchor (2.362218ms)
+✔ hill decoration follows the 5% authored grade; unknown worlds/missing anchors fail explicitly (1.035199ms)
+✔ environment source rebuilds byte-for-byte and provenance validates schema 1 (1041.519832ms)
+✔ all authored normals are finite unit vectors and all primitives have valid triangle indices (492.654652ms)
+✔ official Babylon decoder reads every kit mesh and exact triangle count (geometry-only Node check) (508.823127ms)
+✔ street surfaces face upward in the left-handed scene, including graded and reversed paths (14.577263ms)
+✔ source export is byte-reproducible and checked-in runtime/metadata have not drifted (15.010011ms)
+✔ real provenance validates every category and combined schema 1, and catalog covers every runtime file (2.34514ms)
+✔ category aggregation rejects cross-manifest duplicate IDs and runtime paths (1.272651ms)
+✔ category errors and missing manifests cannot disappear during aggregation (0.971108ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3503.955101
