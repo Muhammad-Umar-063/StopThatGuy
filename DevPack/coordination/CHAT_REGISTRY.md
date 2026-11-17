@@ -59,3 +59,9 @@ reported notLoaded; they are not assumed to be running or receiving messages.
 The prior task assignments above are historical. Scoped internal assistants for
 T009 review and T011 unresolved defects report directly to root. No push is
 authorized by this operation; the user will push.
+
+## Batch closed
+
+T009–T012 integrated and accepted at c8526de; all listed task ownership is
+historical and leases are released. No next-task chats are assigned by this
+record. Root completed local integration; the user performs the GitHub push.

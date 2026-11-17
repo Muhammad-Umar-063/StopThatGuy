@@ -1,5 +1,24 @@
 # Active work and integration state
 
+Updated 17 November 2026: **T001–T012 are done and integrated.**
+Accepted batch-2 integration: `c8526de`. See integration/BATCH_2.md for commits,
+334 passing tests, complete browser acceptance and remaining planned scope.
+
+No batch-2 implementation chat holds an active lease. All T009–T012 original
+scopes, extra exact-file leases and coordinator reservations below are released.
+No next task has been started or assigned. T013–T016 dependencies are satisfied;
+new task assignment/ownership must be recorded before those chats edit files.
+Do not resume old tasks based on the historical blocked statuses below.
+
+The user authorized this local completion/commit/merge operation and will push
+to GitHub personally. Future task chats retain manual Git unless newly authorized.
+The task branches and all old worktrees are preserved and clean. Root closeout is
+serial; no background monitor or automatic cross-chat delivery is claimed.
+
+## Historical coordination and leases (superseded)
+
+# Active work and integration state
+
 Updated: 17 November 2026.
 
 Coordinator for current integration: root Codex chat, under the user request to finish, verify, commit and merge T009–T012 locally. Prior task chats are not loaded. Chat D history below is preserved; its active ownership transfers for this integration only.

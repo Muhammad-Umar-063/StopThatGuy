@@ -28,6 +28,11 @@ One chat is the coordinator/integrator. It alone updates tasks/board.json, ACTIV
 
 ## Codex chat coordination
 
+Batch 2 (T009–T012) is now integrated and complete at c8526de. The role assignments
+below are historical; no old task holds an active lease. Consult main's current
+ACTIVE_WORK and the next explicit assignment before editing.
+
+
 For the user-authorized next batch T009–T012, Chat D/T012 is the sole coordinator;
 Chats A/T009, B/T010 and C/T011 implement in separate worktrees. The user authorizes
 direct task messages and replies for routine ownership/dependency coordination.

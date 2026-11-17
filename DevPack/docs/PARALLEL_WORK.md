@@ -1,6 +1,12 @@
 # Working with four Codex chats
 
-## Current allocation
+## Current state
+
+Batch 2 T009–T012 is integrated at c8526de; all leases released. No next batch is
+started. T013–T016 dependencies are satisfied; assign new scopes before work.
+The allocations and launch sequence below document the completed batch.
+
+## Completed batch-2 allocation
 
 The user has switched the next batch to Codex. Use one chat per task; Chat D
 coordinates while implementing its own UI task in a separate worktree. The roles

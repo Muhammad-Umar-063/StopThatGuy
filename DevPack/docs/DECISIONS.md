@@ -180,3 +180,15 @@ will push. Root takes integration ownership from finished task chats, preserves
 existing work, completes T009/T011 gaps, verifies T010/T012 and combined checks.
 No task is marked done before accepted integration. Future feature work retains
 manual commits unless separately authorized.
+
+### 17 November 2026 — Batch 2 accepted integration
+
+T009–T012 are done at c8526de after 334 tests and all browser gates passed.
+The pending movement/config lease above is implemented: provisional-2 with no
+wire change. Per-player memory remains private; custom injected kernels expose
+conservative legal actions. Early buffering is off in normal gameplay pending
+visible cues. Bent-road lane offsets are continuous, with conservative sweeps.
+Environment registry/manifest aggregation and original street rendering passed.
+All new tests run in standard commands/CI; browser artifacts default to ignored
+paths. Full details and limits: coordination/integration/BATCH_2.md. All task
+leases released. No push performed; user will push. No next batch started.
