@@ -1,0 +1,8 @@
+PASS glTF loader chunk requested only after loading an asset
+PASS real GLB loads with correct metre bounds, origin and axes
+PASS positive 90 degree yaw points forward toward +X
+PASS unload and three reload cycles return resources to baseline
+PASS visible 404 failure has asset ID and no leaked scene resources
+PASS visible invalid failure has asset ID and no leaked scene resources
+PASS retry after each failure succeeds
+PASS page shutdown disposes renderer and scene resources

@@ -1,0 +1,15 @@
+▶ fixtures with the real simulation
+  ✔ the fixture setup starts a match that conforms to the state contract through the chase start (7.386356ms)
+✔ fixtures with the real simulation (8.405833ms)
+▶ package boundaries
+  ✔ browser-facing sources import no Node built-ins (1.500679ms)
+  ✔ test data is never a production dependency (0.310899ms)
+✔ package boundaries (1.998726ms)
+ℹ tests 3
+ℹ suites 2
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 577.254405

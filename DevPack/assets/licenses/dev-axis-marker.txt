@@ -1,0 +1,19 @@
+LicenseRef-Project-Original
+
+Scope: assets-source/dev-axis-marker.json and its procedural GLB export,
+apps/client/public/assets/dev/axis-marker.glb.
+
+Original calibration geometry authored for Stop That Guy! by Chat C (Codex,
+AI-assisted code authoring), 17 November 2026. No downloaded model, texture,
+font, animation, reference image or generative-media service output is used.
+The source consists of elementary geometric dimensions and colors; the
+deterministic exporter is in scripts/assets/build.ts.
+
+This original development fixture is supplied for use, modification and
+redistribution with Stop That Guy! and its development artifacts, without an
+attribution requirement. No third-party asset license is asserted. This record
+does not license other project content or claim exclusive rights in elementary
+geometry. Supplied as-is, without warranty. It is not final game art.
+
+Manifest origin is self-authored (procedural code), not generated media;
+generatorTermsCheckedAt is therefore null.

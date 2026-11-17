@@ -1,0 +1,20 @@
+
+> validate
+> tsx --conditions=stopthatguy-source scripts/validate-data.ts
+
+World data
+  ✔ FIXTURE_WORLD (@stopthatguy/test-support) [fixture-world-1]: 0 errors, 0 warnings
+  ℹ authored map data: none registered yet (packages/world is created by T005)
+  ℹ not checked yet (T005): reachability from spawns, spawn/collider overlap, slopes and ground heights
+
+Asset manifest (assets/manifest.json)
+  ✔ status active, 1 assets
+  ℹ a passing manifest check does not verify:
+      - whether each license actually permits the intended use and redistribution
+      - whether creator, origin and source are truthful (files cannot prove provenance)
+      - the content of generator terms recorded for generated assets
+      - that required attributions are displayed in the game's credits
+      - technical fields (triangles, LODs, materials, texture sizes, animations) against the files; needs glTF inspection (T008)
+      - browser loading, compression/decoder support and performance budgets (T008/T031)
+
+Validation passed

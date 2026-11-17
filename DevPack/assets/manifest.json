@@ -1,6 +1,37 @@
 {
   "schemaVersion": 1,
-  "status": "empty-development",
-  "description": "Provenance manifest for shipped runtime assets (docs/ASSETS.md). No assets exist yet; T008 adds the first entries and switches status to \"active\". Validated by npm run validate.",
-  "assets": []
+  "status": "active",
+  "description": "Runtime provenance, schema 1. Only an original DEVELOPMENT calibration sample ships; no final characters, city, vehicles or audio are available yet. See assets/CANDIDATES.md.",
+  "assets": [
+    {
+      "id": "dev.axis-marker",
+      "kind": "model",
+      "runtimePath": "assets/dev/axis-marker.glb",
+      "source": {
+        "path": "assets-source/dev-axis-marker.json",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original procedural geometry for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/dev-axis-marker.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Deterministic export by scripts/assets/build.ts: metres, X reflection and winding reversal to right-handed glTF. Development calibration only.",
+      "generatorTermsCheckedAt": null,
+      "fileSizeBytes": 12764,
+      "technical": {
+        "triangles": 128,
+        "lods": 1,
+        "materials": 3,
+        "textureSizes": [],
+        "animations": []
+      }
+    }
+  ]
 }

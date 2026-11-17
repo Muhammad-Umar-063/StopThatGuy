@@ -1,0 +1,15 @@
+
+> smoke
+> tsx --conditions=stopthatguy-source scripts/smoke.ts
+
+✔ build output: server and client builds present
+✔ browser: /usr/bin/google-chrome
+✔ server health: GET /health on port 35437 → {"status":"ok","protocolVersion":1,"configVersion":"provisional-1"} (expected {"status":"ok","protocolVersion":1,"configVersion":"provisional-1"})
+✔ client preview: serving the production build at http://127.0.0.1:40403/
+✔ browser started: Chrome/154.0.8037.92 (headless, SwiftShader WebGL)
+✔ renderer started: html[data-renderer] = "running"
+✔ status label: "Babylon.js 9.37.0 running (WebGL2), protocol v1 — temporary T001 smoke scene"
+✔ render loop advancing: 27 frames in 1 s (minimum 5)
+✔ no console errors: no errors, exceptions or failed resources
+
+Smoke check passed
