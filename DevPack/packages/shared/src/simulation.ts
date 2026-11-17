@@ -46,7 +46,14 @@ export interface ValidatedPlayerInput extends HeldControls {
 
 /** What one left/right press would do now; distinguishes a turn from a lane shift for cues. */
 export type DirectionalOption =
-  | { kind: "turn"; junctionId: JunctionId; toEdgeId: EdgeId; label: string | null }
+  | {
+      kind: "turn";
+      junctionId: JunctionId;
+      toEdgeId: EdgeId;
+      label: string | null;
+      /** True only for an explicitly presented early-buffer cue; absent = false. */
+      earlyBuffer?: boolean;
+    }
   | { kind: "laneChange"; toLaneIndex: number }
   | { kind: "none" };
 

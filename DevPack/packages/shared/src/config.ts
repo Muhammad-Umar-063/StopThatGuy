@@ -32,7 +32,7 @@ export const PROTOCOL_LIMITS = Object.freeze({
   maxVersionLabelLength: 32,
 });
 
-export const CONFIG_VERSION = "provisional-1";
+export const CONFIG_VERSION = "provisional-2";
 
 export interface GameTuning {
   readonly configVersion: string;
@@ -55,6 +55,15 @@ export interface GameTuning {
     readonly staminaMax: number;
     /** Stamina spent per second of sprinting (100 points ≈ 5 s of continuous sprint). */
     readonly sprintStaminaPerSecond: number;
+    readonly accelerationMps2: number;
+    readonly coastMps2: number;
+    readonly brakeMps2: number;
+    readonly laneShiftMs: number;
+    readonly staminaRecoveryPerSecond: number;
+    readonly staminaRecoveryDelayMs: number;
+    readonly bodyRadiusM: number;
+    readonly bodyHeightM: number;
+    readonly collisionSkinM: number;
   };
   readonly junction: {
     /** Turn approach window along the incoming edge; sized to speed within this range. */
@@ -62,6 +71,7 @@ export interface GameTuning {
     readonly approachWindowMaxM: number;
     /** Early left/right press buffer, only where the cue indicates buffering. */
     readonly turnInputBufferMs: number;
+    readonly approachTimeMs: number;
   };
   readonly vehicles: {
     readonly bicycleSpeedMps: number;
@@ -104,8 +114,13 @@ export const DEFAULT_TUNING: GameTuning = deepFreeze({
     introMs: 8_000,
     chaseTimeLimitMs: 360_000,
   },
-  movement: { runSpeedMps: 4, sprintSpeedMps: 6, staminaMax: 100, sprintStaminaPerSecond: 20 },
-  junction: { approachWindowMinM: 5, approachWindowMaxM: 8, turnInputBufferMs: 250 },
+  movement: {
+    runSpeedMps: 4, sprintSpeedMps: 6, staminaMax: 100, sprintStaminaPerSecond: 20,
+    accelerationMps2: 8, coastMps2: 6, brakeMps2: 12, laneShiftMs: 300,
+    staminaRecoveryPerSecond: 15, staminaRecoveryDelayMs: 1_000,
+    bodyRadiusM: 0.35, bodyHeightM: 1.8, collisionSkinM: 0.01,
+  },
+  junction: { approachWindowMinM: 5, approachWindowMaxM: 8, turnInputBufferMs: 250, approachTimeMs: 1_000 },
   vehicles: { bicycleSpeedMps: 7, scooterSpeedMps: 10, liftPassengerSeats: 2 },
   sabotage: { rangeM: 1.5, cooldownMs: 3_000, disruptionMs: 500, protectionMs: 1_500 },
   capture: { rangeM: 1.5, attemptMs: 350 },
