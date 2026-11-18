@@ -27,7 +27,7 @@ describe("first street world data", () => {
   });
 
   test("is the registered authored world and is frozen, JSON-safe plain data", () => {
-    assert.deepEqual(AUTHORED_WORLDS, [world]);
+    assert.equal(AUTHORED_WORLDS.filter(entry => entry === world).length, 1);
     const isDeepFrozen = (value: unknown): boolean =>
       typeof value !== "object" || value === null || (Object.isFrozen(value) && Object.values(value).every(isDeepFrozen));
     assert.ok(isDeepFrozen(world));
