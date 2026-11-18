@@ -16,14 +16,16 @@
     "check": "npm run typecheck && npm run build && npm run test && npm run validate && npm run smoke",
     "typecheck": "npm run typecheck --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json",
     "build": "npm run build --workspace @stopthatguy/shared && npm run build --workspace @stopthatguy/world && npm run build --workspace @stopthatguy/simulation && npm run build --workspace @stopthatguy/client --workspace @stopthatguy/server",
-    "test": "npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts && npm run test:assets && npm run test:environment",
+    "test": "npm run test --workspaces --if-present && tsx --conditions=stopthatguy-source --test tests/*.test.ts && npm run test:assets && npm run test:environment && npm run test:characters",
     "validate": "tsx --conditions=stopthatguy-source scripts/validate-data.ts",
     "smoke": "tsx --conditions=stopthatguy-source scripts/smoke.ts",
     "start:server": "npm run start --workspace @stopthatguy/server",
     "preview:client": "npm run preview --workspace @stopthatguy/client",
     "test:assets": "tsx scripts/assets/build.ts --check && tsx --conditions=stopthatguy-source --test scripts/assets/workflow.test.ts scripts/assets/runtime.test.mjs",
-    "test:browser": "npm run test:browser -w @stopthatguy/client && node scripts/assets/browser.mjs --dev && node scripts/assets/browser.mjs && node apps/client/src/camera/browser/acceptance.mjs --dev && node apps/client/src/camera/browser/acceptance.mjs && node apps/client/src/render/environment/browser.mjs",
-    "test:environment": "tsx --conditions=stopthatguy-source --test apps/client/src/render/environment/environment.test.mjs"
+    "test:browser": "npm run test:browser -w @stopthatguy/client && node scripts/assets/browser.mjs --dev && node scripts/assets/browser.mjs && node apps/client/src/camera/browser/acceptance.mjs --dev && node apps/client/src/camera/browser/acceptance.mjs && node apps/client/src/render/environment/browser.mjs && npm run test:characters:browser",
+    "test:environment": "tsx --conditions=stopthatguy-source --test apps/client/src/render/environment/environment.test.mjs",
+    "test:characters": "tsx --conditions=stopthatguy-source --test apps/client/src/render/characters/characters.test.mjs",
+    "test:characters:browser": "node apps/client/src/render/characters/browser.mjs --dev && node apps/client/src/render/characters/browser.mjs"
   },
   "devDependencies": {
     "@types/node": "22.20.5",

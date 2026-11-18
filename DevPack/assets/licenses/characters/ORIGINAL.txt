@@ -1,0 +1,14 @@
+Stop That Guy! original character art — 18 November 2026
+Identifier: LicenseRef-Project-Original
+
+Original AI-assisted parametric geometry, palette, clothing, rig and movement
+curves authored by Chat C (Codex) for this project. No third-party meshes,
+textures, mocap, fonts or generative-media service outputs are included.
+
+The project owner may use, modify and redistribute these source files, exported
+models and animations in the game and its development artifacts. Attribution is
+not required. This notice describes project permission; it does not assert
+exclusive copyright over AI-assisted material or license external candidates.
+
+Quaternius Universal Base Characters was evaluated as a source lead via its
+publisher pages only. No archive or content from that pack is included here.

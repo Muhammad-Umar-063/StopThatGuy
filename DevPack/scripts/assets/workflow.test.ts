@@ -16,7 +16,7 @@ test("source export is byte-reproducible and checked-in runtime/metadata have no
   assert.doesNotThrow(() => buildSample(true));
 });
 
-const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json"] as const;
+const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json", "assets/manifest-characters.json"] as const;
 const options = { projectRoot: ROOT, publicDir: resolve(ROOT, "apps/client/public") };
 const readManifests = (): AssetManifest[] => manifestPaths.map((path) => JSON.parse(readFileSync(resolve(ROOT, path), "utf8")) as AssetManifest);
 const combine = (manifests: AssetManifest[]): AssetManifest => ({ schemaVersion: 1, status: "active", description: "All shipped asset categories", assets: manifests.flatMap((manifest) => manifest.assets) });
@@ -51,9 +51,9 @@ test("real provenance validates every category and combined schema 1, and catalo
 
 
 test("category aggregation rejects cross-manifest duplicate IDs and runtime paths", () => {
-  for (const field of ["id", "runtimePath"] as const) {
+  for (let category = 1; category < manifestPaths.length; category++) for (const field of ["id", "runtimePath"] as const) {
     const manifests = readManifests();
-    manifests[1]!.assets[0]![field] = manifests[0]!.assets[0]![field];
+    manifests[category]!.assets[0]![field] = manifests[0]!.assets[0]![field];
     const report = validateAssetManifest(combine(manifests), options);
     assert.equal(report.ok, false);
     assert.ok(report.issues.some((issue) => issue.code === (field === "id" ? "duplicateId" : "duplicatePath")));
