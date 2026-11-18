@@ -1,4 +1,4 @@
-# T006 room transport
+# Room transport (T006 / T014)
 
 `createRoomLifecycle({ world, tuning? })` composes the `chase` room definition and
 HTTP endpoints for one Colyseus server process. The caller supplies trusted,
@@ -47,9 +47,10 @@ readiness and creates a fresh simulation on the next start.
 
 ## Boundaries and cleanup
 
-Input transport, gameplay movement and reconnect are not implemented here;
-`input`/`resume` receive a rejection. Departures remove lobby membership and command
-budgets immediately. During a match, snapshots project departed players as
+Validated `input` frames now drive the existing pure simulation. The authenticated
+Colyseus session supplies player identity; client timestamps never drive the clock.
+`resume` remains rejected until T028. Departures remove lobby membership, input
+buffers and command budgets immediately. During a match, snapshots project departed players as
 `left`/`forfeit`, and host metadata comes from the connected roster. The existing
 simulation interface has no departure mutation: T028 must add simulation-level
 forfeit/removal before gameplay interactions can rely on that projection.
@@ -69,8 +70,8 @@ deployment origin restrictions and wider abuse controls remain integration/T041 
 
 This initial schema envelope sends full shared snapshots at the configured patch
 rate (15 Hz by default), with 30 Hz fixed simulation steps and bounded catch-up.
-It is intentionally basic phase transport. Bandwidth optimization and gameplay
-input sequencing belong to later networking work; no performance claim is made.
+It carries authoritative movement and input acknowledgements. Bandwidth optimization
+remains later work; no performance claim is made.
 
 ## Verification
 
@@ -95,3 +96,33 @@ shortened under a separate config version; simulation tick and patch rates remai
 the defaults. The suite includes a real 15-second reservation-expiry check and
 stops only its own server. The leased server test script includes this suite in
 `npm run check`.
+
+## T014 input boundary
+
+Send `{ type: "input", frame: InputFrame }` on `command` after admission. The
+shared parser rejects extra fields, forged player IDs/poses/results, invalid
+booleans/numbers and oversized action arrays. The per-session command budget
+bounds all messages; input sequence must increase strictly. Replayed action IDs
+are ignored, including after rematch. A maximum of eight new edges can await the
+next simulation step; overflow/stale packets are rejected atomically. Accepted
+edges are drained only once, including fixed-step catch-up. The simulation's
+published `lastProcessedInputSequence` and `lastProcessedActionId` are the only
+acknowledgements; receipt alone does not acknowledge movement.
+
+Held controls expire at the existing 250 ms receipt-time timeout. Already accepted
+edges survive a stalled server until processed once; expiring them without a
+matching acknowledgement would strand client retransmissions. Leaving deletes the
+buffer, so departure neutralizes controls on the next step. Resetting to a lobby
+clears pending controls/edges but preserves session sequence/ID watermarks. T028
+still owns actual simulation-level forfeiture/removal and reconnect grace.
+
+T014's client exposes no legal-action prompts because this envelope has no
+server legal-action field. Capture/vehicle rules and their UI remain their own
+tasks. No prediction or speculative outcome is introduced.
+
+`rooms/test/input.test.mjs` is included by the existing server test glob. It tests
+real independent SDK sessions against FIRST_STREET_WORLD, matching server ticks,
+movement/ACKs, replay/stale/forged/flooded input, input loss and departure. The
+client network tests additionally exercise real admission cancellation, late-seat
+cleanup, errors/retry and UI state projection. All browser gates require the
+batch-3 shared lock while that batch is active.

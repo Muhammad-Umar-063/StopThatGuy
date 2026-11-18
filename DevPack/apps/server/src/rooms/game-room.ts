@@ -8,6 +8,7 @@ import { MatchSimulation } from "../adapters/match-simulation.js";
 import { SnapshotState } from "../adapters/snapshot-state.js";
 import { CommandGate, reject } from "../validation/command-gate.js";
 import { RoomFailure, readCreateOptions, readJoinOptions } from "../validation/room-options.js";
+import { PlayerInputBuffer } from "../validation/player-input.js";
 import type { RoomDirectory } from "./room-directory.js";
 
 export function createGameRoom(world: WorldData, tuning: GameTuning, directory: RoomDirectory) {
@@ -19,6 +20,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
     private mode: MatchMode = "normal";
     private readonly players = new Map<string, PlayerRecord>();
     private readonly gates = new Map<string, CommandGate>();
+    private readonly playerInputs = new Map<string, PlayerInputBuffer>();
     private nextJoinOrder = 0;
     private match: MatchSimulation | undefined;
     private snapshot!: AuthoritativeSnapshot;
@@ -65,6 +67,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
       };
       this.players.set(client.sessionId, player);
       this.gates.set(client.sessionId, new CommandGate(tuning.timing.maxInputSendHz));
+      this.playerInputs.set(client.sessionId, new PlayerInputBuffer(player.id, tuning.network.heldInputTimeoutMs));
       this.publish();
     }
 
@@ -72,6 +75,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
       // Failed/late reservations never joined the roster and must not cancel a countdown.
       if (!this.players.delete(client.sessionId)) return;
       this.gates.delete(client.sessionId);
+      this.playerInputs.delete(client.sessionId);
       if (this.snapshot.match.phase === "countdown" && this.players.size < this.minimumPlayers()) {
         this.resetLobby();
         void this.unlock();
@@ -85,6 +89,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
       this.match = undefined;
       this.players.clear();
       this.gates.clear();
+      this.playerInputs.clear();
       // Colyseus owns and clears the simulation interval, patch interval and room clock.
     }
 
@@ -122,9 +127,13 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
           this.onLeave(client);
           client.leave();
           return;
-        case "input":
+        case "input": {
+          const outcome = this.playerInputs.get(client.sessionId)!.accept(command.frame, performance.now());
+          if (outcome !== "accepted") this.sendMessage(client, reject(command.type, outcome === "overflow" ? "rateLimited" : "malformed"));
+          return;
+        }
         case "resume":
-          // T009/T014 input transport and T028 reconnect are intentionally not implemented.
+          // Reconnect identity/grace semantics remain T028.
           this.sendMessage(client, reject(command.type, "wrongPhase"));
           return;
       }
@@ -138,6 +147,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
 
     private resetLobby(): void {
       this.match = undefined;
+      for (const input of this.playerInputs.values()) input.clear();
       for (const player of this.players.values()) player.ready = false;
       this.snapshot = {
         match: {
@@ -152,7 +162,11 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
 
     private advance(elapsedMs: number): void {
       if (!this.match || this.snapshot.match.phase === "results") return;
-      const droppedMs = this.match.advance(elapsedMs);
+      const now = performance.now();
+      const droppedMs = this.match.advance(elapsedMs, () => [...this.playerInputs.values()].flatMap((input) => {
+        const sample = input.sample(now);
+        return sample ? [sample] : [];
+      }));
       if (droppedMs) console.warn(`[room] fixed-step catch-up dropped ${Math.round(droppedMs)} ms`);
       this.publish();
       for (const event of this.match.events()) this.broadcast("message", { type: "event", event } satisfies ServerMessage);
@@ -164,7 +178,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
         for (const player of this.snapshot.players) {
           if (!this.players.has(player.id)) {
             // Presence projection only. Simulation-level forfeit/removal is reserved for T028;
-            // T006 accepts no gameplay input, including from departed players.
+            // Departed sessions have no input buffer; simulation sees neutral controls.
             player.connection = "left";
             player.participation = "forfeit";
             player.ready = false;
