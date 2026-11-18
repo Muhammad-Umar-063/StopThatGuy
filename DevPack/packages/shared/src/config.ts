@@ -32,7 +32,7 @@ export const PROTOCOL_LIMITS = Object.freeze({
   maxVersionLabelLength: 32,
 });
 
-export const CONFIG_VERSION = "provisional-2";
+export const CONFIG_VERSION = "provisional-3";
 
 export interface GameTuning {
   readonly configVersion: string;
@@ -78,6 +78,10 @@ export interface GameTuning {
     readonly scooterSpeedMps: number;
     readonly liftPassengerSeats: number;
   };
+  readonly robber: {
+    /** Visible, stopped dismount at an authored foot boundary; fixed simulation time. */
+    readonly transitionMs: number;
+  };
   readonly sabotage: {
     readonly rangeM: number;
     readonly cooldownMs: number;
@@ -122,6 +126,7 @@ export const DEFAULT_TUNING: GameTuning = deepFreeze({
   },
   junction: { approachWindowMinM: 5, approachWindowMaxM: 8, turnInputBufferMs: 250, approachTimeMs: 1_000 },
   vehicles: { bicycleSpeedMps: 7, scooterSpeedMps: 10, liftPassengerSeats: 2 },
+  robber: { transitionMs: 1_000 },
   sabotage: { rangeM: 1.5, cooldownMs: 3_000, disruptionMs: 500, protectionMs: 1_500 },
   capture: { rangeM: 1.5, attemptMs: 350 },
   theft: { holdMs: 2_000 },
