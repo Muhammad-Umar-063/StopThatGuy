@@ -4,7 +4,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { describe, test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { FIRST_STREET_WORLD } from "../src/index.js";
+import { AUTHORED_WORLDS } from "../src/index.js";
 
 const packageDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -24,12 +24,12 @@ describe("world package boundaries", () => {
   test("the compiled package resolves without the source condition and matches the source", { skip: built ? false : "dist not built: run `npm run build` first" }, () => {
     const child = spawnSync(
       process.execPath,
-      ["--input-type=module", "-e", 'const w = await import("@stopthatguy/world"); process.stdout.write(JSON.stringify({ resolved: import.meta.resolve("@stopthatguy/world"), world: w.FIRST_STREET_WORLD }));'],
+      ["--input-type=module", "-e", 'const w = await import("@stopthatguy/world"); process.stdout.write(JSON.stringify({ resolved: import.meta.resolve("@stopthatguy/world"), world: w.AUTHORED_WORLDS }));'],
       { cwd: packageDir, env: { ...process.env, NODE_OPTIONS: "" }, encoding: "utf8" },
     );
     assert.equal(child.status, 0, child.stderr);
     const output = JSON.parse(child.stdout) as { resolved: string; world: unknown };
     assert.match(output.resolved, /packages\/world\/dist\/index\.js$/);
-    assert.deepEqual(output.world, JSON.parse(JSON.stringify(FIRST_STREET_WORLD)));
+    assert.deepEqual(output.world, JSON.parse(JSON.stringify(AUTHORED_WORLDS)));
   });
 });
