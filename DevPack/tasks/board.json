@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-11-17",
+  "updated": "2026-11-18",
   "project": "Stop That Guy!",
   "implementation_started": true,
   "status_values": [
@@ -114,7 +114,7 @@
       "integration_commit": "50d552d",
       "evidence": [
         "coordination/handoffs/T003.md",
-        "npm run check (typecheck → build → test) exit 0: simulation 30/30, shared/fixtures 97/97",
+        "npm run check (typecheck \u2192 build \u2192 test) exit 0: simulation 30/30, shared/fixtures 97/97",
         "replay equality, seeded choice, RNG reference, tick/phase schedule, invalid delta/input, exactly-once actions, event drain, isolation and immutability tests",
         "compiled dist resolves under plain Node and matches the source build",
         "dev/built server /health and client dev/preview in headless Chrome 154 OK",
@@ -543,81 +543,156 @@
       "id": "T013",
       "title": "Robber AI and match progression",
       "lane": "A",
-      "status": "planned",
+      "status": "in_review",
       "depends_on": [
         "T006",
         "T009"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat A (Codex; T013 implementer)",
+      "branch": "task/T013-robber-progression",
+      "base_commit": "edfdce7b5ca2856cc2ff01e656476f0025d4f439",
       "write_paths": [
         "packages/simulation/src/robber/",
-        "packages/simulation/src/match/"
+        "packages/simulation/src/match/",
+        "packages/simulation/src/state.ts",
+        "packages/simulation/src/step.ts",
+        "packages/simulation/src/simulation.ts",
+        "packages/simulation/src/index.ts",
+        "packages/simulation/test/robber.test.ts",
+        "packages/simulation/test/match.test.ts",
+        "packages/simulation/test/simulation.test.ts",
+        "packages/shared/src/config.ts",
+        "coordination/handoffs/T013.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
+        "Worker launch verified against branch/HEAD. REQ-001 tuning approved after independent compatibility review.",
+        "D reviewed published draft handoff on 2026-11-18. Browser acceptance pending; status remains in_progress, not accepted/in_review."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T013/DevPack",
+      "chat_id": "01a1e9fa-a445-7d90-8f1d-1c33e5e389e5",
+      "tuning_approval": {
+        "request_id": "REQ-001",
+        "path": "packages/shared/src/config.ts",
+        "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T013/DevPack",
+        "configVersion": "provisional-3",
+        "robber": {
+          "transitionMs": 1000
+        },
+        "status": "granted"
+      },
+      "integration_requirements": [
+        "REQ-002: after T013 manual integration, T014/T020 drains collectRobberDiagnostics on host initialization/steps and logs fallback reasons. match-simulation.ts remains T014-owned; T013 acceptance tests diagnostics only, host logging unintegrated."
+      ]
     },
     {
       "id": "T014",
       "title": "Client connection and state adapter",
       "lane": "B",
-      "status": "planned",
+      "status": "in_review",
       "depends_on": [
         "T006",
         "T009"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat B (Codex; T014 implementer)",
+      "branch": "task/T014-client-network",
+      "base_commit": "edfdce7b5ca2856cc2ff01e656476f0025d4f439",
       "write_paths": [
-        "apps/client/src/network/"
+        "apps/client/src/network/",
+        "apps/client/package.json",
+        "apps/client/vite.config.ts",
+        "apps/server/src/rooms/game-room.ts",
+        "apps/server/src/rooms/README.md",
+        "apps/server/src/rooms/test/input.test.mjs",
+        "apps/server/src/rooms/test/lifecycle.test.mjs",
+        "apps/server/src/adapters/match-simulation.ts",
+        "apps/server/src/validation/command-gate.ts",
+        "apps/server/src/validation/player-input.ts",
+        "coordination/handoffs/T014.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
+        "Launch status published by worker; coordinator verified task branch/HEAD against mailbox, 2026-11-18.",
+        "D reviewed published draft handoff on 2026-11-18. Browser acceptance pending; status remains in_progress, not accepted/in_review."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T014/DevPack",
+      "chat_id": "01a1ea37-4368-7100-8cd9-6ad2f299df5d"
     },
     {
       "id": "T015",
       "title": "Character models and movement animation",
       "lane": "C",
-      "status": "planned",
+      "status": "in_review",
       "depends_on": [
         "T008",
         "T011"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat C (Codex; T015 implementer)",
+      "branch": "task/T015-characters",
+      "base_commit": "edfdce7b5ca2856cc2ff01e656476f0025d4f439",
       "write_paths": [
         "apps/client/src/render/characters/",
         "apps/client/public/assets/characters/",
         "assets-source/characters/",
-        "assets/manifest-characters.json"
+        "assets/manifest-characters.json",
+        "assets/licenses/characters/",
+        "assets/catalog.json",
+        "scripts/assets/workflow.test.ts",
+        "scripts/validate-data.ts",
+        "package.json",
+        "coordination/handoffs/T015.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
+        "Launch status published by worker; coordinator verified task branch/HEAD against mailbox, 2026-11-18."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T015/DevPack",
+      "chat_id": "01a1e9fc-6fb5-7000-9099-74cf86ed3055"
     },
     {
       "id": "T016",
       "title": "Complete playable city graph",
       "lane": "D",
-      "status": "planned",
+      "status": "in_review",
       "depends_on": [
         "T005",
         "T011"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (Codex; sole batch-3 coordinator and T016 implementer)",
+      "branch": "task/T016-city-graph",
+      "base_commit": "edfdce7b5ca2856cc2ff01e656476f0025d4f439",
       "write_paths": [
-        "packages/world/"
+        "packages/world/",
+        "coordination/handoffs/T016.md"
       ],
       "integration_commit": null,
-      "evidence": [],
-      "blocker": null
+      "evidence": [
+        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
+        "coordination/handoffs/T016.md in assigned worktree; awaiting user review, manual commit and integration.",
+        "16 new tests execute in standard verification. Final npm run check exit 0: 350 tests, zero skips, typecheck/build/validate/smoke; city zero errors/warnings.",
+        "All browser components passed across runs: assigned full suite exited 143 during last environment component after keyboard/lobby/assets/camera passes; isolated locked environment retry exit 0, six views and disposal. No combined exit-0 claim.",
+        "Task/main git diff --check and new-file whitespace checks passed. First-street fingerprint and source/compiled exports preserved.",
+        "Main coordination/BATCH_3_INTEGRATION.md records T013 AI/catchability, T014 authority/versions/diagnostic logging, T015 asset aggregation and pending integration."
+      ],
+      "blocker": null,
+      "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T016/DevPack",
+      "chat_id": "01a1ea31-eab3-7e02-a75c-948fa0e4986c",
+      "leases": [
+        {
+          "path": "tests/city-world.test.ts",
+          "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T016/DevPack",
+          "owner": "Chat D/T016",
+          "request_id": "REQ-001",
+          "status": "granted",
+          "scope": "Cross-package authored-city acceptance using the existing public simulation/movement API; discovered by existing root test glob, no scripts/dependencies changed."
+        }
+      ]
     },
     {
       "id": "T017",
@@ -1291,5 +1366,20 @@
       "evidence": [],
       "blocker": null
     }
-  ]
+  ],
+  "browser_schedule": {
+    "requests": [
+      "T014/REQ-001",
+      "T015/REQ-001"
+    ],
+    "queue": [
+      "T014",
+      "T015",
+      "T013"
+    ],
+    "current": "T016 finished; T014 next",
+    "scope": "each task mandatory check and assigned browser acceptance",
+    "enforcement": "coordination priority only; shared flock mandatory; existing suites finish",
+    "release": "worker publishes completion/yield in own status.json"
+  }
 }

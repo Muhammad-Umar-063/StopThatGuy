@@ -28,25 +28,17 @@ One chat is the coordinator/integrator. It alone updates tasks/board.json, ACTIV
 
 ## Codex chat coordination
 
-Batch 2 (T009–T012) is now integrated and complete at c8526de. The role assignments
-below are historical; no old task holds an active lease. Consult main's current
-ACTIVE_WORK and the next explicit assignment before editing.
-
-
-For the user-authorized next batch T009–T012, Chat D/T012 is the sole coordinator;
-Chats A/T009, B/T010 and C/T011 implement in separate worktrees. The user authorizes
-direct task messages and replies for routine ownership/dependency coordination.
-Each launch prompt supplies that authorization directly. Verify actual chat IDs
-against their current task assignment and record them in main's
-coordination/CHAT_REGISTRY.md; do not infer a destination from an old chat title.
-Use available chat tools to route requests and decisions without user relaying.
-If tools cannot reach/read a chat, report the actual limitation. Never claim
-successful delivery or approval without evidence, and do not poll continuously.
-Chat D may grant routine exclusive file leases within the assigned scope and
-must record the exact file and owning checkout. This does not grant OS/network
-permissions, authorize Git writes, or make another branch's code available.
-Escalate unavailable access, destructive actions, costs and product scope changes
-to the user. Main tracking edits remain serial; workers never change them.
+Current assignment: batch 3 T013–T016, with Chat D/T016 as sole coordinator.
+A/T013 owns robber rules, B/T014 networking, C/T015 characters, D/T016 city data.
+Read live main docs/PARALLEL_WORK.md, coordination/BATCH_3.md and ACTIVE_WORK.md.
+Task worktree coordination snapshots can describe the old batch; main is canonical.
+Exact pregranted leases are ready to use; do not ask for duplicate approval.
+The launch prompt directly authorizes routine messages AND replies. Verify actual
+chat identities before sending. When messaging is unavailable, use per-task file
+mailboxes and recorded main decisions. Do not invent delivery or silently self-approve.
+D resolves routine scope leases without repeated user relays; actual OS/network
+permissions, destructive operations, costs and scope changes remain separate.
+No continuously running coordinator or automatic idle-chat wakeup is promised.
 
 ## Implementation rules
 

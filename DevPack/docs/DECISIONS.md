@@ -192,3 +192,35 @@ Environment registry/manifest aggregation and original street rendering passed.
 All new tests run in standard commands/CI; browser artifacts default to ignored
 paths. Full details and limits: coordination/integration/BATCH_2.md. All task
 leases released. No push performed; user will push. No next batch started.
+
+### 17 November 2026 — Batch 3 preparation
+
+User requests VS Code preparation and prompts for the next four tasks. T013/A,
+T014/B, T015/C and T016/D are reserved at edfdce7; D coordinates. Existing completed
+worktrees are preserved. Setup creates branches, installs locked dependencies and
+updates the local workspace; feature implementation is not started. Setup records
+remain uncommitted in main, read directly by workers; no staging, commits or push.
+Pregrant exact simulation/config, input transport and asset/test registration scopes
+in ACTIVE_WORK to avoid repeating known integration-lease delays. New requests use
+verified direct messages or single-writer file mailboxes; D records approval before
+use. File changes do not wake idle chats. Shared flock serializes browser gates.
+No new engine, protocol, paid asset, gameplay feature or dependency is selected by
+preparation. Characters need actual licensed/source verification during T015.
+
+### 18 November 2026 — T013 provisional robber transition
+
+D approves REQ-001: `robber.transitionMs = 1000`, CONFIG_VERSION `provisional-3`,
+implemented only by T013 in its leased config.ts. Existing phase clocks, movement
+values, protocol and world schemas remain. The dwell uses simulation ticks at a
+clear road-to-foot boundary; transport ownership/remount remains T021. Every T016
+escape will include a foot section. Combined T013/T016 catchability and T014
+version rejection remain manual-integration gates; approval does not merge code.
+
+### 18 November 2026 — Batch 3 local integration authorized
+
+The user authorizes root to review, commit and merge T013–T016 locally, then
+prepare the next worktrees. The user will push main to GitHub. All four workers
+have in_review handoffs and released their browser gates. Root takes serial
+integration ownership; earlier worker scopes are now closed to new edits.
+This authorization applies to this integration/setup operation, not automatic
+commits for future T017–T020 feature work. Combined acceptance remains required.
