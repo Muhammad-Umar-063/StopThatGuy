@@ -16,3 +16,5 @@ export {
 } from "./clock.js";
 export { cloneRng, createRng, nextFloat, nextInt, nextUint32, type RngState } from "./rng.js";
 export * from "./movement/index.js";
+
+export { collectRobberDiagnostics, type RobberDiagnostic } from "./robber/robber.js";

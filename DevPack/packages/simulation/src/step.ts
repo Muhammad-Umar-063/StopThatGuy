@@ -2,12 +2,12 @@ import {
   PROTOCOL_LIMITS,
   type EdgeAction,
   type GameEvent,
-  type GameEventPayload,
   type LegalActions,
-  type MatchResult,
   type PlayerId,
   type ValidatedPlayerInput,
 } from "@stopthatguy/shared";
+import { advancePhaseClock, resolveEscapeAndTimeout } from "./match/progression.js";
+import { advanceRobber } from "./robber/robber.js";
 import { FIXED_DELTA_TOLERANCE_MS } from "./clock.js";
 import { clonePlain } from "./copy.js";
 import { copyMovementMemory, type MovementInput, type MovementKernel, type MovementResult, type MovementState } from "./movement/kernel.js";
@@ -36,11 +36,11 @@ const NEUTRAL_INPUT: MovementInput = Object.freeze({
  *
  *   0. phase clock — countdown → intro → chase (emits matchStarted)
  *   1. inputs — acknowledge sequences, consume new edge actions exactly once
- *   2. movement/collision — chase only, grounded active players, via the MovementKernel (rules: T009)
+ *   2. movement/collision — chase only, grounded active players and server-controlled robber
  *   3. action effects: mount, borrow, lift, shove — T021/T025, not implemented
  *   4. theft, police, arrest — T029/T033, not implemented
  *   5. capture completion — T017, not implemented
- *   6. escape / timeout → one immutable result (escape: T013; timeout implemented)
+ *   6. escape / timeout → one immutable result
  *
  * The delta and inputs are validated before any mutation: on RangeError the state is unchanged.
  * An invalid MovementKernel result is a programming error: step throws Error after stages 0–1
@@ -57,6 +57,9 @@ export function stepState(s: InternalState, inputs: readonly ValidatedPlayerInpu
   applyInputs(s, intents);
   if (s.match.phase !== "chase") return;
   moveGroundedPlayers(s, intents, movement);
+  advanceRobber(s, s.tuning.robber.transitionMs);
+  // Stages 3–5 remain reserved for action effects, police/arrest and capture.
+  // Capture must resolve before a pending robber escape or the time limit.
   resolveEscapeAndTimeout(s);
 }
 
@@ -92,26 +95,6 @@ function prepareInputs(s: InternalState, inputs: readonly ValidatedPlayerInput[]
     });
   }
   return intents;
-}
-
-function emit(s: InternalState, payload: GameEventPayload): void {
-  const event: GameEvent = { ...payload, id: s.nextEventId, tick: s.match.tick };
-  s.nextEventId += 1;
-  s.pendingEvents.push(event);
-}
-
-// Stage 0
-function advancePhaseClock(s: InternalState): void {
-  const m = s.match;
-  if (m.phase === "countdown" && m.tick >= (m.phaseEndsAtTick ?? 0)) {
-    m.phase = "intro";
-    m.phaseEndsAtTick = m.chaseStartTick;
-  }
-  if (m.phase === "intro" && m.chaseStartTick !== null && m.tick >= m.chaseStartTick) {
-    m.phase = "chase";
-    m.phaseEndsAtTick = null;
-    emit(s, { type: "matchStarted", chaseStartTick: m.chaseStartTick });
-  }
 }
 
 // Stage 1. Edge-action effects (interact, capture, sabotage, turns) are applied by later stages/tasks;
@@ -183,21 +166,6 @@ function checkMovementResult(s: InternalState, current: MovementState, result: M
     locomotion === current.locomotion &&
     [position.x, position.y, position.z, yaw].every(Number.isFinite);
   if (!valid || !validMovementMemory(result.state.motion, { world: s.world, tuning: s.tuning, dtMs: s.fixedDeltaMs })) throw new Error("movement kernel returned an invalid or out-of-range result");
-}
-
-// Stage 6. Escape resolution arrives with T013; only the time limit is implemented here.
-function resolveEscapeAndTimeout(s: InternalState): void {
-  const m = s.match;
-  if (m.result !== null || m.chaseEndTick === null || m.tick < m.chaseEndTick) return;
-  finishMatch(s, { outcome: "noWinner", reason: "timeout", winnerId: null, resolvedAtTick: m.tick, awards: [], stats: [], deductions: [] });
-}
-
-/** Publishes the one immutable result and freezes competition. Stats/awards are filled by T037. */
-function finishMatch(s: InternalState, result: MatchResult): void {
-  s.match.result = result;
-  s.match.phase = "results";
-  s.match.phaseEndsAtTick = null;
-  emit(s, { type: "matchEnded", result: clonePlain(result) });
 }
 
 /** Rules arrive with T009 (turns/lanes, sprint), T017 (capture), T021 (vehicles) and T025 (sabotage). */

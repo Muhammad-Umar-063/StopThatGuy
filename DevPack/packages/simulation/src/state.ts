@@ -27,7 +27,9 @@ import { clonePlain } from "./copy.js";
 import { copyMovementMemory, type MovementMemory } from "./movement/kernel.js";
 import { poseOnRoute } from "./movement/geometry.js";
 import { indexWorld, type WorldIndex } from "./movement/world-index.js";
-import { createRng, nextInt, type RngState } from "./rng.js";
+import { createRng, type RngState } from "./rng.js";
+import { initializeRobber, type RobberMemory } from "./robber/robber.js";
+import { movementBody } from "./movement/road.js";
 
 /**
  * Opaque handle for one match. Callers can only pass it back to the Simulation methods; the data lives
@@ -52,6 +54,7 @@ export interface InternalState {
   readonly movementByPlayer: Map<PlayerId, MovementMemory>;
   readonly playersById: ReadonlyMap<string, PlayerRecord>;
   readonly robber: RobberRecord;
+  readonly robberMemory: RobberMemory;
   readonly vehicles: VehicleRecord[];
   readonly police: PoliceRecord[];
   readonly interactables: InteractableRecord[];
@@ -87,6 +90,8 @@ function validateSetup(setup: SimulationSetup): void {
     || tuning.junction.turnInputBufferMs > 250 || m.sprintSpeedMps < m.runSpeedMps) invalidSetup("invalid movement tuning");
   if (![t.countdownMs, t.introMs].every((ms) => Number.isFinite(ms) && ms >= 0)) invalidSetup("countdown/intro must be ≥ 0 ms");
   if (!Number.isFinite(t.chaseTimeLimitMs) || msToTicks(t.chaseTimeLimitMs, tuning) < 1) invalidSetup("chase must last at least one tick");
+  if (!Number.isFinite(tuning.robber.transitionMs) || tuning.robber.transitionMs <= 0) invalidSetup("robber transition must be positive");
+  if (![tuning.vehicles.scooterSpeedMps, tuning.vehicles.bicycleSpeedMps].every(n => Number.isFinite(n) && n > 0)) invalidSetup("invalid vehicle speed");
   if (world.schemaVersion !== WORLD_SCHEMA_VERSION) invalidSetup(`world schema ${world.schemaVersion} ≠ ${WORLD_SCHEMA_VERSION}`);
   if (!MATCH_MODES.includes(setup.mode)) invalidSetup("unknown mode");
   const code = parseRoomCode(setup.roomCode);
@@ -131,9 +136,6 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
   const ticks = (ms: number) => msToTicks(ms, tuning);
   const rng = createRng(setup.seed);
 
-  const escapeRoutes = setup.world.routes.filter((r) => r.kind === "robberEscape");
-  const robberRoute = escapeRoutes.length > 0 ? escapeRoutes[nextInt(rng, escapeRoutes.length)]! : null;
-
   const playerSpawns = setup.world.spawns.filter((s) => s.kind === "player");
   const participants = [...setup.participants].sort((a, b) => a.joinOrder - b.joinOrder);
   const players: PlayerRecord[] = participants.map((p, i) => {
@@ -166,8 +168,11 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
     speedMps: 0,
     locomotion: "onFoot",
     aiState: "departing",
-    escapeTargetZoneId: robberRoute?.kind === "robberEscape" ? robberRoute.exitZoneId : null,
+    escapeTargetZoneId: null,
   };
+
+  const robberMemory = initializeRobber(robber, { world, tuning,
+    body: movementBody({ world, tuning, dtMs: getFixedDeltaMs(tuning) }) }, rng);
 
   const vehicles: VehicleRecord[] = [];
   const police: PoliceRecord[] = [];
@@ -214,7 +219,7 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
     phaseEndsAtTick: Math.min(ticks(tuning.timing.countdownMs), chaseStartTick),
     chaseStartTick,
     chaseEndTick: chaseStartTick + ticks(tuning.timing.chaseTimeLimitMs),
-    robberRouteId: robberRoute?.id ?? null,
+    robberRouteId: robberMemory.plan.routeId,
     versions: { protocolVersion: PROTOCOL_VERSION, worldVersion: setup.world.worldVersion, configVersion: tuning.configVersion },
     hostId: players[0]!.id,
     result: null,
@@ -229,6 +234,7 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
     movementByPlayer: new Map(players.map((p) => [p.id, copyMovementMemory()])),
     playersById: new Map<PlayerId, PlayerRecord>(players.map((p) => [p.id, p])),
     robber,
+    robberMemory,
     vehicles,
     police,
     interactables,
