@@ -2,7 +2,7 @@ import {
   advanceFixedStepClock, createFixedStepClock, createSimulation, getFixedDeltaMs,
   type SimulationState,
 } from "@stopthatguy/simulation";
-import type { SimulationSetup } from "@stopthatguy/shared";
+import type { SimulationSetup, ValidatedPlayerInput } from "@stopthatguy/shared";
 
 /** Only the room measures wall time. Both normal and practice use this same simulation. */
 export class MatchSimulation {
@@ -16,9 +16,9 @@ export class MatchSimulation {
     this.deltaMs = getFixedDeltaMs(setup.tuning);
   }
 
-  advance(elapsedMs: number): number {
+  advance(elapsedMs: number, readInputs: () => readonly ValidatedPlayerInput[] = () => []): number {
     const { steps, droppedMs } = advanceFixedStepClock(this.clock, elapsedMs, this.deltaMs);
-    for (let i = 0; i < steps; i++) this.simulation.step(this.state, [], this.deltaMs);
+    for (let i = 0; i < steps; i++) this.simulation.step(this.state, readInputs(), this.deltaMs);
     return droppedMs;
   }
 
