@@ -46,7 +46,7 @@ console.log("  ℹ not checked: collider placement relative to routes, lateral s
 
 const assetOptions = { projectRoot: ROOT, publicDir: join(ROOT, "apps/client/public") };
 const assetManifests: AssetManifest[] = [];
-const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json"];
+const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json", "assets/manifest-characters.json"];
 function printAssets(label: string, report: AssetManifestReport): void {
   failed ||= !report.ok;
   console.log(`\nAsset manifest (${label})`);

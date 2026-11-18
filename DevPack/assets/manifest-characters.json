@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "description": "Original smooth stylized player and satchel robber; real skinned LODs and five locomotion clips. Final user art approval and hardware performance remain unverified.",
+  "assets": [
+    {
+      "id": "character.player",
+      "kind": "model",
+      "runtimePath": "assets/characters/player.glb",
+      "source": {
+        "path": "assets-source/characters/model.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural authoring for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/characters/ORIGINAL.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original ring-surface anatomy/clothing, weighted 17-joint skeleton, analytical foot trajectories exported as real glTF quaternion/translation clips, three independently authored mesh resolutions; X reflection with reversed winding for Babylon glTF conversion. No third-party model/texture or generative media service.",
+      "fileSizeBytes": 954952,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 19252,
+        "lods": 3,
+        "materials": 1,
+        "textureSizes": [],
+        "animations": [
+          "idle",
+          "run",
+          "sprint",
+          "turnLeft",
+          "turnRight"
+        ]
+      }
+    },
+    {
+      "id": "character.robber",
+      "kind": "model",
+      "runtimePath": "assets/characters/robber.glb",
+      "source": {
+        "path": "assets-source/characters/model.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural authoring for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/characters/ORIGINAL.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original ring-surface anatomy/clothing, weighted 17-joint skeleton, analytical foot trajectories exported as real glTF quaternion/translation clips, three independently authored mesh resolutions; X reflection with reversed winding for Babylon glTF conversion. No third-party model/texture or generative media service.",
+      "fileSizeBytes": 1014440,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 20548,
+        "lods": 3,
+        "materials": 1,
+        "textureSizes": [],
+        "animations": [
+          "idle",
+          "run",
+          "sprint",
+          "turnLeft",
+          "turnRight"
+        ]
+      }
+    }
+  ]
+}

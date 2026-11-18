@@ -1,0 +1,116 @@
+{
+  "sourceHashes": {
+    "mesh.mjs": "bc139acc169fa0b4e77fb92ecbe751f89285bfba4fc0aa0c8cc71f875b302164",
+    "rig.mjs": "cd3854538a7925b1a15f4f81e4174a836c3fdfc073b1e203b3fc9c2642354394",
+    "model.mjs": "1d4fce4a1fe7c0af4ad67ab749cad349ed75927c91ae7c242f08126079c48a69",
+    "export.mjs": "b565fc4586604c02472a22b2c1209a5f90be5dd73204f6ce159002cef1a52c7b"
+  },
+  "characters": {
+    "player": {
+      "sha256": "2112e2091a2375a8b6db9355a0d2b0708320be60fac04b80399c23992d1a18f1",
+      "fileSizeBytes": 954952,
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 12824,
+          "vertices": 7136,
+          "vertexBufferBytes": 456704,
+          "indexBufferBytes": 76944
+        },
+        {
+          "level": 1,
+          "triangles": 4528,
+          "vertices": 2676,
+          "vertexBufferBytes": 171264,
+          "indexBufferBytes": 27168
+        },
+        {
+          "level": 2,
+          "triangles": 1900,
+          "vertices": 1132,
+          "vertexBufferBytes": 72448,
+          "indexBufferBytes": 11400
+        }
+      ],
+      "bones": 17,
+      "clips": {
+        "idle": {
+          "duration": 2.4,
+          "stride": 0
+        },
+        "run": {
+          "duration": 1,
+          "stride": 2.4
+        },
+        "sprint": {
+          "duration": 1,
+          "stride": 3.2
+        },
+        "turnLeft": {
+          "duration": 1,
+          "stride": 0
+        },
+        "turnRight": {
+          "duration": 1,
+          "stride": 0
+        }
+      },
+      "materials": 1,
+      "textures": 0,
+      "textureBytes": 0
+    },
+    "robber": {
+      "sha256": "fb25723d5c0a80fc67aaada2247202914af8481d73629d56feca7013e826d7ce",
+      "fileSizeBytes": 1014440,
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 13768,
+          "vertices": 7700,
+          "vertexBufferBytes": 492800,
+          "indexBufferBytes": 82608
+        },
+        {
+          "level": 1,
+          "triangles": 4760,
+          "vertices": 2836,
+          "vertexBufferBytes": 181504,
+          "indexBufferBytes": 28560
+        },
+        {
+          "level": 2,
+          "triangles": 2020,
+          "vertices": 1216,
+          "vertexBufferBytes": 77824,
+          "indexBufferBytes": 12120
+        }
+      ],
+      "bones": 17,
+      "clips": {
+        "idle": {
+          "duration": 2.4,
+          "stride": 0
+        },
+        "run": {
+          "duration": 1,
+          "stride": 2.4
+        },
+        "sprint": {
+          "duration": 1,
+          "stride": 3.2
+        },
+        "turnLeft": {
+          "duration": 1,
+          "stride": 0
+        },
+        "turnRight": {
+          "duration": 1,
+          "stride": 0
+        }
+      },
+      "materials": 1,
+      "textures": 0,
+      "textureBytes": 0
+    }
+  }
+}

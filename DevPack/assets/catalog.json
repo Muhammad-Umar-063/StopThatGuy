@@ -8,5 +8,13 @@
   "environment.lisbon-kit": {
     "runtimePath": "assets/environment/lisbon-kit.glb",
     "label": "Original Lisbon architecture — final direction, acceptance pending"
+  },
+  "character.player": {
+    "runtimePath": "assets/characters/player.glb",
+    "label": "Original smooth player — skinned locomotion, user art review pending"
+  },
+  "character.robber": {
+    "runtimePath": "assets/characters/robber.glb",
+    "label": "Original smooth robber — skinned locomotion, user art review pending"
   }
 }
