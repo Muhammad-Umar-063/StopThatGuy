@@ -74,6 +74,7 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
     override onLeave(client: Client): void {
       // Failed/late reservations never joined the roster and must not cancel a countdown.
       if (!this.players.delete(client.sessionId)) return;
+      this.match?.forfeit(client.sessionId as PlayerId);
       this.gates.delete(client.sessionId);
       this.playerInputs.delete(client.sessionId);
       if (this.snapshot.match.phase === "countdown" && this.players.size < this.minimumPlayers()) {
@@ -175,15 +176,6 @@ export function createGameRoom(world: WorldData, tuning: GameTuning, directory: 
     private publish(): void {
       if (this.match) {
         this.snapshot = this.match.snapshot();
-        for (const player of this.snapshot.players) {
-          if (!this.players.has(player.id)) {
-            // Presence projection only. Simulation-level forfeit/removal is reserved for T028;
-            // Departed sessions have no input buffer; simulation sees neutral controls.
-            player.connection = "left";
-            player.participation = "forfeit";
-            player.ready = false;
-          }
-        }
       } else {
         this.snapshot.players = [...this.players.values()];
       }

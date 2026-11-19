@@ -1,7 +1,7 @@
 import type { EventId, InteractableId, PlayerId, PoliceId, Tick, VehicleId, ZoneId } from "./ids.js";
 import type { MatchResult } from "./results.js";
 
-export const CAPTURE_CANCEL_REASONS = ["outOfRange", "lostSight", "tooFast", "stunned", "arrested", "phaseEnded"] as const;
+export const CAPTURE_CANCEL_REASONS = ["outOfRange", "lostSight", "tooFast", "stunned", "arrested", "phaseEnded", "notFacing", "ineligible"] as const;
 export type CaptureCancelReason = (typeof CAPTURE_CANCEL_REASONS)[number];
 
 /**

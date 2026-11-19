@@ -1,8 +1,8 @@
 import {
-  advanceFixedStepClock, collectRobberDiagnostics, createFixedStepClock, createSimulation, getFixedDeltaMs,
+  advanceFixedStepClock, collectRobberDiagnostics, createFixedStepClock, createSimulation, forfeitPlayer, getFixedDeltaMs,
   type RobberDiagnostic, type SimulationState,
 } from "@stopthatguy/simulation";
-import type { SimulationSetup, ValidatedPlayerInput } from "@stopthatguy/shared";
+import type { PlayerId, SimulationSetup, ValidatedPlayerInput } from "@stopthatguy/shared";
 
 /** Only the room measures wall time. Both normal and practice use this same simulation. */
 export class MatchSimulation {
@@ -26,6 +26,8 @@ export class MatchSimulation {
     }
     return droppedMs;
   }
+
+  forfeit(playerId: PlayerId): void { forfeitPlayer(this.state, playerId); }
 
   snapshot() { return this.simulation.readSerializableState(this.state); }
   events() { return this.simulation.collectEvents(this.state); }

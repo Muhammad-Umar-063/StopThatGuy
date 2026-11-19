@@ -18,3 +18,5 @@ export { cloneRng, createRng, nextFloat, nextInt, nextUint32, type RngState } fr
 export * from "./movement/index.js";
 
 export { collectRobberDiagnostics, type RobberDiagnostic } from "./robber/robber.js";
+
+export { forfeitPlayer } from "./results/departure.js";

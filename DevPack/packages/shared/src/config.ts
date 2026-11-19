@@ -32,7 +32,7 @@ export const PROTOCOL_LIMITS = Object.freeze({
   maxVersionLabelLength: 32,
 });
 
-export const CONFIG_VERSION = "provisional-3";
+export const CONFIG_VERSION = "provisional-4";
 
 export interface GameTuning {
   readonly configVersion: string;
@@ -91,6 +91,11 @@ export interface GameTuning {
   readonly capture: {
     readonly rangeM: number;
     readonly attemptMs: number;
+    /** Inclusive limits using actual horizontal motion, including lanes and turns. */
+    readonly maxRelativeSpeedMps: number;
+    readonly maxMountedSpeedMps: number;
+    /** Inclusive horizontal facing cone half-angle, in degrees. */
+    readonly facingHalfAngleDeg: number;
   };
   readonly theft: {
     readonly holdMs: number;
@@ -128,7 +133,7 @@ export const DEFAULT_TUNING: GameTuning = deepFreeze({
   vehicles: { bicycleSpeedMps: 7, scooterSpeedMps: 10, liftPassengerSeats: 2 },
   robber: { transitionMs: 1_000 },
   sabotage: { rangeM: 1.5, cooldownMs: 3_000, disruptionMs: 500, protectionMs: 1_500 },
-  capture: { rangeM: 1.5, attemptMs: 350 },
+  capture: { rangeM: 1.5, attemptMs: 350, maxRelativeSpeedMps: 3, maxMountedSpeedMps: 4, facingHalfAngleDeg: 60 },
   theft: { holdMs: 2_000 },
   police: { arrestHoldMs: 1_000 },
   network: { heldInputTimeoutMs: 250, reconnectGraceMs: 15_000, interpolationDelayMs: 100 },
