@@ -1,9 +1,13 @@
-# Batch 4 — prepared for launch
+# Batch 4 — coordination active
 
 Accepted code baseline: `46811168fab6feab33858ff0830a8d0631273fa8`. T013–T016 are reviewed, merged and verified;
 see integration/BATCH_3.md. Worktrees T017–T020 exist at that code commit. Main
 holds the current setup instructions; read them directly, not older tree snapshots.
-Setup installation evidence: BATCH_4_SETUP.md. No next-task chat has been launched.
+Setup installation evidence: BATCH_4_SETUP.md. D/T020 started coordination on
+19 November 2026; the user has launched A/B/C and their active assignments are
+verified. T017/T018/T019 have supplied verified in_review handoffs; all await
+manual review, commits and accepted integration. Live registration is in
+CHAT_REGISTRY.md; T020 gameplay remains planned.
 
 ## Start order and dependencies
 

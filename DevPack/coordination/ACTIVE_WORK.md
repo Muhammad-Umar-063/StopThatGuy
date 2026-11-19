@@ -1,19 +1,38 @@
 # Batch 4 — active reservations
 
-Prepared 19 November 2026. T001–T016 are done. Accepted code baseline and all four
-new branch HEADs: `46811168fab6feab33858ff0830a8d0631273fa8`. No next-task chat has been launched by setup.
-A/T017, B/T018 and C/T019 are ready; D coordinates first. T020 gameplay remains
+Integration in progress: the user authorized root on 19 November 2026 to commit
+and merge current changes locally. Root owns serial integration and tracking
+until verification finishes; worker feature edits remain paused. User will push.
+The reservations and review states below are the pre-integration record.
+
+Verified 19 November 2026 by Chat D. T001–T016 are done. Accepted code baseline
+and all four task HEADs verified clean at coordinator startup: `46811168fab6feab33858ff0830a8d0631273fa8`.
+Main HEAD: `3afa9760659a5b8c75ca0511bda73053db051795` (accepted code plus setup).
+D is active for coordination. T017, T018 and T019 are all in_review after verified
+handoffs/gate evidence; none is integrated. Actual task identities are in CHAT_REGISTRY.
+Exact pregranted scopes remain unchanged. T020 gameplay remains
 planned until T017–T019 are reviewed/integrated and its checkout is updated with
 the user's Git authorization. Coordination work does not mark T020 in_progress.
 
-Chat D/T020 is sole coordinator after launch. Main tracking is D-only; game code
+Chat D/T020 is the active sole coordinator: local thread
+`01a1ea31-eab3-7e02-a75c-948fa0e4986c`, verified from runtime identity and the app.
+All four branch names, actual base commits and disjoint claims were verified against
+BATCH_4_PLAN.json. T012–T016 integration commits are ancestors of the T020 baseline.
+Direct chat tools are available; worker IDs are registered only after fresh task
+assignment evidence. Old titles/IDs alone do not launch or register a worker.
+
+Main tracking is D-only; game code
 belongs in each assigned worktree. These exact scopes are PREGRANTED; do not ask
 for them again. Paths are relative to DevPack in the named checkout.
 
-## T017 — Chat A — ready
+## T017 — Chat A — in_review
 
 Checkout: `/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack`
 Branch: `task/T017-capture-results`
+
+Awaiting user review, manual commit and integration; no integration commit.
+Handoff and saved check/browser evidence verified. All exact T017 ownership below
+remains reserved through review; no transfer or automatic Git action is implied.
 
 - `packages/simulation/src/capture/`
 - `packages/simulation/src/results/`
@@ -31,10 +50,30 @@ Branch: `task/T017-capture-results`
 - `apps/server/src/adapters/match-simulation.ts`
 - `apps/server/src/rooms/test/capture.test.mjs`
 
-## T018 — Chat B — ready
+### T017 additional exact leases — REQ-001 granted 19 November 2026
+
+Exclusive owner Chat A/T017, checkout `/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack`:
+
+- `packages/shared/src/events.ts`: add only `notFacing` and `ineligible` cancellation reasons.
+- `packages/shared/src/versions.ts`: `PROTOCOL_VERSION` 1 → 2; world schema unchanged.
+
+Preleased `packages/shared/src/config.ts`: `CONFIG_VERSION` provisional-4;
+capture relative horizontal speed ≤3 m/s, mounted horizontal speed ≤4 m/s,
+facing half-angle 60°, existing 1.5 m / 350 ms preserved. Other tuning unchanged.
+Motion must include actual lane/turn displacement; yaw × longitudinal speed alone
+is insufficient. Use identical eligibility for query/start/continuation/completion.
+See DECISIONS and the matching mailbox decision for required compatibility,
+server departure, zero-active ordering and regression conditions. This grant
+changes ownership only; runtime integration remains manual and unperformed.
+
+## T018 — Chat B — in_review
 
 Checkout: `/home/umar/Downloads/StopThatGuy/.worktrees/T018/DevPack`
 Branch: `task/T018-chase-hud`
+
+Awaiting user review, manual commit and integration; no integration commit.
+Handoff, saved check/full-browser reports and fixture HUD screenshots verified.
+Exact ownership remains reserved through review; live cue integration is still T020.
 
 - `apps/client/src/ui/hud/`
 - `apps/client/src/network/view.ts`
@@ -43,10 +82,14 @@ Branch: `task/T018-chase-hud`
 - `apps/client/vite.config.ts`
 - `coordination/handoffs/T018.md`
 
-## T019 — Chat C — ready
+## T019 — Chat C — in_review
 
 Checkout: `/home/umar/Downloads/StopThatGuy/.worktrees/T019/DevPack`
 Branch: `task/T019-transport-art`
+
+Awaiting user review, manual commit and integration; no integration commit.
+Final check/full-browser exit records, hashes and static-fit screenshots verified.
+Exact ownership remains reserved through review; no transfer or Git action implied.
 
 - `apps/client/src/render/vehicles/`
 - `apps/client/public/assets/vehicles/`
@@ -59,7 +102,7 @@ Branch: `task/T019-transport-art`
 - `package.json`
 - `coordination/handoffs/T019.md`
 
-## T020 — Chat D — planned
+## T020 — Chat D — coordination active; gameplay planned
 
 Checkout: `/home/umar/Downloads/StopThatGuy/.worktrees/T020/DevPack`
 Branch: `task/T020-online-chase`
@@ -104,3 +147,6 @@ Feature workers do not stage/commit/merge/push/rebase/reset/stash or switch bran
 Leave implementation uncommitted, report in_review after checks/handoff. Done requires
 accepted integration. The user's preceding batch integration authorization is scoped
 and does not grant future worker Git writes. T020 waits for an authorized branch update.
+
+Assembly/API findings and acceptance gate: BATCH_4_INTEGRATION.md. This checklist
+grants no additional implementation leases and records no gameplay acceptance.

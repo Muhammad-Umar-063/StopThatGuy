@@ -236,3 +236,63 @@ future commits, protocol/framework/dependency change or game feature expansion.
 Browser access uses the actual running-process lock without persistent priority
 reservations, avoiding a stopped chat blocking the next test. Main setup docs are
 canonical for all task trees. One implementation owner per file remains required.
+
+### 19 November 2026 — T017 capture contract and departure review (pending integration)
+
+D grants T017 REQ-001 after an independent shared-contract/state-transition review.
+Implementation is exclusively in the T017 checkout; exact leases are in ACTIVE_WORK
+and board. Provisional capture defaults: relative horizontal speed ≤3 m/s, mounted
+own horizontal speed ≤4 m/s, facing half-angle 60°, with 1.5 m range and 350 ms
+wind-up unchanged. Inclusive boundaries; 3D pose distance, horizontal facing and
+body-height line-of-sight against authored blockers; fixed-tick duration rounds up.
+These are provisional defaults, not demonstrated city catchability/balance.
+
+Correct the proposed yaw × speed calculation: existing lane shifts add lateral
+motion that this approximation omits. Use authoritative motion-derived horizontal
+velocity for both actors, including lane and turn components (private fixed-tick
+pose history is sufficient), and the same predicate/source for query/start/ongoing
+attempt/completion. Mounted own speed uses its horizontal magnitude. Reset stale
+motion history at departure/phase/terminal boundaries. Test lane shifts, opposing
+headings, turns, exact boundaries and collisions; no wire velocity field is added.
+
+Add `notFacing` / `ineligible` cancellation enum values. The old decoder uses a
+closed enum, so this is a breaking event change despite unchanged object shape:
+**PROTOCOL_VERSION 2** is required in addition to **CONFIG_VERSION provisional-4**.
+Do not hide protocol incompatibility behind the tuning label. Existing fixtures
+and consumers import these shared constants/enums; prove old protocol/config
+rejection and new-reason decode acceptance during verification. No other protocol,
+world schema, dependency or tuning change is approved. T018 continues against its
+committed contracts until reviewed manual integration; no uncommitted copying.
+
+A trusted server-only exported `forfeitPlayer(state, playerId)` is approved within
+already preleased simulation/results/index and server room/adapter paths. This is
+not a room-host privilege or client command: every real departing competitor must
+be handled. Mark left/forfeit, neutralize motion and cancel an attempt synchronously;
+repeat calls are idempotent, unknown player IDs may throw. Preserve countdown reset.
+Do not resolve a terminal result inside onLeave: the room skips further advancement
+once results are published, which could strand cancellation/matchEnded events.
+Resolve zero active participation during a CHASE tick, after eligible capture and
+before escape/timeout: capture → allCompetitorsOut → escape → timeout. Stunned and
+passenger players still count as active competitors even though capture eligibility
+is narrower. Clear remaining attempts on every terminal path before final publication;
+subsequent departures cannot mutate the result or emit additional terminal/cancel
+records. No reconnect, police, vehicle ownership or broad lifecycle implementation.
+
+Required evidence includes public simulation ordering/immutability/idempotence and
+real independent-client departure during wind-up, plus protocol/config migration
+checks. Existing diagnostics/input validation/lifecycle gates must remain intact.
+Approval permits implementation; it is not acceptance, integration or a Git grant.
+
+Review boundary: current real sessions are on foot. This departure lease does not
+claim complete mounted/passenger ownership or seat release (T021/T028). Preserve
+the existing fixture-consistency requirement that forfeited players are dismounted;
+do not weaken that invariant or advertise future vehicle cleanup as implemented.
+
+### 19 November 2026 — T017–T019 local integration authorized
+
+The user explicitly requests committing and merging current changes locally and
+will push main personally. Root takes serial integration ownership from the idle
+batch-4 chats for this operation: preserve D's coordination records, review and
+commit T017–T019, merge and verify their combined behavior, then record acceptance.
+This supersedes manual-only Git for this operation only. T020 has no gameplay
+changes to merge; it remains a subsequent implementation task. No push authorized.
