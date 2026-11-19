@@ -1,0 +1,147 @@
+{
+  "sourceHashes": {
+    "geometry.mjs": "88f89c93f71c149e5e39ac5f84845bc3ff772bf4b788bb7a7753a6fc665c99dc",
+    "definition.mjs": "9a13b9e420a8c62f96f06e6f662ba0fd5b0165741cd9182fb255ae129278e810",
+    "model.mjs": "79811f0a4736d1990ed3b55415a968ae2d198dc8fa2308b7ba2cdcd46e3b0dc3",
+    "export.mjs": "ccfe379a3b78bd5e85e1e784f86f0ed2137edb27b25f3eea1a05e4b854d5e686"
+  },
+  "vehicles": {
+    "bicycle": {
+      "sha256": "8cec253295fe24ee12ec198809b16e60880ce99ed651078fe5e86a633c741ab2",
+      "fileSizeBytes": 462372,
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 6088,
+          "vertices": 4898,
+          "bufferBytes": 232448,
+          "meshes": 5
+        },
+        {
+          "level": 1,
+          "triangles": 3332,
+          "vertices": 2822,
+          "bufferBytes": 132872,
+          "meshes": 5
+        },
+        {
+          "level": 2,
+          "triangles": 1996,
+          "vertices": 1770,
+          "bufferBytes": 82776,
+          "meshes": 5
+        }
+      ],
+      "materials": 1,
+      "textures": 0,
+      "pivots": [
+        "pivot.steering",
+        "pivot.wheel.front",
+        "pivot.wheel.rear",
+        "pivot.crank"
+      ],
+      "anchors": [
+        "seat.rider",
+        "hand.rider.L",
+        "hand.rider.R",
+        "foot.rider.L",
+        "foot.rider.R"
+      ]
+    },
+    "scooter": {
+      "sha256": "f8efc15123c0400354c38fcae6268146437e9232c68aac6b7974d2c89575c5c2",
+      "fileSizeBytes": 404940,
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 7072,
+          "vertices": 4352,
+          "bufferBytes": 216512,
+          "meshes": 4
+        },
+        {
+          "level": 1,
+          "triangles": 3536,
+          "vertices": 2296,
+          "bufferBytes": 113056,
+          "meshes": 4
+        },
+        {
+          "level": 2,
+          "triangles": 1912,
+          "vertices": 1308,
+          "bufferBytes": 63792,
+          "meshes": 4
+        }
+      ],
+      "materials": 1,
+      "textures": 0,
+      "pivots": [
+        "pivot.steering",
+        "pivot.wheel.front",
+        "pivot.wheel.rear"
+      ],
+      "anchors": [
+        "seat.rider",
+        "hand.rider.L",
+        "hand.rider.R",
+        "foot.rider.L",
+        "foot.rider.R"
+      ]
+    },
+    "lift": {
+      "sha256": "49c9df0a7adfe242670791043c4707b00cd5c9349ffa70107cd74576813d7f81",
+      "fileSizeBytes": 498656,
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 7680,
+          "vertices": 5124,
+          "bufferBytes": 251040,
+          "meshes": 5
+        },
+        {
+          "level": 1,
+          "triangles": 4296,
+          "vertices": 3000,
+          "bufferBytes": 145776,
+          "meshes": 5
+        },
+        {
+          "level": 2,
+          "triangles": 2512,
+          "vertices": 1784,
+          "bufferBytes": 86432,
+          "meshes": 5
+        }
+      ],
+      "materials": 1,
+      "textures": 0,
+      "pivots": [
+        "pivot.steering.L",
+        "pivot.steering.R",
+        "pivot.wheel.front.L",
+        "pivot.wheel.front.R",
+        "pivot.wheel.rear.L",
+        "pivot.wheel.rear.R"
+      ],
+      "anchors": [
+        "seat.driver",
+        "hand.driver.L",
+        "hand.driver.R",
+        "foot.driver.L",
+        "foot.driver.R",
+        "seat.passenger.0",
+        "hand.passenger.0.L",
+        "hand.passenger.0.R",
+        "foot.passenger.0.L",
+        "foot.passenger.0.R",
+        "seat.passenger.1",
+        "hand.passenger.1.L",
+        "hand.passenger.1.R",
+        "foot.passenger.1.L",
+        "foot.passenger.1.R"
+      ]
+    }
+  }
+}

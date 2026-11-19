@@ -16,5 +16,17 @@
   "character.robber": {
     "runtimePath": "assets/characters/robber.glb",
     "label": "Original smooth robber — skinned locomotion, user art review pending"
+  },
+  "vehicle.bicycle": {
+    "runtimePath": "assets/vehicles/bicycle.glb",
+    "label": "Original bicycle — transport art, user review pending"
+  },
+  "vehicle.scooter": {
+    "runtimePath": "assets/vehicles/scooter.glb",
+    "label": "Original scooter — transport art, user review pending"
+  },
+  "vehicle.lift": {
+    "runtimePath": "assets/vehicles/lift.glb",
+    "label": "Original lift — transport art, user review pending"
   }
 }
