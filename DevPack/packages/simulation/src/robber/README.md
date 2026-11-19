@@ -29,7 +29,8 @@ validated by their author/loader; this is not a replacement world validator.
 routeId }` records. Each reason/edge/route combination is recorded once per match
 to avoid repeated fallback spam. These diagnostics stay outside wire snapshots
 and game-event IDs. A host should drain them after initialization and stepping
-for operational logging. That server consumer is not wired here (REQ-002).
+for operational logging. The server MatchSimulation adapter now drains them on initialization and every
+fixed step, reporting deduplicated records through its host logger (REQ-002).
 
 Later integration must run every T016 exit through the public simulation,
 verify visible foot transitions/bottlenecks and practical shortcut catchability,

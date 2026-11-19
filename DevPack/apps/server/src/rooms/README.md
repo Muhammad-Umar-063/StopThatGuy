@@ -126,3 +126,8 @@ movement/ACKs, replay/stale/forged/flooded input, input loss and departure. The
 client network tests additionally exercise real admission cancellation, late-seat
 cleanup, errors/retry and UI state projection. All browser gates require the
 batch-3 shared lock while that batch is active.
+
+Robber integration: MatchSimulation drains deterministic fallback diagnostics at
+initialization and after each fixed step. The host logger receives only tick,
+reason and authored edge/route IDs; no session credentials or player data. These
+records do not alter wire snapshots or game-event IDs.
