@@ -1,0 +1,475 @@
+{
+  "bicycle": {
+    "id": "vehicle.bicycle",
+    "label": "Arco city bicycle",
+    "clearance": {
+      "source": "WORLD_LAYOUT_LIMITS.spawnFootprint",
+      "radiusM": 0.9,
+      "heightM": 1.4,
+      "scope": "unoccupied parked vehicle only; not a moving collider or rider envelope"
+    },
+    "pivots": {
+      "pivot.steering": {
+        "parent": null,
+        "position": [
+          0,
+          0.32,
+          0.54
+        ]
+      },
+      "pivot.wheel.front": {
+        "parent": "pivot.steering",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "pivot.wheel.rear": {
+        "parent": null,
+        "position": [
+          0,
+          0.32,
+          -0.54
+        ]
+      },
+      "pivot.crank": {
+        "parent": null,
+        "position": [
+          0,
+          0.31,
+          -0.1
+        ]
+      }
+    },
+    "wheels": [
+      {
+        "pivot": "pivot.wheel.front",
+        "radiusM": 0.32
+      },
+      {
+        "pivot": "pivot.wheel.rear",
+        "radiusM": 0.32
+      }
+    ],
+    "steering": [
+      "pivot.steering"
+    ],
+    "crank": "pivot.crank",
+    "anchors": {
+      "seat.rider": {
+        "parent": null,
+        "position": [
+          0,
+          0.906,
+          -0.19
+        ]
+      },
+      "hand.rider.L": {
+        "parent": "pivot.steering",
+        "position": [
+          -0.28,
+          0.75,
+          -0.19
+        ]
+      },
+      "hand.rider.R": {
+        "parent": "pivot.steering",
+        "position": [
+          0.28,
+          0.75,
+          -0.19
+        ]
+      },
+      "foot.rider.L": {
+        "parent": "pivot.crank",
+        "position": [
+          -0.14,
+          0.025,
+          0.15
+        ]
+      },
+      "foot.rider.R": {
+        "parent": "pivot.crank",
+        "position": [
+          0.14,
+          0.025,
+          -0.15
+        ]
+      }
+    },
+    "seats": [
+      {
+        "id": "rider",
+        "role": "rider",
+        "seat": "seat.rider",
+        "hands": [
+          "hand.rider.L",
+          "hand.rider.R"
+        ],
+        "feet": [
+          "foot.rider.L",
+          "foot.rider.R"
+        ],
+        "fitLeanRadians": 0.7
+      }
+    ]
+  },
+  "scooter": {
+    "id": "vehicle.scooter",
+    "label": "Aurora step-through scooter",
+    "clearance": {
+      "source": "WORLD_LAYOUT_LIMITS.spawnFootprint",
+      "radiusM": 1,
+      "heightM": 1.4,
+      "scope": "unoccupied parked vehicle only; not a moving collider or rider envelope"
+    },
+    "pivots": {
+      "pivot.steering": {
+        "parent": null,
+        "position": [
+          0,
+          0.23,
+          0.74
+        ]
+      },
+      "pivot.wheel.front": {
+        "parent": "pivot.steering",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "pivot.wheel.rear": {
+        "parent": null,
+        "position": [
+          0,
+          0.23,
+          -0.61
+        ]
+      }
+    },
+    "wheels": [
+      {
+        "pivot": "pivot.wheel.front",
+        "radiusM": 0.23
+      },
+      {
+        "pivot": "pivot.wheel.rear",
+        "radiusM": 0.23
+      }
+    ],
+    "steering": [
+      "pivot.steering"
+    ],
+    "crank": null,
+    "anchors": {
+      "seat.rider": {
+        "parent": null,
+        "position": [
+          0,
+          0.76,
+          -0.1
+        ]
+      },
+      "hand.rider.L": {
+        "parent": "pivot.steering",
+        "position": [
+          -0.3,
+          0.82,
+          -0.3
+        ]
+      },
+      "hand.rider.R": {
+        "parent": "pivot.steering",
+        "position": [
+          0.3,
+          0.82,
+          -0.3
+        ]
+      },
+      "foot.rider.L": {
+        "parent": null,
+        "position": [
+          -0.17,
+          0.26,
+          0.18
+        ]
+      },
+      "foot.rider.R": {
+        "parent": null,
+        "position": [
+          0.17,
+          0.26,
+          0.18
+        ]
+      }
+    },
+    "seats": [
+      {
+        "id": "rider",
+        "role": "rider",
+        "seat": "seat.rider",
+        "hands": [
+          "hand.rider.L",
+          "hand.rider.R"
+        ],
+        "feet": [
+          "foot.rider.L",
+          "foot.rider.R"
+        ],
+        "fitLeanRadians": 0.32
+      }
+    ]
+  },
+  "lift": {
+    "id": "vehicle.lift",
+    "label": "Largo electric delivery lift",
+    "clearance": {
+      "source": "WORLD_LAYOUT_LIMITS.spawnFootprint",
+      "radiusM": 2.2,
+      "heightM": 2.5,
+      "scope": "unoccupied parked vehicle only; not a moving collider or rider envelope"
+    },
+    "pivots": {
+      "pivot.steering.L": {
+        "parent": null,
+        "position": [
+          -0.65,
+          0.28,
+          0.99
+        ]
+      },
+      "pivot.steering.R": {
+        "parent": null,
+        "position": [
+          0.65,
+          0.28,
+          0.99
+        ]
+      },
+      "pivot.wheel.front.L": {
+        "parent": "pivot.steering.L",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "pivot.wheel.front.R": {
+        "parent": "pivot.steering.R",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "pivot.wheel.rear.L": {
+        "parent": null,
+        "position": [
+          -0.65,
+          0.28,
+          -0.99
+        ]
+      },
+      "pivot.wheel.rear.R": {
+        "parent": null,
+        "position": [
+          0.65,
+          0.28,
+          -0.99
+        ]
+      }
+    },
+    "wheels": [
+      {
+        "pivot": "pivot.wheel.front.L",
+        "radiusM": 0.28
+      },
+      {
+        "pivot": "pivot.wheel.front.R",
+        "radiusM": 0.28
+      },
+      {
+        "pivot": "pivot.wheel.rear.L",
+        "radiusM": 0.28
+      },
+      {
+        "pivot": "pivot.wheel.rear.R",
+        "radiusM": 0.28
+      }
+    ],
+    "steering": [
+      "pivot.steering.L",
+      "pivot.steering.R"
+    ],
+    "crank": null,
+    "anchors": {
+      "seat.driver": {
+        "parent": null,
+        "position": [
+          0,
+          0.76,
+          0.6
+        ]
+      },
+      "hand.driver.L": {
+        "parent": null,
+        "position": [
+          -0.2,
+          1.08,
+          1.06
+        ]
+      },
+      "hand.driver.R": {
+        "parent": null,
+        "position": [
+          0.2,
+          1.08,
+          1.06
+        ]
+      },
+      "foot.driver.L": {
+        "parent": null,
+        "position": [
+          -0.16,
+          0.4,
+          0.93
+        ]
+      },
+      "foot.driver.R": {
+        "parent": null,
+        "position": [
+          0.16,
+          0.4,
+          0.93
+        ]
+      },
+      "seat.passenger.0": {
+        "parent": null,
+        "position": [
+          -0.36,
+          0.69,
+          -0.82
+        ]
+      },
+      "hand.passenger.0.L": {
+        "parent": null,
+        "position": [
+          -0.61,
+          1.04,
+          -0.46
+        ]
+      },
+      "hand.passenger.0.R": {
+        "parent": null,
+        "position": [
+          -0.10999999999999999,
+          1.04,
+          -0.46
+        ]
+      },
+      "foot.passenger.0.L": {
+        "parent": null,
+        "position": [
+          -0.49,
+          0.4,
+          -0.38
+        ]
+      },
+      "foot.passenger.0.R": {
+        "parent": null,
+        "position": [
+          -0.22999999999999998,
+          0.4,
+          -0.38
+        ]
+      },
+      "seat.passenger.1": {
+        "parent": null,
+        "position": [
+          0.36,
+          0.69,
+          -0.82
+        ]
+      },
+      "hand.passenger.1.L": {
+        "parent": null,
+        "position": [
+          0.10999999999999999,
+          1.04,
+          -0.46
+        ]
+      },
+      "hand.passenger.1.R": {
+        "parent": null,
+        "position": [
+          0.61,
+          1.04,
+          -0.46
+        ]
+      },
+      "foot.passenger.1.L": {
+        "parent": null,
+        "position": [
+          0.22999999999999998,
+          0.4,
+          -0.38
+        ]
+      },
+      "foot.passenger.1.R": {
+        "parent": null,
+        "position": [
+          0.49,
+          0.4,
+          -0.38
+        ]
+      }
+    },
+    "seats": [
+      {
+        "id": "driver",
+        "role": "driver",
+        "seat": "seat.driver",
+        "hands": [
+          "hand.driver.L",
+          "hand.driver.R"
+        ],
+        "feet": [
+          "foot.driver.L",
+          "foot.driver.R"
+        ],
+        "fitLeanRadians": 0.15
+      },
+      {
+        "id": "passenger.0",
+        "role": "passenger",
+        "seat": "seat.passenger.0",
+        "hands": [
+          "hand.passenger.0.L",
+          "hand.passenger.0.R"
+        ],
+        "feet": [
+          "foot.passenger.0.L",
+          "foot.passenger.0.R"
+        ],
+        "fitLeanRadians": 0
+      },
+      {
+        "id": "passenger.1",
+        "role": "passenger",
+        "seat": "seat.passenger.1",
+        "hands": [
+          "hand.passenger.1.L",
+          "hand.passenger.1.R"
+        ],
+        "feet": [
+          "foot.passenger.1.L",
+          "foot.passenger.1.R"
+        ],
+        "fitLeanRadians": 0
+      }
+    ]
+  }
+}

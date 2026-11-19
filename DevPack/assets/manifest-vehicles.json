@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "description": "Original smooth transport art with stable pivots/fit anchors; presentation only. User art approval and device performance remain unverified.",
+  "assets": [
+    {
+      "id": "vehicle.bicycle",
+      "kind": "model",
+      "runtimePath": "assets/vehicles/bicycle.glb",
+      "source": {
+        "path": "assets-source/vehicles/model.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural authoring for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/vehicles/ORIGINAL.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original tube, torus, rounded body profiles and vertex palette; three mesh resolutions, named wheel/steering/crank pivots and seat/hand/foot nodes; X-reflected glTF export with reversed winding. No third-party media.",
+      "fileSizeBytes": 462372,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 11416,
+        "lods": 3,
+        "materials": 1,
+        "textureSizes": [],
+        "animations": []
+      }
+    },
+    {
+      "id": "vehicle.scooter",
+      "kind": "model",
+      "runtimePath": "assets/vehicles/scooter.glb",
+      "source": {
+        "path": "assets-source/vehicles/model.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural authoring for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/vehicles/ORIGINAL.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original tube, torus, rounded body profiles and vertex palette; three mesh resolutions, named wheel/steering/crank pivots and seat/hand/foot nodes; X-reflected glTF export with reversed winding. No third-party media.",
+      "fileSizeBytes": 404940,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 12520,
+        "lods": 3,
+        "materials": 1,
+        "textureSizes": [],
+        "animations": []
+      }
+    },
+    {
+      "id": "vehicle.lift",
+      "kind": "model",
+      "runtimePath": "assets/vehicles/lift.glb",
+      "source": {
+        "path": "assets-source/vehicles/model.mjs",
+        "url": null
+      },
+      "creator": "Chat C (Codex), original AI-assisted procedural authoring for Stop That Guy!",
+      "origin": "self-authored",
+      "license": {
+        "id": "LicenseRef-Project-Original",
+        "textPath": "assets/licenses/vehicles/ORIGINAL.txt",
+        "url": null
+      },
+      "attribution": {
+        "required": false,
+        "text": null
+      },
+      "modifications": "Original tube, torus, rounded body profiles and vertex palette; three mesh resolutions, named wheel/steering/crank pivots and seat/hand/foot nodes; X-reflected glTF export with reversed winding. No third-party media.",
+      "fileSizeBytes": 498656,
+      "generatorTermsCheckedAt": null,
+      "technical": {
+        "triangles": 14488,
+        "lods": 3,
+        "materials": 1,
+        "textureSizes": [],
+        "animations": []
+      }
+    }
+  ]
+}

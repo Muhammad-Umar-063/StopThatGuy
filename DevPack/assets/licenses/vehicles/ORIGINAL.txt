@@ -1,0 +1,11 @@
+Stop That Guy! original transport art — 19 November 2026
+Identifier: LicenseRef-Project-Original
+
+Original AI-assisted parametric geometry, vertex palette, wheel/steering parts,
+body profiles, passenger pictogram and fit anchors authored by Chat C (Codex).
+No third-party model, texture, font, mocap or generative-media service is included.
+
+The project owner may use, modify and redistribute these source files and exported
+models in the game and its development artifacts. Attribution is not required.
+This scoped project permission does not assert exclusive copyright over
+AI-assisted material or grant rights to any external candidate.

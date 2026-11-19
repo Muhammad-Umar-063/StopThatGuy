@@ -16,7 +16,7 @@ test("source export is byte-reproducible and checked-in runtime/metadata have no
   assert.doesNotThrow(() => buildSample(true));
 });
 
-const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json", "assets/manifest-characters.json"] as const;
+const manifestPaths = ["assets/manifest.json", "assets/manifest-environment.json", "assets/manifest-characters.json", "assets/manifest-vehicles.json"] as const;
 const options = { projectRoot: ROOT, publicDir: resolve(ROOT, "apps/client/public") };
 const readManifests = (): AssetManifest[] => manifestPaths.map((path) => JSON.parse(readFileSync(resolve(ROOT, path), "utf8")) as AssetManifest);
 const combine = (manifests: AssetManifest[]): AssetManifest => ({ schemaVersion: 1, status: "active", description: "All shipped asset categories", assets: manifests.flatMap((manifest) => manifest.assets) });
