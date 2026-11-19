@@ -49,6 +49,8 @@ test("merged capture query, decoder and HUD distinguish readiness, pending attem
   assert.equal(final.phase, "results");
   assert.equal(final.actions, null);
   assert.ok(final.result);
+  assert.equal(final.result.localPlayerWon, true);
+  assert.equal(final.result.reason, "captured");
   assert.equal(g.simulation.readSerializableState(g.state).match.result?.winnerId, g.playerId);
   assert.equal(g.simulation.collectEvents(g.state).filter(e => e.type === "matchEnded").length, 1);
   g.step();
@@ -68,6 +70,7 @@ test("departure cancels a real pending attempt before HUD can display a capture 
   const result = g.simulation.readSerializableState(g.state).match.result!;
   assert.equal(result.reason, "allCompetitorsOut");
   assert.equal(result.winnerId, null);
+  assert.equal(g.view().result?.reason, "allCompetitorsOut");
   assert.equal(g.view().phase, "results");
   assert.equal(g.view().actions, null);
   assert.equal(g.simulation.collectEvents(g.state).filter(e => e.type === "matchEnded").length, 1);
