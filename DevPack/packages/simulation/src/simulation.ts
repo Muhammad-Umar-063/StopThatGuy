@@ -5,7 +5,7 @@ import { createInitialState, readSerializableState, toInternal, type SimulationS
 import { collectEvents, queryLegalActions, stepState } from "./step.js";
 
 export interface SimulationOptions {
-  /** Movement rules. Defaults to roadMovementKernel. Custom kernels have conservative (all unavailable) legal actions. */
+  /** Movement rules. Defaults to roadMovementKernel. Custom kernels have conservative movement cues; capture still uses authoritative poses. */
   movement?: MovementKernel;
 }
 

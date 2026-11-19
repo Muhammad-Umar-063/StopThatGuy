@@ -1,5 +1,5 @@
 /** Wire protocol version. Bump for any breaking change to commands, input frames, state records or events. */
-export const PROTOCOL_VERSION = 1;
+export const PROTOCOL_VERSION = 2;
 
 /** Version of the WorldData format (not of a particular map; maps carry their own `worldVersion`). */
 export const WORLD_SCHEMA_VERSION = 1;

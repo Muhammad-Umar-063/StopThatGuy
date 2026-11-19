@@ -29,6 +29,8 @@ import { poseOnRoute } from "./movement/geometry.js";
 import { indexWorld, type WorldIndex } from "./movement/world-index.js";
 import { createRng, type RngState } from "./rng.js";
 import { initializeRobber, type RobberMemory } from "./robber/robber.js";
+import type { CaptureMotion } from "./capture/motion.js";
+import type { CaptureAttempt } from "./capture/memory.js";
 import { movementBody } from "./movement/road.js";
 
 /**
@@ -51,6 +53,8 @@ export interface InternalState {
   readonly match: MatchRecord;
   /** Ordered by joinOrder. */
   readonly players: PlayerRecord[];
+  readonly captureMotion: CaptureMotion;
+  readonly captureAttempts: Map<PlayerId, CaptureAttempt>;
   readonly movementByPlayer: Map<PlayerId, MovementMemory>;
   readonly playersById: ReadonlyMap<string, PlayerRecord>;
   readonly robber: RobberRecord;
@@ -92,6 +96,13 @@ function validateSetup(setup: SimulationSetup): void {
   if (!Number.isFinite(t.chaseTimeLimitMs) || msToTicks(t.chaseTimeLimitMs, tuning) < 1) invalidSetup("chase must last at least one tick");
   if (!Number.isFinite(tuning.robber.transitionMs) || tuning.robber.transitionMs <= 0) invalidSetup("robber transition must be positive");
   if (![tuning.vehicles.scooterSpeedMps, tuning.vehicles.bicycleSpeedMps].every(n => Number.isFinite(n) && n > 0)) invalidSetup("invalid vehicle speed");
+  const capture = tuning.capture;
+  if (![capture.rangeM, capture.attemptMs].every(n => Number.isFinite(n) && n > 0)
+    || ![capture.maxRelativeSpeedMps, capture.maxMountedSpeedMps].every(n => Number.isFinite(n) && n >= 0)
+    || !Number.isFinite(capture.facingHalfAngleDeg) || capture.facingHalfAngleDeg <= 0
+    || capture.facingHalfAngleDeg > 180 || !Number.isSafeInteger(Math.ceil(capture.attemptMs / getFixedDeltaMs(tuning)))) {
+    invalidSetup("invalid capture tuning");
+  }
   if (world.schemaVersion !== WORLD_SCHEMA_VERSION) invalidSetup(`world schema ${world.schemaVersion} ≠ ${WORLD_SCHEMA_VERSION}`);
   if (!MATCH_MODES.includes(setup.mode)) invalidSetup("unknown mode");
   const code = parseRoomCode(setup.roomCode);
@@ -231,6 +242,8 @@ export function createInitialState(setup: SimulationSetup): SimulationState {
     fixedDeltaMs: getFixedDeltaMs(tuning),
     match,
     players,
+    captureMotion: { players: new Map(), robber: { x: 0, y: 0, z: 0 } },
+    captureAttempts: new Map(),
     movementByPlayer: new Map(players.map((p) => [p.id, copyMovementMemory()])),
     playersById: new Map<PlayerId, PlayerRecord>(players.map((p) => [p.id, p])),
     robber,

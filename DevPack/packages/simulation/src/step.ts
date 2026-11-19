@@ -1,4 +1,5 @@
 import {
+  EDGE_ACTION_KINDS,
   PROTOCOL_LIMITS,
   type EdgeAction,
   type GameEvent,
@@ -6,6 +7,9 @@ import {
   type PlayerId,
   type ValidatedPlayerInput,
 } from "@stopthatguy/shared";
+import { advanceCaptures } from "./capture/capture.js";
+import { capturePositions, clearCaptureMotion, recordCaptureMotion } from "./capture/motion.js";
+import { captureFailure } from "./capture/eligibility.js";
 import { advancePhaseClock, resolveEscapeAndTimeout } from "./match/progression.js";
 import { advanceRobber } from "./robber/robber.js";
 import { FIXED_DELTA_TOLERANCE_MS } from "./clock.js";
@@ -39,7 +43,7 @@ const NEUTRAL_INPUT: MovementInput = Object.freeze({
  *   2. movement/collision — chase only, grounded active players and server-controlled robber
  *   3. action effects: mount, borrow, lift, shove — T021/T025, not implemented
  *   4. theft, police, arrest — T029/T033, not implemented
- *   5. capture completion — T017, not implemented
+ *   5. eligible capture start/cancellation/completion
  *   6. escape / timeout → one immutable result
  *
  * The delta and inputs are validated before any mutation: on RangeError the state is unchanged.
@@ -55,11 +59,18 @@ export function stepState(s: InternalState, inputs: readonly ValidatedPlayerInpu
   s.match.tick += 1;
   advancePhaseClock(s);
   applyInputs(s, intents);
-  if (s.match.phase !== "chase") return;
+  if (s.match.phase !== "chase") {
+    clearCaptureMotion(s);
+    advanceCaptures(s, new Set());
+    return;
+  }
+  const beforeMotion = capturePositions(s);
   moveGroundedPlayers(s, intents, movement);
   advanceRobber(s, s.tuning.robber.transitionMs);
-  // Stages 3–5 remain reserved for action effects, police/arrest and capture.
-  // Capture must resolve before a pending robber escape or the time limit.
+  recordCaptureMotion(s, beforeMotion);
+  // Stages 3–4 remain reserved for action effects and police/arrest.
+  advanceCaptures(s, new Set([...intents].filter(([, intent]) =>
+    intent.newActions.some(action => action.kind === "capture")).map(([id]) => id)));
   resolveEscapeAndTimeout(s);
 }
 
@@ -75,13 +86,18 @@ function prepareInputs(s: InternalState, inputs: readonly ValidatedPlayerInput[]
     if (!player) throw new RangeError(`input for unknown player ${input.playerId}`);
     if (intents.has(input.playerId)) throw new RangeError(`more than one input for player ${input.playerId} in one step`);
     if (!isUint32(input.sequence)) throw new RangeError("input sequence must be a uint32");
+    if (![input.forwardHeld, input.brakeHeld, input.sprintHeld, input.interactHeld].every(v => typeof v === "boolean")
+      || !Array.isArray(input.actions) || input.actions.length > PROTOCOL_LIMITS.maxActionsPerInputFrame) {
+      throw new RangeError("invalid held controls or action count");
+    }
     let previousId = 0;
     for (const action of input.actions) {
+      if (!action || !EDGE_ACTION_KINDS.includes(action.kind)) throw new RangeError("unknown action kind");
       if (!isUint32(action.id) || action.id <= previousId) throw new RangeError("action IDs must be ascending positive uint32 values");
       previousId = action.id;
     }
     // Arrested, forfeited and spectating players are neutralized but still acknowledged.
-    const active = player.participation === "active";
+    const active = player.participation === "active" && player.connection === "connected";
     const newActions = input.actions.filter((a) => a.id > player.lastProcessedActionId);
     intents.set(input.playerId, {
       sequence: input.sequence,
@@ -182,11 +198,12 @@ export function queryLegalActions(state: SimulationState, playerId: PlayerId, ro
   const s = toInternal(state);
   const player = s.playersById.get(playerId);
   if (!player) throw new RangeError(`unknown player ${playerId}`);
-  if (!roadRules || s.match.phase !== "chase" || player.participation !== "active"
+  if (s.match.phase !== "chase" || player.connection !== "connected" || player.participation !== "active"
     || player.locomotion === "passenger" || !player.route) return clonePlain(NOTHING_AVAILABLE);
-  return clonePlain(queryRoadActions({ route: player.route, speedMps: player.speedMps, stamina: player.stamina,
+  const legal = roadRules ? queryRoadActions({ route: player.route, speedMps: player.speedMps, stamina: player.stamina,
     locomotion: player.locomotion, motion: s.movementByPlayer.get(playerId)! },
-    { world: s.world, tuning: s.tuning, dtMs: s.fixedDeltaMs }));
+    { world: s.world, tuning: s.tuning, dtMs: s.fixedDeltaMs }) : clonePlain(NOTHING_AVAILABLE);
+  return clonePlain({ ...legal, canCapture: !s.captureAttempts.has(playerId) && captureFailure(s, player) === null });
 }
 
 export function collectEvents(state: SimulationState): GameEvent[] {
