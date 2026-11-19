@@ -296,3 +296,13 @@ batch-4 chats for this operation: preserve D's coordination records, review and
 commit T017–T019, merge and verify their combined behavior, then record acceptance.
 This supersedes manual-only Git for this operation only. T020 has no gameplay
 changes to merge; it remains a subsequent implementation task. No push authorized.
+
+### 19 November 2026 — T017–T019 accepted integration
+
+Accepted code 642e89ac1934bf8c35749df32c090d5be786503e: capture/results, HUD and transport art merged
+without conflicts; 439 combined check tests plus two integration regressions,
+typecheck and full browser gates passed. Protocol2/config provisional-4 migration
+is accepted. Exact evidence/limits: coordination/integration/BATCH_4.md. Root
+fast-forwards the clean T020 branch to accepted main as part of this authorized
+local merge; D may resume T020 with its existing implementation scope. This starts
+no gameplay work and grants no automatic future commits. User pushes main.

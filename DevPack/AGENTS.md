@@ -29,8 +29,8 @@ One chat is the coordinator/integrator. It alone updates tasks/board.json, ACTIV
 ## Codex chat coordination
 
 Current assignment: batch 4 T017–T020; D/T020 is sole coordinator after launch.
-A/T017 capture, B/T018 HUD and C/T019 vehicle art may implement in parallel. D
-coordinates first; actual T020 assembly waits for reviewed T017–T019 integration.
+A/T017 capture, B/T018 HUD and C/T019 vehicle art are integrated and done. D/T020
+is ready for assembly from the updated checkout; see coordination/integration/BATCH_4.md.
 Read canonical MAIN docs/PARALLEL_WORK.md, coordination/BATCH_4.md and ACTIVE_WORK.
 Task worktree coordination copies may describe the previous batch and are historical.
 Exact pregranted leases need no duplicate approval. Use verified direct task messages

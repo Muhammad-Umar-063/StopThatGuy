@@ -1,19 +1,17 @@
-# Batch 4 — coordination active
+# Batch 4 — T017–T019 accepted; T020 ready
 
-Accepted code baseline: `46811168fab6feab33858ff0830a8d0631273fa8`. T013–T016 are reviewed, merged and verified;
-see integration/BATCH_3.md. Worktrees T017–T020 exist at that code commit. Main
-holds the current setup instructions; read them directly, not older tree snapshots.
-Setup installation evidence: BATCH_4_SETUP.md. D/T020 started coordination on
-19 November 2026; the user has launched A/B/C and their active assignments are
-verified. T017/T018/T019 have supplied verified in_review handoffs; all await
-manual review, commits and accepted integration. Live registration is in
-CHAT_REGISTRY.md; T020 gameplay remains planned.
+Accepted code: `642e89ac1934bf8c35749df32c090d5be786503e`. T017–T019 were reviewed, committed and merged
+locally under the user's explicit authorization; combined verification passed.
+See integration/BATCH_4.md. Root fast-forwards clean T020 to accepted main plus
+these records; D can resume implementation. T020 itself has no gameplay changes.
+User pushes main. Earlier setup baselines/plans and handoff/mailbox pending states
+are historical. Current exact ownership is in ACTIVE_WORK.md.
 
 ## Start order and dependencies
 
 Start D/T020 for coordination; after coordinator ready, start A/T017, B/T018 and
 C/T019 concurrently. D checks registration/requests and prepares the integration
-checklist. Keep T020 planned until T017–T019 are done and its branch contains their
+checklist. The dependency gate is now satisfied: T017–T019 are done and T020 contains their
 accepted main commit. D must not copy uncommitted code or begin fake parallel assembly.
 Future Git commits/merges/branch updates require user authorization; preparation
 of these trees does not grant those operations to feature chats.

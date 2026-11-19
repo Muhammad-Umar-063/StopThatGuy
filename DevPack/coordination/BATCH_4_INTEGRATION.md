@@ -1,5 +1,10 @@
 # Batch 4 assembly and acceptance checklist
 
+Current integration status (19 November): T017–T019 are accepted on main; see
+integration/BATCH_4.md. T020 is ready with an updated checkout, not implemented.
+The dated planning/review notes below preserve history; their pending-commit and
+old-base statements are superseded by the acceptance record.
+
 Prepared by D/T020 on 19 November 2026. This is a plan grounded in accepted APIs,
 not implementation or acceptance evidence. Code baseline: `46811168fab6feab33858ff0830a8d0631273fa8`;
 main setup HEAD at registration: `3afa9760659a5b8c75ca0511bda73053db051795`.

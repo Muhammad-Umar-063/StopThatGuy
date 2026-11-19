@@ -1,5 +1,8 @@
 # Batch 4 chat registry
 
+Current status: T017–T019 integrated and accepted; T020 ready at updated main.
+See integration/BATCH_4.md. Registration/base details below are historical.
+
 Chat D started batch-4 coordination on 19 November 2026. The user has now
 launched A/B/C; their fresh task prompts and active turns were verified via read_thread.
 Register actual task, cwd, branch, HEAD and ID/host when each prompt is executed;
@@ -7,10 +10,10 @@ never treat an earlier task's chat ID as a current task assignment automatically
 
 | Role | Task | Chat ID / host | State |
 |---|---|---|---|
-| A | T017 | `01a1e9fa-a445-7d90-8f1d-1c33e5e389e5` / `local` | in_review; manual review/commit/integration pending |
-| B | T018 | `01a1ea37-4368-7100-8cd9-6ad2f299df5d` / `local` | in_review; manual review/commit/integration pending |
-| C | T019 | `01a1e9fc-6fb5-7000-9099-74cf86ed3055` / `local` | in_review; manual review/commit/integration pending |
-| D / coordinator | T020 | `01a1ea31-eab3-7e02-a75c-948fa0e4986c` / `local` | coordination active; gameplay planned |
+| A | T017 | `01a1e9fa-a445-7d90-8f1d-1c33e5e389e5` / `local` | done; accepted on main |
+| B | T018 | `01a1ea37-4368-7100-8cd9-6ad2f299df5d` / `local` | done; accepted on main |
+| C | T019 | `01a1e9fc-6fb5-7000-9099-74cf86ed3055` / `local` | done; accepted on main |
+| D / coordinator | T020 | `01a1ea31-eab3-7e02-a75c-948fa0e4986c` / `local` | T020 ready; gameplay not started |
 
 Suggested chats to reuse (titles still describe older tasks): A “Implement T006 room
 lifecycle”; B “Implement third-person camera”; C “Implement T008 asset workflow”;

@@ -700,7 +700,7 @@
       "id": "T017",
       "title": "Capture and authoritative result rules",
       "lane": "A",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T013"
       ],
@@ -724,8 +724,9 @@
         "apps/server/src/adapters/match-simulation.ts",
         "apps/server/src/rooms/test/capture.test.mjs"
       ],
-      "integration_commit": null,
+      "integration_commit": "642e89ac1934bf8c35749df32c090d5be786503e",
       "evidence": [
+        "Accepted on main at 642e89ac1934bf8c35749df32c090d5be786503e: conflict-free local merge, combined check439 + two capture/HUD regression tests and tools typecheck passed; full browser suite exit0. Independent integration review found no blockers. See coordination/integration/BATCH_4.md. Historical pending notes below are superseded; task leases released.",
         "T017 final handoff verified: awaiting user review, manual commit and integration; changes uncommitted, integration_commit null. D inspected saved logs: check 425 passing/no failures/skips and smoke; focused 26; client browser 24 keyboard/lobby tests + 10 dev/built network checks, reports both ok/no errors. New tests discovered by normal globs. D independently passed 19-file ownership/whitespace/unstaged audit. Worker reports independent re-review clear. Seed-4 city capture is simulation replay; no online 3D chase claim. Final handoff supersedes earlier browser/handoff-pending progress notes.",
         "2026-11-19: fresh user task launcher and active turn verified through app read_thread; assigned branch/HEAD read-only verified at 46811168fab6feab33858ff0830a8d0631273fa8. Startup work underway; acceptance pending.",
         "T017 progress report: worker reports check 425/425 and focused 26 (22 simulation + 4 real-client rules tests), independent review fixes complete. D inspected smoke ok/protocol2/configprovisional-4 and registered test/API declarations. Browser gate and handoff pending; keep in_progress. Seed-4 normal-city capture at tick 5589 is simulation replay, not browser play; details in coordination/BATCH_4_INTEGRATION.md."
@@ -745,7 +746,7 @@
           "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack",
           "owner": "Chat A/T017",
           "request_id": "REQ-001",
-          "status": "granted",
+          "status": "released",
           "scope": "Add only notFacing and ineligible to CAPTURE_CANCEL_REASONS, preserving existing values and event shape."
         },
         {
@@ -753,7 +754,7 @@
           "checkout": "/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack",
           "owner": "Chat A/T017",
           "request_id": "REQ-001",
-          "status": "granted",
+          "status": "released",
           "scope": "Bump PROTOCOL_VERSION from 1 to 2 for the closed event-enum extension; preserve WORLD_SCHEMA_VERSION."
         }
       ],
@@ -777,13 +778,15 @@
         "REQ-001: shared cancellation enum is a breaking event change: PROTOCOL_VERSION 2 plus CONFIG_VERSION provisional-4; combined old-protocol/config rejection and new-reason decoding must pass before accepted integration.",
         "REQ-001: trusted server-only forfeit hook synchronously cancels departures, but zero-active results resolve during CHASE tick after capture and before escape/timeout. Preserve countdown reset and once-only terminal events; no reconnect/vehicle ownership scope."
       ],
-      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack/coordination/handoffs/T017.md"
+      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T017/DevPack/coordination/handoffs/T017.md",
+      "final_commit": "72e61c907cf245db7e4218b8a710e353e0f92ad4",
+      "leases_released": true
     },
     {
       "id": "T018",
       "title": "Chase HUD and contextual cues",
       "lane": "B",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T010",
         "T013",
@@ -800,8 +803,9 @@
         "apps/client/vite.config.ts",
         "coordination/handoffs/T018.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "642e89ac1934bf8c35749df32c090d5be786503e",
       "evidence": [
+        "Accepted on main at 642e89ac1934bf8c35749df32c090d5be786503e: conflict-free local merge, combined check439 + two capture/HUD regression tests and tools typecheck passed; full browser suite exit0. Independent integration review found no blockers. See coordination/integration/BATCH_4.md. Historical pending notes below are superseded; task leases released.",
         "T018 final handoff verified: awaiting user review, manual commit and integration, uncommitted with no integration_commit. D inspected saved 408-test check / nine focused passes (zero failures/skips), full-browser completion and clean fixture HUD dev/built reports (10 groups each). D inspected wide/narrow screenshots and independently passed 16-file ownership/whitespace/unstaged audit. New tests registered in standard scripts. Exact-snapshot AcceptedChaseCues boundary documented; live sources and accepted T017 capture parity remain T020 gates.",
         "2026-11-19: fresh user task launcher and active turn verified through app read_thread; assigned branch/HEAD read-only verified at 46811168fab6feab33858ff0830a8d0631273fa8. Startup work underway; acceptance pending."
       ],
@@ -814,13 +818,15 @@
       },
       "chat_id": "01a1ea37-4368-7100-8cd9-6ad2f299df5d",
       "host": "local",
-      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T018/DevPack/coordination/handoffs/T018.md"
+      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T018/DevPack/coordination/handoffs/T018.md",
+      "final_commit": "a48bbcb6ea5c2e3d230eff7e811ef7faf858699b",
+      "leases_released": true
     },
     {
       "id": "T019",
       "title": "Transport models and visual definitions",
       "lane": "C",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T008",
         "T011"
@@ -840,8 +846,9 @@
         "package.json",
         "coordination/handoffs/T019.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "642e89ac1934bf8c35749df32c090d5be786503e",
       "evidence": [
+        "Accepted on main at 642e89ac1934bf8c35749df32c090d5be786503e: conflict-free local merge, combined check439 + two capture/HUD regression tests and tools typecheck passed; full browser suite exit0. Independent integration review found no blockers. See coordination/integration/BATCH_4.md. Historical pending notes below are superseded; task leases released.",
         "T019 final handoff verified: awaiting user review, manual commit/integration, no integration_commit. D inspected check404/no failures/skips and final check/full-browser numeric exit0 records; dev/built reports 28 views/12 checks each, empty errors. D verified all source/GLB/runtime hashes, inspected three static-fit screenshots and independently audited 26 owned files/no staged edits. One untracked-test trailing space was corrected by T019; final whitespace audit passes. Five new tests and dev/built browser gates registered normally. Static fit/art preview only; user art, real-device/fleet, T020 placement, T021/T023 gameplay remain pending.",
         "2026-11-19: fresh user task launcher and active turn verified through app read_thread; assigned branch/HEAD read-only verified at 46811168fab6feab33858ff0830a8d0631273fa8. Startup work underway; acceptance pending.",
         "2026-11-19: T019 published vehicle visual API/catalog IDs/seat anchors; declarations inspected read-only and summarized in coordination/BATCH_4_INTEGRATION.md. Fit/browser/cleanup acceptance pending; triangle counts worker-reported, no integration claim.",
@@ -856,13 +863,15 @@
       },
       "chat_id": "01a1e9fc-6fb5-7000-9099-74cf86ed3055",
       "host": "local",
-      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T019/DevPack/coordination/handoffs/T019.md"
+      "handoff": "/home/umar/Downloads/StopThatGuy/.worktrees/T019/DevPack/coordination/handoffs/T019.md",
+      "final_commit": "bf2833744933dbc0a0c4d1eb942527cae601b494",
+      "leases_released": true
     },
     {
       "id": "T020",
       "title": "Integrate first playable online chase",
       "lane": "D",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T012",
         "T013",
@@ -873,9 +882,9 @@
         "T018",
         "T019"
       ],
-      "owner": "Chat D (Codex; active batch-4 coordinator; gameplay planned)",
+      "owner": "Chat D (Codex; T020 implementer and coordinator)",
       "branch": "task/T020-online-chase",
-      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
+      "base_commit": "642e89ac1934bf8c35749df32c090d5be786503e",
       "write_paths": [
         "apps/client/src/bootstrap/",
         "apps/server/src/bootstrap/",
@@ -886,9 +895,10 @@
       "integration_commit": null,
       "evidence": [
         "2026-11-19: coordinator identity and main/T017\u2013T020 HEADs/claims verified; T012\u2013T016 accepted integration is present. T017\u2013T019 were ready/unlaunched at coordinator startup; subsequently launched and registered. Coordination readiness is not gameplay completion.",
-        "coordination/BATCH_4_INTEGRATION.md: published API inventory, unresolved live HUD source, future exact-lease needs and concrete assembly/acceptance checklist; no implementation/check/browser pass claimed."
+        "coordination/BATCH_4_INTEGRATION.md: published API inventory, unresolved live HUD source, future exact-lease needs and concrete assembly/acceptance checklist; no implementation/check/browser pass claimed.",
+        "T017\u2013T019 accepted integration at 642e89ac1934bf8c35749df32c090d5be786503e. Clean T020 checkout will be fast-forwarded to this accepted code plus acceptance documentation by root as part of the authorized merge. No T020 gameplay has been implemented or started. Read current main tracking on resume; build before using production outputs."
       ],
-      "blocker": "Gameplay gate: T017\u2013T019 must pass review, be committed/integrated and marked done with evidence; then an authorized clean T020 branch update must include that main integration commit.",
+      "blocker": null,
       "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T020/DevPack",
       "reservation_verified": {
         "date": "2026-11-19",

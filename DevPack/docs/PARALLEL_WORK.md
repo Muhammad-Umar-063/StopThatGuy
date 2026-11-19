@@ -1,5 +1,10 @@
 # Four-chat workflow — batch 4
 
+Current status: T017–T019 are accepted and their leases released. T020 is ready
+with its clean checkout fast-forwarded to accepted main. D resumes coordination
+and implementation; A/B/C are finished. See coordination/integration/BATCH_4.md
+and current ACTIVE_WORK for ownership. The setup instructions below are historical.
+
 Accepted code: `46811168fab6feab33858ff0830a8d0631273fa8`. T013–T016 integrated; current exact leases are in main
 coordination/ACTIVE_WORK.md. Old worktrees and historical records are preserved.
 
