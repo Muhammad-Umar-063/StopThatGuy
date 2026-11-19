@@ -1,81 +1,56 @@
-# Working with four Codex chats
+# Four-chat workflow — batch 4
 
-## Current batch: T013–T016
+Accepted code: `46811168fab6feab33858ff0830a8d0631273fa8`. T013–T016 integrated; current exact leases are in main
+coordination/ACTIVE_WORK.md. Old worktrees and historical records are preserved.
 
-Start Chat D/T016 first; after it reports coordinator ready, start A/T013, B/T014
-and C/T015. All four can implement concurrently in separate worktrees. Main is
-coordination-only. The previous batch T009–T012 is complete; its roles are historical.
+Start Chat D/T020 first for coordination, then A/T017, B/T018 and C/T019 together.
+T020 gameplay assembly is sequential: it waits for accepted T017–T019 integration
+and an authorized update of its clean worktree to that main commit. Do not implement
+against copies of their uncommitted files. D can inspect APIs, prepare the checklist
+and review/coordinate while the other three work. No fourth independent task is claimed.
 
-| Chat | Task | Worktree | Branch |
+| Chat | Task | Cwd relative to repository root | Branch |
 |---|---|---|---|
-| A | T013: Robber AI and match progression | `.worktrees/T013/DevPack` | `task/T013-robber-progression` |
-| B | T014: Client connection and state adapter | `.worktrees/T014/DevPack` | `task/T014-client-network` |
-| C | T015: Character models and movement animation | `.worktrees/T015/DevPack` | `task/T015-characters` |
-| D | T016: Complete playable city graph | `.worktrees/T016/DevPack` | `task/T016-city-graph` |
+| A | T017 — Capture and authoritative result rules | `.worktrees/T017/DevPack` | `task/T017-capture-results` |
+| B | T018 — Chase HUD and contextual cues | `.worktrees/T018/DevPack` | `task/T018-chase-hud` |
+| C | T019 — Transport models and visual definitions | `.worktrees/T019/DevPack` | `task/T019-transport-art` |
+| D | T020 — First playable online chase and coordination | `.worktrees/T020/DevPack` | `task/T020-online-chase` |
 
-All paths are relative to /home/umar/Downloads/StopThatGuy. Baseline is edfdce7.
-The exact pregranted scopes are in main coordination/ACTIVE_WORK.md and board.json.
-One implementation owner per file; shared package/lock/bootstrap changes require
-an exact additional lease. Do not ask again for paths already assigned to you.
+Repository root: /home/umar/Downloads/StopThatGuy. Use absolute assigned cwd for every
+command and verify branch/status. One VS Code window does not bind chats to folders.
+Task trees start at the accepted code baseline; main contains the newer setup docs.
+Always read live MAIN AGENTS/DECISIONS/PARALLEL_WORK/ACTIVE_WORK/BATCH_4 and board.
+Worktree coordination snapshots are historical. Do not copy tracking edits into trees.
 
-## Canonical instructions and isolation
+Only D edits live main tracking. Workers own their implementation, own handoff and
+mailbox request/status. Exact preleases need no duplicate permission; new shared
+paths require D's recorded exclusive lease. No ownership approval copies code.
+Use verified direct messaging when available; otherwise use BATCH_4 file protocol.
+File updates do not wake stopped chats; resume D for later unresolved requests.
 
-Setup docs are deliberately uncommitted in main. Branches contain the accepted
-code baseline, including older coordination snapshots. At startup read MAIN's
-AGENTS.md, docs/DECISIONS.md, docs/TOKEN_EFFICIENCY.md, this document,
-coordination/BATCH_3.md and ACTIVE_WORK.md. They supersede historical batch roles
-in the worktree. Do not copy tracking or instruction edits into task branches.
-Use the assigned absolute cwd for every command. A multi-folder VS Code window
-does not assign a chat's working directory. Verify root, branch, HEAD and status.
-Never edit another worker's checkout or run Git writes. D's main tracking role
-is the sole exception to the single-checkout editing rule.
+All browser/Chrome gates, including npm run check's smoke, use:
+`bash /home/umar/Downloads/StopThatGuy/.worktrees/coordination/batch4/run-browser.sh <command>`
+The common OS lock lasts only for the running command. No advance priority reservations.
+Busy exit 75 is a resource wait, not a product failure. Continue independent work;
+never busy-poll, kill another worker's process or bypass the lock. Fixed-port camera,
+lobby, network, environment and character suites must remain serialized.
 
-Preleased tasks work against merged contracts. T013 tests authored route behavior
-with task-local fixtures; it need not wait for uncommitted T016 world data. T014
-uses the current server world and simulation; it must prove actual authority and
-input transport, not a mock network. T015 renders in the existing street slice.
-T016 publishes new data without replacing first-street consumers. Full online
-presentation assembly remains T020; capture is T017 and prediction is T022.
-
-## Coordination without repeated user relays
-
-Use verified direct chat messaging when available. Read the file mailbox protocol
-in coordination/BATCH_3.md when messaging is unavailable. Approvals already recorded
-in main apply without a duplicate chat reply. Only D edits shared live tracking.
-Check coordination at startup, phase boundaries, before blocked handoff and before
-finishing. No infinite polling; idle chats do not wake merely because a file changes.
-Actual filesystem/network approvals are separate and cannot be bypassed by a lease.
-
-## Checks and completion
-
-Run focused tests during implementation; required npm run check before handoff.
-All browser/Chrome gates (including check's smoke) use the common flock wrapper in
-.worktrees/coordination/batch3/run-browser.sh. This serializes expensive browser
-checks and fixed ports; simulation/unit tests can run concurrently. Use own server
-and Vite ports, strictPort, ignored test-results paths, and stop only own processes.
-
-Feature work stays uncommitted. Worker writes its own handoff and status; D records
-in_review after acceptance evidence, never done on an unmerged branch. The user
-reviews/commits/merges later or explicitly authorizes integration. Integrate one
-branch at a time and run combined checks; isolation reduces conflicts, not a guarantee.
-No copying uncommitted changes between worktrees or wholesale conflict resolution.
-
-## Development ports
-
-| Task | Server PORT | Vite | Keyboard browser | Asset browser |
+| Task | Server | Vite | Keyboard browser | Asset browser |
 |---|---|---|---|---|
-| T013 | 2613 | 5213 | 5413 | 5513 |
-| T014 | 2614 | 5214 | 5414 | 5514 |
-| T015 | 2615 | 5215 | 5415 | 5515 |
-| T016 | 2616 | 5216 | 5416 | 5516 |
+| T017 | 2617 | 5217 | 5417 | 5517 |
+| T018 | 2618 | 5218 | 5418 | 5518 |
+| T019 | 2619 | 5219 | 5419 | 5519 |
+| T020 | 2620 | 5220 | 5420 | 5520 |
 
-Environment, camera and lobby acceptance still have fixed ports. Acquire the lock
-for individual browser tests as well as full gates. Older preview servers occupying
-5210–5212 need to be closed by their owner; do not kill arbitrary processes.
+Use strictPort and actual runner configuration; not every existing suite honors
+all variables. Local server .env contains only the assigned port. Test artifacts
+belong in ignored test-results. Dependencies are isolated per worktree.
 
-## Following batches (not launched)
+Run focused tests while implementing, mandatory npm run check before handoff and
+relevant browser acceptance. Register tests in ordinary commands; never label fixture
+previews as live gameplay. Leave feature changes uncommitted and report in_review.
+The user reviews/commits/merges or explicitly authorizes an integration operation.
+Run combined checks before marking done. No reset/stash/automatic branch switching.
 
-T017 capture, T018 HUD and T019 vehicle art precede T020 first playable online chase.
-Remaining dependencies and acceptance are in tasks/board.json and BACKLOG.md.
-Preserve earlier setup/history and all completed worktrees. Machine-local evidence
-and the VS Code workspace location are recorded in .worktrees/SETUP.md.
+Next gate: T020 playable online chase. T021+ vehicle logic, prediction, riding and
+mobile controls remain later tasks. Specs/board dependencies are authoritative.

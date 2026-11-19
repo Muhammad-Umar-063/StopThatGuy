@@ -1,3 +1,8 @@
+# Closed — accepted at 4681116
+
+All four tasks were reviewed, committed and integrated. See integration/BATCH_3.md
+for final checks and remaining scope. The original checklist below is historical.
+
 # Batch 3 integration checklist — 18 November 2026
 
 This is a pending manual-integration checklist, not authorization to commit/merge.

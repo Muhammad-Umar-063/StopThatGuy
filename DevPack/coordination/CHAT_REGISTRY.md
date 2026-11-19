@@ -1,18 +1,18 @@
-# Batch 3 chat registry
+# Batch 4 chat registry
 
-D/T016 is the active coordinator. All four tasks have published started status. The role letters are
-assignments, not chat IDs. Never reuse batch-2 IDs without fresh verification.
-History is preserved in archive/BATCH_2_CHAT_REGISTRY.md.
+Setup does not launch or send work to chats. D/T020 coordinates after launch.
+Register actual task, cwd, branch, HEAD and ID/host when each prompt is executed;
+never treat an earlier task's chat ID as a current task assignment automatically.
 
 | Role | Task | Chat ID / host | State |
 |---|---|---|---|
-| A | T013 | `01a1e9fa-a445-7d90-8f1d-1c33e5e389e5` / local Codex (mailbox and branch verified) | in_progress |
-| B | T014 | `01a1ea37-4368-7100-8cd9-6ad2f299df5d` / local Codex VS Code (mailbox and branch verified) | in_progress |
-| C | T015 | `01a1e9fc-6fb5-7000-9099-74cf86ed3055` / local Codex (mailbox and branch verified) | in_progress |
-| D / coordinator | T016 | `01a1ea31-eab3-7e02-a75c-948fa0e4986c` / local Codex (environment verified 2026-11-18) | in_review |
+| A | T017 | unregistered | ready |
+| B | T018 | unregistered | ready |
+| C | T019 | unregistered | ready |
+| D / coordinator | T020 | unregistered | coordinator reserved; gameplay planned |
 
-Workers put their task, actual branch/HEAD and verifiable chat ID/host (if exposed)
-in their own status.json. Do not dump the process environment. If ID is unavailable,
-record that explicitly and coordinate through files; no need to ask the user for
-an ID just to implement a preleased task. D cross-checks task/path/branch and records
-registrations here. Only verified destinations may receive direct messages.
+Suggested chats to reuse (titles still describe older tasks): A “Implement T006 room
+lifecycle”; B “Implement third-person camera”; C “Implement T008 asset workflow”;
+D “Implement accessible lobby screens”. Actual IDs must be freshly registered.
+History: archive/BATCH_3_CHAT_REGISTRY.md. Use file mailboxes if chat tools/IDs are
+unavailable; do not require a user ID relay just to implement preleased work.

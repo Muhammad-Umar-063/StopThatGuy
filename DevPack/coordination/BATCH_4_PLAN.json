@@ -1,0 +1,82 @@
+{
+  "status": "prepared",
+  "tasks": {
+    "T017": {
+      "role": "A",
+      "title": "Capture and authoritative result rules",
+      "branch": "task/T017-capture-results",
+      "paths": [
+        "packages/simulation/src/capture/",
+        "packages/simulation/src/results/",
+        "packages/simulation/src/state.ts",
+        "packages/simulation/src/step.ts",
+        "packages/simulation/src/simulation.ts",
+        "packages/simulation/src/index.ts",
+        "packages/simulation/src/match/progression.ts",
+        "packages/simulation/test/capture.test.ts",
+        "packages/simulation/test/results.test.ts",
+        "packages/simulation/test/simulation.test.ts",
+        "packages/shared/src/config.ts",
+        "coordination/handoffs/T017.md",
+        "apps/server/src/rooms/game-room.ts",
+        "apps/server/src/adapters/match-simulation.ts",
+        "apps/server/src/rooms/test/capture.test.mjs"
+      ],
+      "worktree": ".worktrees/T017/DevPack",
+      "status": "ready",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8"
+    },
+    "T018": {
+      "role": "B",
+      "title": "Chase HUD and contextual cues",
+      "branch": "task/T018-chase-hud",
+      "paths": [
+        "apps/client/src/ui/hud/",
+        "apps/client/src/network/view.ts",
+        "apps/client/src/network/view.test.ts",
+        "apps/client/package.json",
+        "apps/client/vite.config.ts",
+        "coordination/handoffs/T018.md"
+      ],
+      "worktree": ".worktrees/T018/DevPack",
+      "status": "ready",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8"
+    },
+    "T019": {
+      "role": "C",
+      "title": "Transport models and visual definitions",
+      "branch": "task/T019-transport-art",
+      "paths": [
+        "apps/client/src/render/vehicles/",
+        "apps/client/public/assets/vehicles/",
+        "assets-source/vehicles/",
+        "assets/manifest-vehicles.json",
+        "assets/licenses/vehicles/",
+        "assets/catalog.json",
+        "scripts/assets/workflow.test.ts",
+        "scripts/validate-data.ts",
+        "package.json",
+        "coordination/handoffs/T019.md"
+      ],
+      "worktree": ".worktrees/T019/DevPack",
+      "status": "ready",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8"
+    },
+    "T020": {
+      "role": "D",
+      "title": "First playable online chase and coordination",
+      "branch": "task/T020-online-chase",
+      "paths": [
+        "apps/client/src/bootstrap/",
+        "apps/server/src/bootstrap/",
+        "apps/client/src/render/city/",
+        "tests/integration/chase/",
+        "coordination/handoffs/T020.md"
+      ],
+      "worktree": ".worktrees/T020/DevPack",
+      "status": "planned",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8"
+    }
+  },
+  "accepted_code_baseline": "46811168fab6feab33858ff0830a8d0631273fa8"
+}

@@ -28,17 +28,17 @@ One chat is the coordinator/integrator. It alone updates tasks/board.json, ACTIV
 
 ## Codex chat coordination
 
-Current assignment: batch 3 T013–T016, with Chat D/T016 as sole coordinator.
-A/T013 owns robber rules, B/T014 networking, C/T015 characters, D/T016 city data.
-Read live main docs/PARALLEL_WORK.md, coordination/BATCH_3.md and ACTIVE_WORK.md.
-Task worktree coordination snapshots can describe the old batch; main is canonical.
-Exact pregranted leases are ready to use; do not ask for duplicate approval.
-The launch prompt directly authorizes routine messages AND replies. Verify actual
-chat identities before sending. When messaging is unavailable, use per-task file
-mailboxes and recorded main decisions. Do not invent delivery or silently self-approve.
-D resolves routine scope leases without repeated user relays; actual OS/network
-permissions, destructive operations, costs and scope changes remain separate.
-No continuously running coordinator or automatic idle-chat wakeup is promised.
+Current assignment: batch 4 T017–T020; D/T020 is sole coordinator after launch.
+A/T017 capture, B/T018 HUD and C/T019 vehicle art may implement in parallel. D
+coordinates first; actual T020 assembly waits for reviewed T017–T019 integration.
+Read canonical MAIN docs/PARALLEL_WORK.md, coordination/BATCH_4.md and ACTIVE_WORK.
+Task worktree coordination copies may describe the previous batch and are historical.
+Exact pregranted leases need no duplicate approval. Use verified direct task messages
+and replies authorized by the launch prompt, or single-writer mailboxes when tools
+are unavailable. Record approvals before use; do not invent delivery or self-approve.
+Browser gates use only the live process lock, never a future priority reservation
+that an idle chat must release. Files do not wake idle chats. OS/network permissions,
+costs, destructive operations and product scope changes remain separate.
 
 ## Implementation rules
 

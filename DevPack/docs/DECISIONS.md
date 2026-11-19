@@ -224,3 +224,15 @@ have in_review handoffs and released their browser gates. Root takes serial
 integration ownership; earlier worker scopes are now closed to new edits.
 This authorization applies to this integration/setup operation, not automatic
 commits for future T017–T020 feature work. Combined acceptance remains required.
+
+### 19 November 2026 — Accepted batch 3 and prepared batch 4
+
+T013–T016 accepted at 4681116 after 399 tests, full browser gates and targeted
+cross-task review. Host robber diagnostic logging is now integrated. User will push.
+T017–T019 run in parallel after D/T020 starts coordination; T020 assembly waits for
+their accepted integration and authorized branch update. Capture's preleases include
+minimum server departure cancellation to prevent disconnected winners. No automatic
+future commits, protocol/framework/dependency change or game feature expansion.
+Browser access uses the actual running-process lock without persistent priority
+reservations, avoiding a stopped chat blocking the next test. Main setup docs are
+canonical for all task trees. One implementation owner per file remains required.

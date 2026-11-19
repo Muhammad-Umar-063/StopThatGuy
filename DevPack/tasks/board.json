@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "project": "Stop That Guy!",
   "implementation_started": true,
   "status_values": [
@@ -543,7 +543,7 @@
       "id": "T013",
       "title": "Robber AI and match progression",
       "lane": "A",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T006",
         "T009"
@@ -564,11 +564,12 @@
         "packages/shared/src/config.ts",
         "coordination/handoffs/T013.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "evidence": [
-        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
-        "Worker launch verified against branch/HEAD. REQ-001 tuning approved after independent compatibility review.",
-        "D reviewed published draft handoff on 2026-11-18. Browser acceptance pending; status remains in_progress, not accepted/in_review."
+        "coordination/handoffs/T013.md",
+        "coordination/integration/BATCH_3.md",
+        "Combined check: 399 tests, 0 failures/skips; build/typecheck/validation/Chrome smoke passed",
+        "Combined complete browser suite passed on main"
       ],
       "blocker": null,
       "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T013/DevPack",
@@ -591,7 +592,7 @@
       "id": "T014",
       "title": "Client connection and state adapter",
       "lane": "B",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T006",
         "T009"
@@ -612,11 +613,12 @@
         "apps/server/src/validation/player-input.ts",
         "coordination/handoffs/T014.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "evidence": [
-        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
-        "Launch status published by worker; coordinator verified task branch/HEAD against mailbox, 2026-11-18.",
-        "D reviewed published draft handoff on 2026-11-18. Browser acceptance pending; status remains in_progress, not accepted/in_review."
+        "coordination/handoffs/T014.md",
+        "coordination/integration/BATCH_3.md",
+        "Combined check: 399 tests, 0 failures/skips; build/typecheck/validation/Chrome smoke passed",
+        "Combined complete browser suite passed on main"
       ],
       "blocker": null,
       "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T014/DevPack",
@@ -626,7 +628,7 @@
       "id": "T015",
       "title": "Character models and movement animation",
       "lane": "C",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T008",
         "T011"
@@ -646,10 +648,12 @@
         "package.json",
         "coordination/handoffs/T015.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "evidence": [
-        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
-        "Launch status published by worker; coordinator verified task branch/HEAD against mailbox, 2026-11-18."
+        "coordination/handoffs/T015.md",
+        "coordination/integration/BATCH_3.md",
+        "Combined check: 399 tests, 0 failures/skips; build/typecheck/validation/Chrome smoke passed",
+        "Combined complete browser suite passed on main"
       ],
       "blocker": null,
       "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T015/DevPack",
@@ -659,7 +663,7 @@
       "id": "T016",
       "title": "Complete playable city graph",
       "lane": "D",
-      "status": "in_review",
+      "status": "done",
       "depends_on": [
         "T005",
         "T011"
@@ -671,14 +675,12 @@
         "packages/world/",
         "coordination/handoffs/T016.md"
       ],
-      "integration_commit": null,
+      "integration_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "evidence": [
-        "Batch-3 coordinator verified assigned branch and clean worktree HEAD edfdce7 on 2026-11-18; pregranted reservations match ACTIVE_WORK.md.",
-        "coordination/handoffs/T016.md in assigned worktree; awaiting user review, manual commit and integration.",
-        "16 new tests execute in standard verification. Final npm run check exit 0: 350 tests, zero skips, typecheck/build/validate/smoke; city zero errors/warnings.",
-        "All browser components passed across runs: assigned full suite exited 143 during last environment component after keyboard/lobby/assets/camera passes; isolated locked environment retry exit 0, six views and disposal. No combined exit-0 claim.",
-        "Task/main git diff --check and new-file whitespace checks passed. First-street fingerprint and source/compiled exports preserved.",
-        "Main coordination/BATCH_3_INTEGRATION.md records T013 AI/catchability, T014 authority/versions/diagnostic logging, T015 asset aggregation and pending integration."
+        "coordination/handoffs/T016.md",
+        "coordination/integration/BATCH_3.md",
+        "Combined check: 399 tests, 0 failures/skips; build/typecheck/validation/Chrome smoke passed",
+        "Combined complete browser suite passed on main"
       ],
       "blocker": null,
       "worktree": "/home/umar/Downloads/StopThatGuy/.worktrees/T016/DevPack",
@@ -698,16 +700,29 @@
       "id": "T017",
       "title": "Capture and authoritative result rules",
       "lane": "A",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T013"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat A (Codex; reserved, not launched)",
+      "branch": "task/T017-capture-results",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "write_paths": [
         "packages/simulation/src/capture/",
-        "packages/simulation/src/results/"
+        "packages/simulation/src/results/",
+        "packages/simulation/src/state.ts",
+        "packages/simulation/src/step.ts",
+        "packages/simulation/src/simulation.ts",
+        "packages/simulation/src/index.ts",
+        "packages/simulation/src/match/progression.ts",
+        "packages/simulation/test/capture.test.ts",
+        "packages/simulation/test/results.test.ts",
+        "packages/simulation/test/simulation.test.ts",
+        "packages/shared/src/config.ts",
+        "coordination/handoffs/T017.md",
+        "apps/server/src/rooms/game-room.ts",
+        "apps/server/src/adapters/match-simulation.ts",
+        "apps/server/src/rooms/test/capture.test.mjs"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -717,17 +732,22 @@
       "id": "T018",
       "title": "Chase HUD and contextual cues",
       "lane": "B",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T010",
         "T013",
         "T014"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat B (Codex; reserved, not launched)",
+      "branch": "task/T018-chase-hud",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "write_paths": [
-        "apps/client/src/ui/hud/"
+        "apps/client/src/ui/hud/",
+        "apps/client/src/network/view.ts",
+        "apps/client/src/network/view.test.ts",
+        "apps/client/package.json",
+        "apps/client/vite.config.ts",
+        "coordination/handoffs/T018.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -737,19 +757,25 @@
       "id": "T019",
       "title": "Transport models and visual definitions",
       "lane": "C",
-      "status": "planned",
+      "status": "ready",
       "depends_on": [
         "T008",
         "T011"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat C (Codex; reserved, not launched)",
+      "branch": "task/T019-transport-art",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "write_paths": [
         "apps/client/src/render/vehicles/",
         "apps/client/public/assets/vehicles/",
         "assets-source/vehicles/",
-        "assets/manifest-vehicles.json"
+        "assets/manifest-vehicles.json",
+        "assets/licenses/vehicles/",
+        "assets/catalog.json",
+        "scripts/assets/workflow.test.ts",
+        "scripts/validate-data.ts",
+        "package.json",
+        "coordination/handoffs/T019.md"
       ],
       "integration_commit": null,
       "evidence": [],
@@ -770,13 +796,15 @@
         "T018",
         "T019"
       ],
-      "owner": null,
-      "branch": null,
-      "base_commit": null,
+      "owner": "Chat D (Codex; reserved, not launched)",
+      "branch": "task/T020-online-chase",
+      "base_commit": "46811168fab6feab33858ff0830a8d0631273fa8",
       "write_paths": [
         "apps/client/src/bootstrap/",
         "apps/server/src/bootstrap/",
-        "tests/integration/chase/"
+        "apps/client/src/render/city/",
+        "tests/integration/chase/",
+        "coordination/handoffs/T020.md"
       ],
       "integration_commit": null,
       "evidence": [],
